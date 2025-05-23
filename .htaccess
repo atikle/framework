@@ -1,5 +1,5 @@
 <IfModule mod_headers.c>
-    Header set Access-Control-Allow-Origin "https://atikle.github.io"
+    Header set Access-Control-Allow-Origin "https://atikle.github.io/framework"
     # Or, to allow all origins (less secure, but easier for testing)
     # Header set Access-Control-Allow-Origin "*"
 </IfModule>
