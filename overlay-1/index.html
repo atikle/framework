@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+        xintegrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- Roboto @ Google Fonts -->
+    <!-- font-family: "Roboto", sans-serif; -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap"
+        rel="stylesheet">
+
+    <!-- Poppins @ Google Fonts -->
+    <!-- font-family: 'Poppins', sans-serif; -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
+
+    <!-- Fredoka @ Google Fonts -->
+    <!-- font-family: 'Fredoka', sans-serif; -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka&display=swap" rel="stylesheet">
+
+    <!-- Ununtu @ Google Fonts -->
+    <!-- font-family: 'Ubuntu', sans-serif; -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Ubuntu&display=swap" rel="stylesheet">
+
+    <script type="text/javascript" src="https://html2canvas.hertzen.com/dist/html2canvas.js"></script>
+    <script type="text/javascript" src="https://atikle.github.io/framework/screenshot-module/html2canvas.js"></script>
+    <script type="text/javascript" src="https://atikle.github.io/framework/screenshot-module/html2canvas.js"></script>
+
+    <style>
+        .material-symbols-outlined {
+            font-variation-settings:
+                'FILL' 0,
+                'wght' 400,
+                'GRAD' 0,
+                'opsz' 24
+        }
+
+        .body {
+            max-width: 1920px;
+        }
+
+        /* The vertical toolbar */
+        .vertical-toolbar {
+            position: fixed;
+            bottom: 10px;
+            left: 10px;
+            z-index: 1000;
+            border-radius: 40px;
+            border: 4px solid black;
+            overflow: hidden;
+            background-color: black;
+        }
+
+        /* The list within the toolbar */
+        .vertical-toolbar ul {
+            list-style-type: none;
+            margin: 0;
+            padding: 0px 0px;
+            display: flex;
+            flex-direction: column;
+            align-items: stretch;
+            /* Make buttons take full width */
+        }
+
+        /* The buttons within the toolbar */
+        .vertical-toolbar button {
+            background-color: black;
+            color: whitesmoke;
+            border: none;
+            padding: 15px 12px;
+            cursor: pointer;
+            font-size: 16px;
+            text-align: left;
+            transition: background-color 0.3s ease, color 0.3s ease;
+            /* Smooth transition for hover effect */
+            width: 100%;
+            /* Fill the width of the list item */
+            border-radius: 0;
+            /* Remove individual button border radius */
+        }
+
+        /* Style for the buttons on hover */
+        .vertical-toolbar button:hover {
+            background-color: wheat;
+            color: #007bff;
+        }
+    </style>
+
+</head>
+
+<body id="canvas">
+
+    <nav class="vertical-toolbar">
+        <ul>
+            <li><button><i class="fa-solid fa-language"></i></button></li>
+            <li><button><i class="fa-solid fa-moon"></i></button></li>
+            <li><button type='button' id='but_screenshot' value='Take screenshot' onclick='screenshot();'><i
+                        class="fa-solid fa-image"></i></button></li>
+        </ul>
+    </nav>
+
+    <!-- Script -->
+    <script type='text/javascript'>
+        function screenshot() {
+            html2canvas(document.body).then(function (canvas) {
+                document.body.appendChild(canvas);
+            });
+        }
+    </script>
+
+</body>
+
+</html>
