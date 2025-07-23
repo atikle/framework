@@ -4,14 +4,10 @@
 
 .atikle-multicolor {
     font-family: "Roboto", sans-serif;
-    -webkit-text-fill-color: transparent;
+    background: linear-gradient(90.1deg, rgb(255, 85, 85) 0.1%, rgb(85, 85, 255) 100%);
     -webkit-background-clip: text;
-    -webkit-animation: 3s ease-in-out infinite alternate;
-    animation: 3s ease-in-out infinite alternate;
-    background: -webkit-radial-gradient(circle, #7182ff 0, #3cff52 100%);
-    background: radial-gradient(circle, #7182ff 0, #3cff52 100%);
     background-clip: text;
-    background-size: 200%;
+    -webkit-text-fill-color: transparent;
 }
 
 .fin {
@@ -39,15 +35,4 @@
     -webkit-background-clip: text;
     background-clip: text;
     -webkit-text-fill-color: transparent;
-}
-
-.new-gradient {
-    -webkit-text-fill-color: transparent;
-    -webkit-background-clip: text;
-    -webkit-animation: 3s ease-in-out infinite alternate;
-    animation: 3s ease-in-out infinite alternate;
-    background: -webkit-radial-gradient(circle, #7182ff 0, #3cff52 100%);
-    background: radial-gradient(circle, #7182ff 0, #3cff52 100%);
-    background-clip: text;
-    background-size: 200%;
 }
