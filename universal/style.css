@@ -1,3 +1,14 @@
+::selection {
+    color: black;
+    background: white;
+}
+
+.max-width-1600 {
+    width: 100%;
+    max-width: 1600px;
+    margin: auto;
+}
+
 .max-width-1650 {
     width: 100%;
     max-width: 1650px;
