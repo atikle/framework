@@ -1,0 +1,38 @@
+.atikle {
+    font-family: "Roboto", sans-serif;
+}
+
+.atikle-multicolor {
+    font-family: "Roboto", sans-serif;
+    background: linear-gradient(90.1deg, rgb(255, 85, 85) 0.1%, rgb(85, 85, 255) 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.fin {
+    font-family: 'Ubuntu', sans-serif;
+    color: cadetblue;
+}
+
+.insights {
+    font-family: 'Ubuntu', sans-serif;
+    color: #CCCCFF;
+}
+
+.synapse {
+    font-family: 'Ubuntu', sans-serif;
+    background: linear-gradient(135deg, #FF2D92, #FF8C00);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+
+}
+
+.connect {
+    font-family: 'Ubuntu', sans-serif;
+    background: linear-gradient(90deg, rgb(255, 85, 85) 0.1%, rgb(85, 85, 255) 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
