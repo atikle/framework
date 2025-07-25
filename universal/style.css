@@ -3,6 +3,35 @@
     background: white;
 }
 
+:root {
+    --body-background: #eaebf5;
+    --navbar-background: white;
+    --shadow-1: 0 2px 6px 0 rgba(136, 148, 171, 0.2), 0 24px 20px -24px rgba(71, 82, 107, 0.1);
+
+    --chat-background: #fff;
+    --link-color: #c0c1c5;
+    --navigation-bg: #fff;
+    --main-color: #3d42df;
+    --message-bg: #f3f4f9;
+    --message-bg-2: #3d42df;
+    --message-text: #2c303a;
+    --placeholder-text: #a2a4bc;
+}
+
+.dark-theme {
+    --body-background: #262a42;
+    --navbar-background: black;
+    --shadow-1: 0px 0px 8px 0px #282b33;
+
+    --chat-background: #3c3f56;
+    --message-bg: #2c3046;
+    --message-text: rgba(255, 255, 255, 0.8);
+    --placeholder-text: #fff;
+    --navigation-bg: #3c3f56;
+    --main-color: #6f74ff;
+    --message-bg-2: #6f74ff;
+}
+
 .max-width-1600 {
     width: 100%;
     max-width: 1600px;
