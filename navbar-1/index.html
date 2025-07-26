@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -24,6 +25,9 @@
             justify-content: center;
             align-items: center;
             box-shadow: var(--shadow-2);
+
+            z-index: 1000; /* Ensure navbar is on top */
+            will-change: transform, box-shadow;
         }
 
         nav {
@@ -41,13 +45,16 @@
             left: 0;
             font-size: 40px;
             font-weight: 600;
+
             padding-left: 5px;
             z-index: 1001; /* Above mobile menu */
         }
 
         .navigation-items {
             display: flex;
-            gap: 70px;
+            gap: 60px;
+
+            align-items: center;
         }
 
         .navigation-items>a {
@@ -58,6 +65,10 @@
             font-weight: 600;
             font-size: 20px;
             transition: .15s ease-in-out;
+
+            transition: color var(--transition-speed-normal) var(--ease-out-quad);
+            will-change: transform, color;
+            white-space: nowrap; /* Prevent text wrapping */
         }
 
         .navigation-items>a:hover {
@@ -70,7 +81,18 @@
             font-size: 20px;
             font-weight: 800;
             color: black;
-            margin-right: 8px;
+            /* margin-right: 8px; */
+
+            cursor: pointer;
+            padding: 5px;
+            z-index: 1001; /* Above mobile menu */
+            user-select: none; /* Prevent text selection */
+            -webkit-tap-highlight-color: transparent; /* Remove tap highlight on mobile */
+            transition: transform var(--transition-speed-fast) var(--ease-out-quad); /* For active feedback */
+        }
+
+        .hamburger:active {
+            transform: scale(0.9); /* Subtle squash on click */
         }
 
         @media screen and (max-width:768px) {

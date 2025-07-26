@@ -1,3 +1,4 @@
+===
 <!DOCTYPE html>
 <html lang="en">
 
@@ -13,11 +14,6 @@
     <title>framework/navbar-1</title>
 
     <style>
-        body{
-            background-color: black;
-            margin: 0;
-        }
-        
         .navigation-header {
             position: fixed;
             background-color: white;
@@ -27,13 +23,15 @@
             top: 0;
             display: flex;
             justify-content: center;
-            /* align-items: center; */
+            align-items: center;
+            box-shadow: var(--shadow-2);
         }
 
         nav {
             width: 95%;
             border-radius: 10px;
-            max-width: 1650px;
+            /* max-width: 1650px; */
+            max-width: 1725px;
             display: flex;
             justify-content: space-between;
             align-items: center;
@@ -44,12 +42,8 @@
             left: 0;
             font-size: 40px;
             font-weight: 600;
-            font-family: "Roboto", sans-serif;
-            /* padding-left: 10px; */
-            background: linear-gradient(90.1deg, rgb(255, 85, 85) 0.1%, rgb(85, 85, 255) 100%);
-            -webkit-background-clip: text;
-            background-clip: text;
-            -webkit-text-fill-color: transparent;
+            padding-left: 5px;
+            z-index: 1001; /* Above mobile menu */
         }
 
         .navigation-items {
@@ -77,6 +71,7 @@
             font-size: 20px;
             font-weight: 800;
             color: black;
+            margin-right: 8px;
         }
 
         @media screen and (max-width:768px) {
@@ -99,7 +94,7 @@
                 background-color: white;
                 width: 100%;
                 height: calc(100vh - 58px);
-                padding-top: 60px;
+                padding-top: 100px;
                 gap: 10vh;
             }
         }
@@ -113,7 +108,7 @@
 
         <nav>
 
-            <div class="name"><a href="https://atikle.github.io/home">atikle.</a></div>
+            <div class="name atikle-multicolor"><a href="https://atikle.github.io/home">atikle</a></div>
 
             <div class="navigation-items" id="navigation-items">
                 <a class="links" href="https://atikle.github.io/finatikle">
