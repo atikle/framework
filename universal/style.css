@@ -9,37 +9,9 @@ body{
     -moz-osx-font-smoothing: grayscale; /* Smoother font rendering for Firefox/macOS */
 }
 
-:root {
-    --body-background: #eaebf5;
-    --navbar-background: white;
-    --shadow-1: 0 2px 6px 0 rgba(136, 148, 171, 0.2), 0 24px 20px -24px rgba(71, 82, 107, 0.1);
 
-    --chat-background: #fff;
-    --link-color: #c0c1c5;
-    --navigation-bg: #fff;
-    --main-color: #3d42df;
-    --message-bg: #f3f4f9;
-    --message-bg-2: #3d42df;
-    --message-text: #2c303a;
-    --placeholder-text: #a2a4bc;
-}
-
-.dark-theme {
-    --body-background: #262a42;
-    --navbar-background: black;
-    --shadow-1: 0px 0px 8px 0px #282b33;
-
-    --chat-background: #3c3f56;
-    --message-bg: #2c3046;
-    --message-text: rgba(255, 255, 255, 0.8);
-    --placeholder-text: #fff;
-    --navigation-bg: #3c3f56;
-    --main-color: #6f74ff;
-    --message-bg-2: #6f74ff;
-}
 
 :root {
-    --hover-color: #007bff;
     --transition-speed-fast: 0.2s; /* For quick interactions like hamburger click */
     --transition-speed-normal: 0.3s; /* For standard hovers */
     --transition-speed-slow: 0.4s; /* For menu slide-in/out */
@@ -48,7 +20,33 @@ body{
     --ease-in-out-quint: cubic-bezier(0.86, 0, 0.07, 1); /* Aggressive acceleration/deceleration */
     --ease-out-quad: cubic-bezier(0.25, 0.46, 0.45, 0.94); /* Smooth deceleration */
     
+    --navbar-background-1: white;
+    --body-background-1: white;
+    --body-background-2: #eaebf5;
+    --text-color-1: #333;
+    --text-color-2: black;
+    --shadow-1: 0 2px 6px 0 rgba(136, 148, 171, 0.2), 0 24px 20px -24px rgba(71, 82, 107, 0.1);
     --shadow-2: 0 2px 10px rgba(0, 0, 0, 0.1);
+    --link-color-1: #c0c1c5;
+    --link-color-2: #007bff;
+    --message-bg-1: #f3f4f9;
+    --message-text-1: #2c303a;
+    --placeholder-text-1: #a2a4bc;
+}
+
+.body.dark {
+    --navbar-background-1: #3c3f56;
+    --body-background-1: #3c3f56;
+    --body-background-2: #262a42;
+    --text-color-1: #333;
+    --text-color-2: black;
+    --shadow-1: 0px 0px 8px 0px #282b33;
+    --shadow-2: 0px 0px 8px 0px #282b33;
+    --link-color-1: #c0c1c5;
+    --link-color-2: #6f74ff;
+    --message-bg-1: #2c3046;
+    --message-text-1: rgba(255, 255, 255, 0.8);
+    --placeholder-text-1: #fff;
 }
 
 .max-width-1600 {
