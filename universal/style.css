@@ -9,8 +9,6 @@ body{
     -moz-osx-font-smoothing: grayscale; /* Smoother font rendering for Firefox/macOS */
 }
 
-
-
 :root {
     --transition-speed-fast: 0.2s; /* For quick interactions like hamburger click */
     --transition-speed-normal: 0.3s; /* For standard hovers */
