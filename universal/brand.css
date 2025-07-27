@@ -18,9 +18,8 @@
 .insights {
     font-family: 'Ubuntu', sans-serif;
     /* color: #CCCCFF; */
-    /* background: -webkit-radial-gradient(circle, #7182ff 0, #3cff52 100%);
-    background: radial-gradient(circle, #7182ff 0, #3cff52 100%); */
-    background: linear-gradient(90deg, rgb(111, 66, 193), rgb(232, 62, 140));
+    background: -webkit-radial-gradient(circle, #7182ff 0, #3cff52 100%);
+    background: radial-gradient(circle, #7182ff 0, #3cff52 100%);
     -webkit-background-clip: text;
     background-clip: text;
     -webkit-text-fill-color: transparent;
@@ -32,7 +31,6 @@
     -webkit-background-clip: text;
     background-clip: text;
     -webkit-text-fill-color: transparent;
-
 }
 
 .connect {
