@@ -3,14 +3,7 @@
     background: white;
 }
 
-body{
-    /* margin-top: var(--navbar-height); Push content down below fixed navbar */
-    -webkit-font-smoothing: antialiased; /* Smoother font rendering for Webkit browsers */
-    -moz-osx-font-smoothing: grayscale; /* Smoother font rendering for Firefox/macOS */
 
-    margin: 0;
-    transition: background-color 0.3s, color 0.3s;
-}
 
 :root {
     --transition-speed-fast: 0.2s; /* For quick interactions like hamburger click */
