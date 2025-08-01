@@ -54,7 +54,7 @@ body.dark-mode {
 
 .max-width-1650 {
     width: 100%;
-    height: auto;
+    height: 100%;
     max-width: 1650px;
     margin: auto;
 }
