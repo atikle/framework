@@ -54,12 +54,10 @@ body.dark-mode {
     width: 100%;
     max-width: 1600px;
     margin: auto;
-    background-color: transparent;
 }
 
 .max-width-1650 {
     width: 100%;
     max-width: 1650px;
     margin: auto;
-    background-color: transparent;
 }
