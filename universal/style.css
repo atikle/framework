@@ -51,13 +51,15 @@ body.dark-mode {
 }
 
 .max-width-1600 {
-    width: 100%;
+    /* width: 100%; */
+    width: auto;
     max-width: 1600px;
     margin: auto;
 }
 
 .max-width-1650 {
-    width: 100%;
+    /* width: 100%; */
+    width: auto;
     max-width: 1650px;
     margin: auto;
 }
