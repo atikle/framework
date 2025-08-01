@@ -27,6 +27,7 @@ body{
     --card-background: white;
     --text-primary: #050505;
     --text-secondary: #65676b;
+    --text-tertiary: white;
     --shadow-1: 0 2px 6px 0 rgba(136, 148, 171, 0.2), 0 24px 20px -24px rgba(71, 82, 107, 0.1);
     --shadow-2: 0 2px 10px rgba(0, 0, 0, 0.1);
 
@@ -45,6 +46,7 @@ body.dark-mode {
     --card-background: #242526; /* #3c3f56 */
     --text-primary: white;
     --text-secondary: #b0b3b8;
+    --text-tertiary: black;
     --shadow-1: 0px 0px 8px 0px #282b33;
     --shadow-2: 0 2px 8px rgba(0, 0, 0, 0.25);
 
