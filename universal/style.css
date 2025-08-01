@@ -22,7 +22,8 @@ body{
     --navbar-background-1: white;
     --body-background-1: white;
     --body-background-2: #eaebf5;
-    --card-background: #f0f2f5;
+    /* --card-background: #f0f2f5; */
+    --card-background: #e9ecef;
     --text-primary: #050505;
     --text-secondary: #65676b;
     --shadow-1: 0 2px 10px rgba(0, 0, 0, 0.1);
