@@ -23,6 +23,7 @@ body{
     --body-background-1: white;
     /* --body-background-2: #eaebf5; */
     --body-background-2: whitesmoke;
+    --background-3: black;
     --card-background: white;
     --text-primary: #050505;
     --text-secondary: #65676b;
@@ -40,6 +41,7 @@ body.dark-mode {
     --navbar-background-1: #242526;
     --body-background-1: black;
     --body-background-2: black;
+    --background-3: white;
     --card-background: #242526; /* #3c3f56 */
     --text-primary: white;
     --text-secondary: #b0b3b8;
