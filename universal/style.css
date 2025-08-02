@@ -35,10 +35,10 @@ body{
     --shadow-1: 0 2px 6px 0 rgba(136, 148, 171, 0.2), 0 24px 20px -24px rgba(71, 82, 107, 0.1);
     --shadow-2: 0 2px 10px rgba(0, 0, 0, 0.1);
 
-    --primary-button-bg: #1877f2;
-    --primary-button-text: #ffffff;
-    --secondary-button-bg: #e4e6eb;
-    --secondary-button-text: #050505;
+    --button-background-1: #1877f2;
+    --button-background-2: #e4e6eb;
+    --button-text-1: #ffffff;
+    --button-text-2: #050505;
     --hover-overlay: rgba(0, 0, 0, 0.05);
 }
 
