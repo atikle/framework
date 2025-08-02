@@ -54,10 +54,10 @@ body.dark-mode {
     --shadow-1: 0px 0px 8px 0px #282b33;
     --shadow-2: 0 2px 8px rgba(0, 0, 0, 0.25);
 
-    --primary-button-bg: #2d88ff;
-    --primary-button-text: #ffffff;
-    --secondary-button-bg: #3a3b3c;
-    --secondary-button-text: #e4e6eb;
+    --button-background-1: #2d88ff;
+    --button-background-2: #3a3b3c;
+    --button-text-1: #ffffff;
+    --button-text-2: #e4e6eb;
     --hover-overlay: rgba(255, 255, 255, 0.08);
 }
 
