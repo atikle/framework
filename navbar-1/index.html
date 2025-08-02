@@ -70,7 +70,6 @@
             font-family: 'Ubuntu', sans-serif;
             font-weight: 600;
             font-size: 20px;
-            transition: .15s ease-in-out;
 
             transition: color var(--transition-speed-normal) var(--ease-out-quad);
             will-change: transform, color;
@@ -80,7 +79,11 @@
 
         .navigation-items>a:hover {
             font-weight: 600;
-            padding: 0px 10px;
+            /* padding: 0px 10px; */
+            text-decoration: underline;
+            text-decoration-color: royalblue;
+            text-decoration-thickness: 3px;
+            text-underline-offset: 6px;
         }
 
         .hamburger {
@@ -126,7 +129,14 @@
                 height: calc(100vh - 58px);
                 /* padding-top: 100px; */
                 padding: 100px 30px;
-                gap: 10vh;
+                gap: 8vh;
+
+                -webkit-tap-highlight-color: transparent; /* Remove tap highlight on mobile */
+            }
+
+            .navigation-items>a:hover {
+                /* padding: 18px 0px; */
+                text-decoration: none;
             }
 
             .links {
