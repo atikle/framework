@@ -3,6 +3,10 @@
     background: white;
 }
 
+a{
+    -webkit-tap-highlight-color: transparent; /* Remove tap highlight on mobile */
+}
+
 body{
     /* margin-top: var(--navbar-height); Push content down below fixed navbar */
     -webkit-font-smoothing: antialiased; /* Smoother font rendering for Webkit browsers */
