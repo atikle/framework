@@ -51,54 +51,36 @@
                 'opsz' 24
         }
 
-        .body {
-            max-width: 1920px;
-        }
-
-        /* The vertical toolbar */
         .vertical-toolbar {
             position: fixed;
             bottom: 10px;
             left: 10px;
             z-index: 1000;
-            border-radius: 40px;
-            border: 4px solid black;
+            width: auto;
+            height: auto;
             overflow: hidden;
+            border-radius: 30px;
             background-color: black;
-        }
-
-        /* The list within the toolbar */
-        .vertical-toolbar ul {
-            list-style-type: none;
-            border-radius: 40px;
-            margin: 0;
-            padding: 0px 0px;
+            border: 4px solid black;
             display: flex;
             flex-direction: column;
-            align-items: stretch;
-            /* Make buttons take full width */
+            gap: 5px;
+            justify-content: space-between;
         }
 
-        /* The buttons within the toolbar */
         .vertical-toolbar button {
             background-color: black;
-            color: whitesmoke;
+            color: white;
             border: none;
-            padding: 15px 12px;
+            padding: 12px 12px;
             cursor: pointer;
-            font-size: 16px;
-            text-align: left;
+            font-size: 18px;
             transition: background-color 0.3s ease, color 0.3s ease;
-            /* Smooth transition for hover effect */
-            width: 100%;
-            /* Fill the width of the list item */
-            border-radius: 0;
-            /* Remove individual button border radius */
+            border-radius: 38px;
         }
 
-        /* Style for the buttons on hover */
         .vertical-toolbar button:hover {
-            background-color: wheat;
+            background-color: whitesmoke;
             color: #007bff;
         }
     </style>
@@ -108,14 +90,12 @@
 <body>
 
     <nav class="vertical-toolbar">
-        <ul>
-            <li><button><i class="fa-solid fa-language"></i></button></li>
-            <li><button><i class="fa-solid fa-moon"></i></button></li>
-            <li><button type='button'><i class="fa-solid fa-image"></i></button></li>
-        </ul>
+        <button><i class="fa-solid fa-language"></i></button>
+        <button><i class="fa-solid fa-moon"></i></button>
+        <button type='button'><i class="fa-solid fa-image"></i></button>
     </nav>
 
-    <input type='button' id='but_screenshot' value='Take screenshot' onclick='screenshot();'><br />
+    <!-- <input type='button' id='but_screenshot' value='Take screenshot' onclick='screenshot();'><br /> -->
 
     <!-- Script -->
     <script type='text/javascript'>
