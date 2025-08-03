@@ -25,10 +25,12 @@ body{
     
     --navbar-background-1: white;
     --background-1: white;
-    /* --body-background-2: #eaebf5; */
     --background-2: whitesmoke;
     --background-3: black;
+    --background-4: #f0f2f5;
+    --background-5: #eaebf5;
     --card-background-1: white;
+    --card-background-2: whitesmoke;
     --text-color-1: #050505;
     --text-color-2: #65676b;
     --text-color-3: white;
@@ -37,8 +39,10 @@ body{
 
     --button-background-1: #1877f2;
     --button-background-2: #e4e6eb;
+    --button-background-3: #3d42df;
     --button-text-1: #ffffff;
     --button-text-2: #050505;
+    --button-text-3: #ffffff;
     --hover-overlay: rgba(0, 0, 0, 0.05);
 }
 
@@ -47,7 +51,10 @@ body.dark-mode {
     --background-1: black;
     --background-2: black;
     --background-3: white;
+    --background-4: #242526;
+    --background-5: #18191a;
     --card-background-1: #242526; /* #3c3f56 */
+    --card-background-2: #242526; /* #3c3f56 */
     --text-color-1: white;
     --text-color-2: #b0b3b8;
     --text-color-3: black;
@@ -56,8 +63,10 @@ body.dark-mode {
 
     --button-background-1: #2d88ff;
     --button-background-2: #3a3b3c;
+    --button-background-3: #6f74ff;
     --button-text-1: #ffffff;
     --button-text-2: #e4e6eb;
+    --button-text-3: #ffffff;
     --hover-overlay: rgba(255, 255, 255, 0.08);
 }
 
