@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+        xintegrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- Roboto @ Google Fonts -->
+    <!-- font-family: "Roboto", sans-serif; -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap"
+        rel="stylesheet">
+
+    <!-- Poppins @ Google Fonts -->
+    <!-- font-family: 'Poppins', sans-serif; -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
+
+    <!-- Fredoka @ Google Fonts -->
+    <!-- font-family: 'Fredoka', sans-serif; -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka&display=swap" rel="stylesheet">
+
+    <!-- Ununtu @ Google Fonts -->
+    <!-- font-family: 'Ubuntu', sans-serif; -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Ubuntu&display=swap" rel="stylesheet">
+
+    <script type="text/javascript" src="https://html2canvas.hertzen.com/dist/html2canvas.js"></script>
+    <script type="text/javascript" src="https://atikle.github.io/framework/screenshot-module/html2canvas.js"></script>
+    <script type="text/javascript" src="https://atikle.github.io/framework/screenshot-module/canvas2image.js"></script>
+
+    <style>
+        .material-symbols-outlined {
+            font-variation-settings:
+                'FILL' 0,
+                'wght' 400,
+                'GRAD' 0,
+                'opsz' 24
+        }
+
+        .vertical-toolbar {
+            position: fixed;
+            bottom: 10px;
+            left: 10px;
+            /* z-index: 1000; */
+            width: auto;
+            height: auto;
+            /* overflow: hidden; */
+            border-radius: 30px;
+            background-color: black;
+            border: 4px solid black;
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+            justify-content: space-between;
+            box-shadow: var(--shadow-1);
+        }
+
+        .vertical-toolbar button {
+            background-color: black;
+            color: white;
+            border: none;
+            padding: 12px 12px;
+            cursor: pointer;
+            font-size: 18px;
+            transition: background-color 0.3s ease, color 0.3s ease;
+            border-radius: 38px;
+        }
+
+        .vertical-toolbar button:hover {
+            background-color: whitesmoke;
+            color: #007bff;
+        }
+    </style>
+
+</head>
+
+<body>
+
+    <nav class="vertical-toolbar">
+        <button><i class="fa-solid fa-language"></i></button>
+        <button id="darkModeToggle"><i id="darkModeToggle" class="fa-solid fa-moon"></i></button>
+        <button type='button'><i class="fa-solid fa-image"></i></button>
+    </nav>
+
+    <!-- <input type='button' id='but_screenshot' value='Take screenshot' onclick='screenshot();'><br /> -->
+
+    <!-- Script -->
+    <script type='text/javascript'>
+        function screenshot() {
+            html2canvas(document.body).then(function (canvas) {
+                document.body.appendChild(canvas);
+            });
+        }
+    </script>
+
+
+    <!-- Script -->
+    <script type='text/javascript'>
+        document.querySelector('button').addEventListener('click', function () {
+            html2canvas(document.querySelector('.specific'), {
+                onrendered: function (canvas) {
+                    // document.body.appendChild(canvas);
+                    return Canvas2Image.saveAsPNG(canvas);
+                }
+            });
+        });
+    </script>
+
+    <script src="https://atikle.github.io/framework/universal/theme.js"></script>
+
+</body>
+
+</html>

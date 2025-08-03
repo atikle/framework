@@ -58,9 +58,34 @@
 
     <nav class="reading-toolbar">
         <button id="translateBtn" title="Translate"><i class="fa-solid fa-language"></i></button>
-        <button id="themeBtn" title="Toggle Theme"><i class="fa-solid fa-moon"></i></button>
+        <button id="darkModeToggle" title="Toggle Theme"><i class="fa-solid fa-moon"></i></button>
         <button id="screenshotBtn" title="Screenshot"><i class="fa-solid fa-image"></i></button>
     </nav>
+
+    <!-- Add this script block to initialize the toggle on this page -->
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // This function is in theme.js and sets up the toggle switch
+            setupThemeToggle();
+
+            // The save button logic can remain here as it's specific to this page
+            const saveButton = document.getElementById('saveButton');
+            saveButton.addEventListener('click', () => {
+                const originalText = saveButton.textContent;
+                saveButton.textContent = 'Saved!';
+                saveButton.style.opacity = '0.7';
+                saveButton.disabled = true;
+                
+                setTimeout(() => {
+                    saveButton.textContent = originalText;
+                    saveButton.style.opacity = '1';
+                    saveButton.disabled = false;
+                }, 2000);
+            });
+        });
+    </script>
+
+    <script src="https://atikle.github.io/connect/framework/universal/theme.js"></script>
 
     <script>
         // --- Screenshot Functionality ---
