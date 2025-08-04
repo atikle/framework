@@ -104,46 +104,46 @@
     <script src="https://atikle.github.io/connect/framework/universal/theme.js"></script>
 
     <script>
-        // // --- Screenshot Functionality ---
-        // const screenshotBtn = document.getElementById('screenshotBtn');
-        // screenshotBtn.addEventListener('click', () => {
-        //     // Hides the toolbar itself before taking the screenshot
-        //     document.querySelector('.reading-toolbar').style.display = 'none';
-
-        //     html2canvas(document.body).then(canvas => {
-        //         const image = canvas.toDataURL("image/png").replace("image/png", "image/octet-stream");
-        //         const link = document.createElement('a');
-        //         link.download = 'screenshot.png';
-        //         link.href = image;
-        //         link.click();
-
-        //         // Shows the toolbar again after the screenshot is taken
-        //         document.querySelector('.reading-toolbar').style.display = 'flex';
-        //     });
-        // });
-
         // --- Screenshot Functionality ---
-        document.addEventListener('DOMContentLoaded', () => {
-            const screenshotBtn = document.getElementById('screenshotBtn');
-            if(screenshotBtn) { // Good practice to check if it exists
-                screenshotBtn.addEventListener('click', () => {
-                    // Hides the toolbar itself before taking the screenshot
-                    document.querySelector('.reading-toolbar').style.display = 'none';
+        const screenshotBtn = document.getElementById('screenshotBtn');
+        screenshotBtn.addEventListener('click', () => {
+            // Hides the toolbar itself before taking the screenshot
+            document.querySelector('.reading-toolbar').style.display = 'none';
 
-                    html2canvas(document.body).then(canvas => {
-                        const image = canvas.toDataURL("image/png").replace("image/png", "image/octet-stream");
-                        const link = document.createElement('a');
-                        link.download = 'screenshot.png';
-                        link.href = image;
-                        link.click();
+            html2canvas(document.body).then(canvas => {
+                const image = canvas.toDataURL("image/png").replace("image/png", "image/octet-stream");
+                const link = document.createElement('a');
+                link.download = 'screenshot.png';
+                link.href = image;
+                link.click();
 
-                        // Shows the toolbar again after the screenshot is taken
-                        document.querySelector('.reading-toolbar').style.display = 'flex';
-                    });
-                });
-            }
-
+                // Shows the toolbar again after the screenshot is taken
+                document.querySelector('.reading-toolbar').style.display = 'flex';
+            });
         });
+
+        // // --- Screenshot Functionality ---
+        // document.addEventListener('DOMContentLoaded', () => {
+        //     const screenshotBtn = document.getElementById('screenshotBtn');
+        //     if(screenshotBtn) { // Good practice to check if it exists
+        //         screenshotBtn.addEventListener('click', () => {
+        //             // Hides the toolbar itself before taking the screenshot
+        //             document.querySelector('.reading-toolbar').style.display = 'none';
+
+        //             html2canvas(document.body).then(canvas => {
+        //                 const image = canvas.toDataURL("image/png").replace("image/png", "image/octet-stream");
+        //                 const link = document.createElement('a');
+        //                 link.download = 'screenshot.png';
+        //                 link.href = image;
+        //                 link.click();
+
+        //                 // Shows the toolbar again after the screenshot is taken
+        //                 document.querySelector('.reading-toolbar').style.display = 'flex';
+        //             });
+        //         });
+        //     }
+
+        // });
 
         // // --- Theme Toggle Functionality ---
         // const themeBtn = document.getElementById('themeBtn');
