@@ -1,4 +1,4 @@
-// atikle screenshot module-1 V1.0 {Working, Prod}
+// atikle screenshot module script-v1.0.0.js {Working, Prod}
 // --- Screenshot Functionality ---
         const screenshotBtn = document.getElementById('screenshotBtn');
         screenshotBtn.addEventListener('click', () => {
