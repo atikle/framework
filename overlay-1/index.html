@@ -38,8 +38,8 @@
             background-color: transparent;
             color: white;
             border: none;
-            width: 48px;
-            height: 48px;
+            width: 35px;
+            height: 35px;
             border-radius: 50%;
             cursor: pointer;
             font-size: 20px;
@@ -145,24 +145,24 @@
 
         });
 
-        // --- Theme Toggle Functionality ---
-        const themeBtn = document.getElementById('themeBtn');
-        const themeIcon = themeBtn.querySelector('i');
+        // // --- Theme Toggle Functionality ---
+        // const themeBtn = document.getElementById('themeBtn');
+        // const themeIcon = themeBtn.querySelector('i');
         
-        themeBtn.addEventListener('click', () => {
-            // This is a placeholder for your actual theme-changing logic
-            document.body.style.backgroundColor = document.body.style.backgroundColor === 'black' ? 'white' : 'black';
-            document.body.style.color = document.body.style.backgroundColor === 'black' ? 'white' : 'black';
+        // themeBtn.addEventListener('click', () => {
+        //     // This is a placeholder for your actual theme-changing logic
+        //     document.body.style.backgroundColor = document.body.style.backgroundColor === 'black' ? 'white' : 'black';
+        //     document.body.style.color = document.body.style.backgroundColor === 'black' ? 'white' : 'black';
             
-            // Toggle icon between sun and moon
-            if (themeIcon.classList.contains('fa-moon')) {
-                themeIcon.classList.remove('fa-moon');
-                themeIcon.classList.add('fa-sun');
-            } else {
-                themeIcon.classList.remove('fa-sun');
-                themeIcon.classList.add('fa-moon');
-            }
-        });
+        //     // Toggle icon between sun and moon
+        //     if (themeIcon.classList.contains('fa-moon')) {
+        //         themeIcon.classList.remove('fa-moon');
+        //         themeIcon.classList.add('fa-sun');
+        //     } else {
+        //         themeIcon.classList.remove('fa-sun');
+        //         themeIcon.classList.add('fa-moon');
+        //     }
+        // });
 
         // --- Translate Functionality (Placeholder) ---
         const translateBtn = document.getElementById('translateBtn');
