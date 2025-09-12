@@ -12,7 +12,8 @@
 
 .fin {
     font-family: 'Ubuntu', sans-serif;
-    color: cadetblue;
+    /* color: cadetblue; */
+    color: darkcyan;
 }
 
 .insights {
