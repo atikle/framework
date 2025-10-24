@@ -13,11 +13,6 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" xintegrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 
     <style>
-        /* Apply a consistent font family */
-        body, html {
-            font-family: 'Inter', sans-serif;
-        }
-
         .reading-toolbar {
             position: fixed;
             bottom: 10px;
@@ -124,153 +119,6 @@
             color: #80deea; /* A teal/cyan color to signify 'auto' */
         }
 
-        /* --- ADD: Icon for Pocket --- */
-        .fa-bookmark {
-            color: #ef4056; /* Pocket's brand color */
-            font-size: 18px; /* Slightly smaller to fit well */
-        }
-
-        /* --- ADD: Pocket Modal Styles --- */
-        .modal-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0, 0, 0, 0.6);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            z-index: 2000;
-            opacity: 1;
-            transition: opacity 0.3s ease, visibility 0.3s;
-            font-family: 'Inter', sans-serif;
-        }
-
-        .modal-content {
-            background-color: #2a2a2a; /* Dark theme modal */
-            color: white;
-            padding: 24px;
-            border-radius: 12px;
-            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.4);
-            width: 90%;
-            max-width: 450px;
-            transform: scale(1);
-            transition: transform 0.3s ease;
-        }
-
-        /* Styles for when modal is hidden */
-        .modal-hidden {
-            visibility: hidden;
-            opacity: 0;
-            pointer-events: none;
-        }
-
-        .modal-hidden .modal-content {
-            transform: scale(0.9);
-        }
-        
-        /* Light mode support for modal */
-        html:not(.dark) .modal-content {
-            background-color: #ffffff;
-            color: #1a1a1a;
-        }
-        html:not(.dark) .modal-input {
-            background-color: #f0f0f0;
-            color: #1a1a1a;
-            border-color: #d1d1d1;
-        }
-        html:not(.dark) .modal-input::placeholder {
-            color: #777;
-        }
-        html:not(.dark) .modal-close-btn {
-            color: #555;
-        }
-        html:not(.dark) .modal-close-btn:hover {
-            color: #000;
-        }
-
-
-        .modal-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            border-bottom: 1px solid #444;
-            padding-bottom: 16px;
-            margin-bottom: 16px;
-        }
-        
-        html:not(.dark) .modal-header {
-            border-bottom-color: #eee;
-        }
-
-        .modal-header h2 {
-            margin: 0;
-            font-size: 20px;
-            font-weight: 700;
-        }
-
-        .modal-close-btn {
-            background: none;
-            border: none;
-            font-size: 28px;
-            color: #aaa;
-            cursor: pointer;
-            line-height: 1;
-            padding: 0;
-            transition: color 0.2s ease;
-        }
-
-        .modal-close-btn:hover {
-            color: white;
-        }
-        
-        .modal-body .modal-label {
-            font-size: 14px;
-            margin-bottom: 8px;
-            color: #ccc;
-        }
-        html:not(.dark) .modal-body .modal-label {
-            color: #555;
-        }
-
-        .modal-input {
-            width: 100%;
-            padding: 12px;
-            border-radius: 8px;
-            border: 1px solid #555;
-            background-color: #333;
-            color: white;
-            font-size: 16px;
-            margin-bottom: 16px;
-            box-sizing: border-box; /* Ensures padding doesn't affect width */
-            font-family: 'Inter', sans-serif;
-        }
-        
-        .modal-input::placeholder {
-            color: #888;
-        }
-
-        .modal-add-btn {
-            width: 100%;
-            padding: 12px;
-            border: none;
-            border-radius: 8px;
-            background-color: #ef4056; /* Pocket color */
-            color: white;
-            font-size: 16px;
-            font-weight: 700;
-            cursor: pointer;
-            transition: background-color 0.2s ease;
-            font-family: 'Inter', sans-serif;
-        }
-
-        .modal-add-btn:hover {
-            background-color: #d9384c;
-        }
-        /* --- END Modal Styles --- */
-
-
         /* --- MOBILE STYLES --- */
         /* This media query applies styles only on screens 640px wide or smaller */
         @media (max-width: 640px) {
@@ -312,25 +160,7 @@
         <button id="translateBtn" title="Translate"><i class="fa-solid fa-language"></i></button>
         <button id="darkModeToggle" title="Toggle Theme"><i class="fa-solid fa-moon"></i></button>
         <button id="screenshotBtn" title="Screenshot"><i class="fa-solid fa-image"></i></button>
-        <!-- ADD: Pocket Button -->
-        <button id="pocketBtn" title="Add to Pocket"><i class="fa-solid fa-bookmark"></i></button>
     </nav>
-
-    <!-- ADD: Pocket Modal Structure -->
-    <div id="pocketModalOverlay" class="modal-overlay modal-hidden">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h2>Add to Pocket</h2>
-                <button id="closeModalBtn" class="modal-close-btn" title="Close">&times;</button>
-            </div>
-            <div class="modal-body">
-                <p class="modal-label">Save a URL or a note:</p>
-                <input type="text" id="pocketInput" class="modal-input" placeholder="Enter URL or note...">
-                <button id="addPocketItemBtn" class="modal-add-btn">Add Item</button>
-            </div>
-        </div>
-    </div>
-    <!-- End Pocket Modal -->
 
     <!-- 
       The theme.js script below will handle the theme toggle functionality
@@ -378,68 +208,15 @@
             // It will find the button with id 'darkModeToggle' and make it work
             // This call will also trigger the first 'themeChanged' event
             setupThemeToggle();
-
-
-            // --- ADD: Pocket Modal Functionality ---
-            const pocketBtn = document.getElementById('pocketBtn');
-            const modalOverlay = document.getElementById('pocketModalOverlay');
-            const closeModalBtn = document.getElementById('closeModalBtn');
-            const addPocketItemBtn = document.getElementById('addPocketItemBtn');
-            const pocketInput = document.getElementById('pocketInput');
-
-            function showPocketModal() {
-                modalOverlay.classList.remove('modal-hidden');
-                // Optional: focus the input field when modal opens
-                pocketInput.focus();
-            }
-
-            function hidePocketModal() {
-                modalOverlay.classList.add('modal-hidden');
-            }
-
-            // Event Listeners for Pocket Modal
-            if (pocketBtn) {
-                pocketBtn.addEventListener('click', showPocketModal);
-            }
-            if (closeModalBtn) {
-                closeModalBtn.addEventListener('click', hidePocketModal);
-            }
-            
-            // Close modal when clicking on the overlay (outside the content)
-            if (modalOverlay) {
-                modalOverlay.addEventListener('click', (e) => {
-                    // Check if the click is on the overlay itself, not its children
-                    if (e.target === modalOverlay) {
-                        hidePocketModal();
-                    }
-                });
-            }
-
-            if (addPocketItemBtn) {
-                addPocketItemBtn.addEventListener('click', () => {
-                    const item = pocketInput.value.trim();
-                    if (item) {
-                        // In a real app, you'd send this to the Pocket API
-                        showCustomAlert(`'${item}' added to Pocket! (Demo)`);
-                        pocketInput.value = ''; // Clear input
-                        hidePocketModal();
-                    } else {
-                        showCustomAlert('Please enter a URL or note to add.');
-                    }
-                });
-            }
-            // --- END: Pocket Modal Functionality ---
         });
 
 
         // --- Translate Functionality (Placeholder) ---
         const translateBtn = document.getElementById('translateBtn');
-        if (translateBtn) {
-            translateBtn.addEventListener('click', () => {
-                // Using a custom modal instead of alert()
-                showCustomAlert('Translate button clicked! Add your translation logic here.');
-            });
-        }
+        translateBtn.addEventListener('click', () => {
+            // Using a custom modal instead of alert()
+            showCustomAlert('Translate button clicked! Add your translation logic here.');
+        });
 
         // Custom alert function to avoid browser 'alert()'
         function showCustomAlert(message) {
@@ -457,25 +234,17 @@
                 z-index: 2000;
                 font-family: 'Inter', sans-serif;
                 font-size: 14px;
-                transition: opacity 0.5s ease;
             `;
             alertBox.textContent = message;
             document.body.appendChild(alertBox);
 
-            // Fade in
             setTimeout(() => {
-                alertBox.style.opacity = '1';
-            }, 10);
-            
-            // Fade out
-            setTimeout(() => {
+                alertBox.style.transition = 'opacity 0.5s ease';
                 alertBox.style.opacity = '0';
                 setTimeout(() => {
-                    if (document.body.contains(alertBox)) {
-                        document.body.removeChild(alertBox);
-                    }
-                }, 500); // Wait for transition to finish
-            }, 3000); // Show for 3 seconds
+                    document.body.removeChild(alertBox);
+                }, 500);
+            }, 3000);
         }
     </script>
 
