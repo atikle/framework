@@ -92,6 +92,16 @@ window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', () 
 });
 
 
-// --- FIX: Removed the self-initializing DOMContentLoaded listener ---
-// The HTML pages will now be responsible for initialization.
+// 2. Set up the toggle and apply the initial theme once the DOM is ready.
+document.addEventListener('DOMContentLoaded', () => {
+    // Get the saved theme preference from storage
+    const savedTheme = localStorage.getItem('theme') || 'system';
+    
+    // Apply the theme to make sure the body class and button UI are correct
+    applyTheme(savedTheme);
 
+    // Set up the click listener on the button
+    setupThemeToggle();
+});
+
+// --- FIX: Removed the extra closing brace that was here ---
