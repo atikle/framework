@@ -45,16 +45,8 @@ function applyTheme(theme) {
         
         // The title should tell the user what the *next* click will do.
         const nextThemeIndex = (THEMES.indexOf(theme) + 1) % THEMES.length;
-        // Use setAttribute for title, as index.html is also setting it this way
-        themeToggle.setAttribute('title', TITLES[THEMES[nextThemeIndex]]);
+        themeToggle.title = TITLES[THEMES[nextThemeIndex]];
     }
-
-    // --- FIX: Dispatch a custom event ---
-    // This allows index.html's inline script to update the tooltip
-    const event = new CustomEvent('themeChanged', { 
-        detail: { theme: theme } 
-    });
-    document.dispatchEvent(event);
 }
 
 /**
@@ -103,5 +95,3 @@ document.addEventListener('DOMContentLoaded', () => {
     // Set up the click listener on the button
     setupThemeToggle();
 });
-
-// --- FIX: Removed the extra closing brace that was here ---
