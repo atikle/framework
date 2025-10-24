@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            /* Example of using an imported font */
+        }
+
+        .reading-toolbar {
+            position: fixed;
+            bottom: 10px;
+            left: 10px;
+            z-index: 1000; /* Ensures toolbar is on top of other content */
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            background-color: #1a1a1a;
+            padding: 8px;
+            border-radius: 50px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25); /* Replaced undefined variable */
+            width: auto;
+        }
+
+        .reading-toolbar button {
+            background-color: transparent;
+            color: white;
+            border: none;
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        .reading-toolbar button:hover {
+            background-color: #333333;
+        }
+
+        /* Icon for Light Mode */
+        .fa-sun {
+            color: #fdd835; /* A nice yellow for the sun */
+        }
+
+        /* Icon for Dark Mode */
+        .fa-moon {
+            color: #e0e0e0; /* A light grey for the moon */
+        }
+
+        /* Icon for System/Auto Mode */
+        .fa-circle-half-stroke {
+            color: #80deea; /* A teal/cyan color to signify 'auto' */
+        }
+    </style>
+</head>
+
+<body>
+
+    <nav class="reading-toolbar">
+        <button id="translateBtn" title="Translate"><i class="fa-solid fa-language"></i></button>
+        <button id="darkModeToggle" title="Toggle Theme"><i class="fa-solid fa-moon"></i></button>
+        <button id="screenshotBtn" title="Screenshot"><i class="fa-solid fa-image"></i></button>
+    </nav>
+
+    <!-- Add this script block to initialize the toggle on this page -->
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // This function is in theme.js and sets up the toggle switch
+            setupThemeToggle();
+        });
+    </script>
+
+    <script src="https://atikle.github.io/framework/screenshot-module/html2canvas/1.4.1.min.js"></script>
+    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js" integrity="sha512-BNaRQnYJYiPSqHHDb58B0yaPfCu+Wgds8Gp/gU33kqBtgNS4tSPHuGibyoVBL5gI9kDXDCJLAe6IAUCLayD4JQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script> -->
+     
+    <script src="https://atikle.github.io/framework/screenshot-module/script-v1.0.0.js"></script>
+
+    <script src="https://atikle.github.io/connect/framework/universal/theme.js"></script>
+
+    <script>
+        // --- Theme Toggle Functionality ---
+        const themeBtn = document.getElementById('themeBtn');
+        const themeIcon = themeBtn.querySelector('i');
+        
+        themeBtn.addEventListener('click', () => {
+            // This is a placeholder for your actual theme-changing logic
+            document.body.style.backgroundColor = document.body.style.backgroundColor === 'black' ? 'white' : 'black';
+            document.body.style.color = document.body.style.backgroundColor === 'black' ? 'white' : 'black';
+            
+            // Toggle icon between sun and moon
+            if (themeIcon.classList.contains('fa-moon')) {
+                themeIcon.classList.remove('fa-moon');
+                themeIcon.classList.add('fa-sun');
+            } else {
+                themeIcon.classList.remove('fa-sun');
+                themeIcon.classList.add('fa-moon');
+            }
+        });
+
+        // --- Translate Functionality (Placeholder) ---
+        const translateBtn = document.getElementById('translateBtn');
+        translateBtn.addEventListener('click', () => {
+            alert('Translate button clicked! Add your translation logic here.');
+            // Example: Connect to a translation API
+        });
+    </script>
+
+</body>
+
+</html>

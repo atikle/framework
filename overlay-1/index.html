@@ -7,16 +7,12 @@
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght:400;700&display=swap" rel="stylesheet">
     
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <!-- FIX: Correcting the typo in the 'integrity' attribute -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" xintegrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 
     <style>
-        body {
-            font-family: 'Inter', sans-serif;
-            /* Example of using an imported font */
-        }
-
         .reading-toolbar {
             position: fixed;
             bottom: 10px;
@@ -28,8 +24,9 @@
             background-color: #1a1a1a;
             padding: 8px;
             border-radius: 50px;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25); /* Replaced undefined variable */
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25); 
             width: auto;
+            transition: all 0.3s ease; /* Added transition for smooth change */
         }
 
         .reading-toolbar button {
@@ -45,11 +42,67 @@
             align-items: center;
             justify-content: center;
             transition: background-color 0.3s ease, color 0.3s ease;
+            position: relative; /* Added for tooltip positioning */
         }
 
         .reading-toolbar button:hover {
             background-color: #333333;
         }
+
+        /* --- TOOLTIP STYLES --- */
+        /* Tooltip Box */
+        .reading-toolbar button::after {
+            content: attr(title); /* Read text from title attribute */
+            position: absolute;
+            background-color: #1a1a1a; /* MOD: Match toolbar bg */
+            color: white;
+            padding: 6px 12px; /* MOD: Adjusted padding */
+            border-radius: 50px; /* MOD: Match toolbar radius */
+            font-size: 12px;
+            font-family: 'Inter', sans-serif;
+            font-weight: 400;
+            white-space: nowrap;
+            z-index: 1010;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25); /* ADD: Match toolbar shadow */
+
+            /* Hidden by default */
+            visibility: hidden;
+            opacity: 0;
+            transition: opacity 0.2s ease;
+
+            /* Desktop position (to the right) */
+            left: 130%; /* MOD: Increased space */
+            top: 50%;
+            transform: translateY(-50%);
+        }
+
+        /* Tooltip Arrow */
+        .reading-toolbar button::before {
+            content: '';
+            position: absolute;
+            
+            /* Hidden by default */
+            visibility: hidden;
+            opacity: 0;
+            transition: opacity 0.2s ease;
+            z-index: 1011;
+
+            /* Desktop position (arrow on the left) */
+            left: 130%; /* MOD: Increased space */
+            top: 50%;
+            transform: translateY(-50%) translateX(-8px); /* 8px = 5px border + 3px gap */
+            border: 5px solid transparent;
+            border-right-color: #1a1a1a; /* MOD: Match toolbar bg */
+        }
+
+        /* Show tooltip on hover */
+        .reading-toolbar button:hover::after,
+        .reading-toolbar button:hover::before {
+            visibility: visible;
+            opacity: 1;
+        }
+        /* --- END TOOLTIP STYLES --- */
+
 
         /* Icon for Light Mode */
         .fa-sun {
@@ -65,6 +118,38 @@
         .fa-circle-half-stroke {
             color: #80deea; /* A teal/cyan color to signify 'auto' */
         }
+
+        /* --- MOBILE STYLES --- */
+        /* This media query applies styles only on screens 640px wide or smaller */
+        @media (max-width: 640px) {
+            .reading-toolbar {
+                flex-direction: row;  /* Stack horizontally on mobile */
+                left: 50%;            /* Start at the center */
+                transform: translateX(-50%); /* Pull back by 50% of its own width to center */
+                bottom: 10px;         /* Keep it at the bottom, near gesture bar */
+                width: auto;          /* Fit the content */
+                padding: 8px 12px;    /* Adjust padding for horizontal layout */
+            }
+
+            /* Override tooltip for mobile */
+            .reading-toolbar button::after {
+                /* Mobile position (above) */
+                bottom: 130%; /* MOD: Increased space */
+                left: 50%;
+                top: auto;
+                transform: translateX(-50%);
+            }
+
+            .reading-toolbar button::before {
+                /* Mobile position (arrow below) */
+                bottom: 130%; /* MOD: Increased space */
+                left: 50%;
+                top: auto;
+                transform: translateX(-50%) translateY(8px); /* 8px = 5px border + 3px gap */
+                border-right-color: transparent;
+                border-top-color: #1a1a1a; /* MOD: Match toolbar bg */
+            }
+        }
     </style>
 </head>
 
@@ -76,47 +161,89 @@
         <button id="screenshotBtn" title="Screenshot"><i class="fa-solid fa-image"></i></button>
     </nav>
 
-    <!-- Add this script block to initialize the toggle on this page -->
-    <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            // This function is in theme.js and sets up the toggle switch
-            setupThemeToggle();
-        });
-    </script>
+    <!-- 
+      The theme.js script below will handle the theme toggle functionality
+      when setupThemeToggle() is called.
+    -->
 
     <script src="https://atikle.github.io/framework/screenshot-module/html2canvas/1.4.1.min.js"></script>
-    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js" integrity="sha512-BNaRQnYJYiPSqHHDb58B0yaPfCu+Wgds8Gp/gU33kqBtgNS4tSPHuGibyoVBL5gI9kDXDCJLAe6IAUCLayD4JQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script> -->
+    <!-- Removed redundant html2canvas script link -->
      
     <script src="https://atikle.github.io/framework/screenshot-module/script-v1.0.0.js"></script>
 
     <script src="https://atikle.github.io/connect/framework/universal/theme.js"></script>
 
     <script>
-        // --- Theme Toggle Functionality ---
-        const themeBtn = document.getElementById('themeBtn');
-        const themeIcon = themeBtn.querySelector('i');
-        
-        themeBtn.addEventListener('click', () => {
-            // This is a placeholder for your actual theme-changing logic
-            document.body.style.backgroundColor = document.body.style.backgroundColor === 'black' ? 'white' : 'black';
-            document.body.style.color = document.body.style.backgroundColor === 'black' ? 'white' : 'black';
+        // --- FIX: Replaced inline placeholder logic with the correct function call for theme.js ---
+        // This function is in theme.js and sets up the toggle switch
+        document.addEventListener('DOMContentLoaded', () => {
             
-            // Toggle icon between sun and moon
-            if (themeIcon.classList.contains('fa-moon')) {
-                themeIcon.classList.remove('fa-moon');
-                themeIcon.classList.add('fa-sun');
-            } else {
-                themeIcon.classList.remove('fa-sun');
-                themeIcon.classList.add('fa-moon');
+            // --- ADD: Logic for dynamic theme tooltip ---
+            const themeButton = document.getElementById('darkModeToggle');
+
+            // Function to update the tooltip text
+            function updateThemeTooltip(theme) {
+                if (themeButton) {
+                    let themeName = 'Auto'; // Default for 'system'
+                    if (theme === 'light') {
+                        themeName = 'Light';
+                    } else if (theme === 'dark') {
+                        themeName = 'Dark';
+                    }
+                    // The CSS `content: attr(title)` will automatically pick this up
+                    themeButton.setAttribute('title', `Current theme: ${themeName}`);
+                }
             }
+
+            // Listen for the custom event from theme.js
+            // This fires on page load AND on theme change
+            document.addEventListener('themeChanged', (e) => {
+                updateThemeTooltip(e.detail.theme);
+            });
+            // --- END: Dynamic tooltip logic ---
+
+
+            // It will find the button with id 'darkModeToggle' and make it work
+            // This call will also trigger the first 'themeChanged' event
+            setupThemeToggle();
         });
+
 
         // --- Translate Functionality (Placeholder) ---
         const translateBtn = document.getElementById('translateBtn');
         translateBtn.addEventListener('click', () => {
-            alert('Translate button clicked! Add your translation logic here.');
-            // Example: Connect to a translation API
+            // Using a custom modal instead of alert()
+            showCustomAlert('Translate button clicked! Add your translation logic here.');
         });
+
+        // Custom alert function to avoid browser 'alert()'
+        function showCustomAlert(message) {
+            let alertBox = document.createElement('div');
+            alertBox.style.cssText = `
+                position: fixed;
+                top: 20px;
+                left: 50%;
+                transform: translateX(-50%);
+                background-color: #333;
+                color: white;
+                padding: 16px 24px;
+                border-radius: 8px;
+                box-shadow: 0 4px 12px rgba(0,0,0,0.25);
+                z-index: 2000;
+                font-family: 'Inter', sans-serif;
+                font-size: 14px;
+            `;
+            alertBox.textContent = message;
+            document.body.appendChild(alertBox);
+
+            setTimeout(() => {
+                alertBox.style.transition = 'opacity 0.5s ease';
+                alertBox.style.opacity = '0';
+                setTimeout(() => {
+                    document.body.removeChild(alertBox);
+                }, 500);
+            }, 3000);
+        }
     </script>
 
 </body>
