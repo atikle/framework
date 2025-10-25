@@ -46,7 +46,7 @@
 
             --button-background-1: #1877f2;
             --button-background-2: #e4e6eb;
-            --button-background-3: #3d42df; /* FIX: Corrected invalid hex code */
+            --button-background-3: #3d42df;
             --button-text-1: #ffffff;
             --button-text-2: #050505;
             --button-text-3: #ffffff;
@@ -58,7 +58,7 @@
             --pocket-todo-delete-bg: #e74c3c;
         }
 
-        /* This is automatically applied by theme.js */
+        /* MOD: Now controlled by script */
         html.dark {
             --navbar-background-1: #242526;
             --background-1: black;
@@ -220,7 +220,7 @@
             color: #e0e0e0; /* A light grey for the moon */
         }
 
-        /* Icon for System/Auto Mode */
+        /* Icon for System/Auto Mode - NO LONGER USED, but style kept for reference */
         .fa-circle-half-stroke {
             color: #80deea; /* A teal/cyan color to signify 'auto' */
         }
@@ -570,7 +570,7 @@
             /* --- ADD: Full-screen mobile modal --- */
             .modal-content {
                 width: 100%;
-                height: 100%; /* Will be 100% of the 100svh overlay */
+                height: 100%; /* Will be 100% of the 100dvh overlay */
                 max-width: 100%;
                 border-radius: 0;
                 padding: 25px 20px; /* Adjust padding */
@@ -583,9 +583,9 @@
                 justify-content: flex-start;
             }
 
-            /* MOD: Use vh (dynamic viewport height) instead of svh (small viewport height) */
+            /* MOD: Use dvh (dynamic viewport height) for mobile */
             .modal-overlay {
-                height: 100vh;
+                height: 100dvh;
             }
 
             .modal-hidden .modal-content {
@@ -608,6 +608,7 @@
 
     <nav class="reading-toolbar">
         <button id="translateBtn" title="Translate"><i class="fa-solid fa-language"></i></button>
+        <!-- MOD: Icon class will be managed by JS -->
         <button id="darkModeToggle" title="Toggle Theme"><i class="fa-solid fa-moon"></i></button>
         <button id="screenshotBtn" title="Screenshot"><i class="fa-solid fa-image"></i></button>
         <button id="pocketBtn" title="Add to Pocket"><i class="fa-solid fa-bookmark"></i></button>
@@ -651,10 +652,12 @@
 
     <script src="https://atikle.github.io/framework/screenshot-module/html2canvas/1.4.1.min.js"></script>
     <script src="https://atikle.github.io/framework/screenshot-module/script-v1.0.0.js"></script>
-    <script src="https://atikle.github.io/framework/universal/theme.js"></script>
+    <!-- MOD: Removed theme.js script -->
+    <!-- <script src="https://atikle.github.io/framework/universal/theme.js"></script> -->
 
     <!-- 
       MOD: Script updated with confirmation, animations, and bug fixes.
+      MOD: Replaced theme.js logic with simple toggle.
     -->
     <script>
         // --- Custom Alert Function (must be defined globally) ---
@@ -696,23 +699,43 @@
 
         // --- Main App Logic ---
             
-        // --- Theme Toggle Logic (existing) ---
-        const themeButton = document.getElementById('darkModeToggle');
-        function updateThemeTooltip(theme) {
-            if (themeButton) {
-                let themeName = 'Auto'; // Default for 'system'
-                if (theme === 'light') {
-                    themeName = 'Light';
-                } else if (theme === 'dark') {
-                    themeName = 'Dark';
+        // --- ADD: Simplified Theme Toggle Logic ---
+        const themeToggleButton = document.getElementById('darkModeToggle');
+        if (themeToggleButton) {
+            const themeIcon = themeToggleButton.querySelector('i');
+
+            // Function to apply the theme and update the icon
+            function applyTheme(theme) {
+                if (theme === 'dark') {
+                    document.documentElement.classList.add('dark');
+                    themeIcon.classList.remove('fa-sun');
+                    themeIcon.classList.add('fa-moon');
+                    themeToggleButton.setAttribute('title', 'Switch to Light Mode');
+                } else {
+                    document.documentElement.classList.remove('dark');
+                    themeIcon.classList.remove('fa-moon');
+                    themeIcon.classList.add('fa-sun');
+                    themeToggleButton.setAttribute('title', 'Switch to Dark Mode');
                 }
-                themeButton.setAttribute('title', `Current theme: ${themeName}`);
+                localStorage.setItem('theme', theme);
             }
+
+            // On load, check localStorage
+            let currentTheme = localStorage.getItem('theme');
+            if (!currentTheme) {
+                // Default to light if no setting
+                currentTheme = 'light'; 
+            }
+            applyTheme(currentTheme);
+
+            // Add click listener to toggle
+            themeToggleButton.addEventListener('click', () => {
+                let theme = document.documentElement.classList.contains('dark') ? 'light' : 'dark';
+                applyTheme(theme);
+            });
         }
-        document.addEventListener('themeChanged', (e) => {
-            updateThemeTooltip(e.detail.theme);
-        });
-        setupThemeToggle();
+        // --- END: Simplified Theme Toggle Logic ---
+
 
         // --- Pocket Modal Functionality (Refactored for new UI) ---
         const readingToolbar = document.querySelector('.reading-toolbar');
@@ -949,5 +972,4 @@
 </body>
 
 </html>
-
 
