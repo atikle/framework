@@ -100,6 +100,11 @@
             color: var(--text-color-1);
         }
 
+        /* ADD: Class to stop body scroll */
+        html.modal-open {
+            overflow: hidden;
+        }
+
         .reading-toolbar {
             position: fixed;
             bottom: 10px;
@@ -704,6 +709,7 @@
         setupThemeToggle();
 
         // --- Pocket Modal Functionality (Refactored for new UI) ---
+        const readingToolbar = document.querySelector('.reading-toolbar');
         const pocketBtn = document.getElementById('pocketBtn');
         const modalOverlay = document.getElementById('pocketModalOverlay');
         const closeModalBtn = document.getElementById('closeModalBtn');
@@ -778,6 +784,8 @@
 
         function showPocketModal() {
             modalOverlay.classList.remove('modal-hidden');
+            document.documentElement.classList.add('modal-open'); // ADD: Stop body scroll
+            if (readingToolbar) readingToolbar.style.display = 'none'; // ADD: Hide toolbar
             renderPocketItems(); // Load and display items when modal opens
             pocketInput.focus();
         }
@@ -786,6 +794,8 @@
             // Check if modal is already hidden to prevent multiple triggers
             if (!modalOverlay.classList.contains('modal-hidden')) {
                 modalOverlay.classList.add('modal-hidden');
+                document.documentElement.classList.remove('modal-open'); // ADD: Re-enable body scroll
+                if (readingToolbar) readingToolbar.style.display = ''; // ADD: Show toolbar
             }
         }
 
@@ -933,6 +943,7 @@
 </body>
 
 </html>
+
 
 
 
