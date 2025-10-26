@@ -101,10 +101,10 @@
             color: var(--text-color-1);
         }
 
-        /* ADD: Class to stop body scroll */
-        html.modal-open {
+        /* ADD: Class to stop body scroll (This is now handled in the mobile media query) */
+        /* html.modal-open {
             overflow: hidden;
-        }
+        } */
 
         .reading-toolbar {
             position: fixed;
@@ -562,6 +562,11 @@
 
         /* --- MOBILE STYLES --- */
         @media (max-width: 640px) {
+            /* ADD: Stop body scroll on mobile when modal is open */
+            html.modal-open {
+                overflow: hidden;
+            }
+
             .reading-toolbar {
                 flex-direction: row;
                 left: 50%;
@@ -625,16 +630,23 @@
                 max-height: none; /* Remove max-height */
             }
 
+            /* ADD: Prevent input field from shrinking */
+            .pocket-modal-inputField {
+                flex-shrink: 0;
+            }
+
             /* MOD: Explicitly add header/footer styles for mobile */
             /* (These rules also now inherit the border-top/bottom) */
             .modal-content header {
                 padding-bottom: 15px;
                 border-bottom: 1px solid var(--background-4);
+                flex-shrink: 0; /* ADD: Prevent shrinking */
             }
             .pocket-modal-footer {
                 margin-top: 15px;
                 padding-top: 15px;
                 border-top: 1px solid var(--background-4);
+                flex-shrink: 0; /* ADD: Prevent shrinking */
             }
             /* --- END: Full-screen mobile modal --- */
         }
@@ -1096,6 +1108,7 @@
 </body>
 
 </html>
+
 
 
 
