@@ -9,7 +9,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap" rel="stylesheet">
     
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" xintegrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 
     <style>
         /* ADD: Global box-sizing */
@@ -255,9 +255,8 @@
             background-color: var(--card-background-1);
             color: var(--text-color-1);
             padding: 25px;
-            border-radius: 8px; /* MOD: Softer corners */
-            box-shadow: var(--shadow-1); /* MOD: Softer shadow */
-            border: 1px solid var(--background-4); /* ADD: Subtle border */
+            border-radius: 5px; /* Match Todo app */
+            box-shadow: var(--shadow-2);
             width: 90%;
             max-width: 400px; /* Match Todo app */
             transform: scale(1);
@@ -284,13 +283,10 @@
             align-items: center;
             font-size: 30px;
             font-weight: 600;
-            /* ADD: Separator line */
-            padding-bottom: 15px;
-            border-bottom: 1px solid var(--background-4);
         }
- 
+
         .modal-content header h2 {
-            font-size: 24px; /* MOD: Reduced size */
+            font-size: 30px;
             font-weight: 600;
             margin: 0;
             display: flex;
@@ -308,23 +304,15 @@
             cursor: pointer;
             line-height: 1;
             padding: 0;
-            /* ADD: Make it a round button */
-            width: 32px; 
-            height: 32px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: color var(--transition-speed-fast) var(--ease-out-quad), background-color var(--transition-speed-fast) var(--ease-out-quad);
+            transition: color var(--transition-speed-fast) var(--ease-out-quad);
         }
         .modal-close-btn:hover {
             color: var(--text-color-1);
-            background-color: var(--hover-overlay); /* ADD: Hover background */
         }
- 
+
         /* Input field style */
         .pocket-modal-inputField {
-            margin: 25px 0 20px 0; /* MOD: Adjusted margin */
+            margin: 20px 0;
             width: 100%;
             display: flex;
             height: 45px;
@@ -424,10 +412,9 @@
             /* MOD: Added background/color transition for flash effect */
             transition: opacity var(--transition-speed-normal) var(--ease-out-quad), 
                         transform var(--transition-speed-normal) var(--ease-out-quad),
-                        background-color var(--transition-speed-fast) var(--ease-out-quad), 
-                        color 0.1s ease;
+                        background-color 0.1s ease, color 0.1s ease;
         }
- 
+
         /* ADD: Keyframes for item add animation */
         @keyframes fadeInSlideUp {
             from {
@@ -470,13 +457,8 @@
             opacity: 0;
             transform: scale(0.95);
         }
- 
-        /* ADD: Hover effect for list items */
-        .pocket-modal-todoList li:not(.pocket-empty-message):hover {
-            background: var(--background-4); /* Subtle hover effect */
-        }
- 
- 
+
+
         /* Delete icon style */
         .pocket-modal-todoList li .pocket-delete-icon {
             position: absolute;
@@ -508,13 +490,10 @@
         .pocket-modal-footer {
             display: flex;
             width: 100%;
-            margin-top: 15px; /* MOD: Adjusted margin */
+            margin-top: 20px;
             align-items: center;
             justify-content: space-between;
             color: var(--text-color-1); /* Adapted theme */
-            /* ADD: Separator line */
-            padding-top: 15px;
-            border-top: 1px solid var(--background-4);
         }
         
         /* ADD: Styles for clear confirmation */
@@ -587,13 +566,12 @@
                 border-top-color: var(--card-background-1);
             }
             
-            /* --- MOD: Restoring Full-screen mobile modal --- */
+            /* --- ADD: Full-screen mobile modal --- */
             .modal-content {
                 width: 100%;
                 height: 100%; /* Will be 100% of the 100dvh overlay */
                 max-width: 100%;
                 border-radius: 0;
-                border: none; /* ADD: Remove the border for full-screen mobile */
                 padding: 25px 20px; /* Adjust padding */
                 /* ADD: Respect safe areas (notches, home bars) */
                 padding-top: calc(25px + env(safe-area-inset-top));
@@ -602,10 +580,6 @@
                 display: flex;
                 flex-direction: column;
                 justify-content: flex-start;
-
-                /* MOD: Add mobile-specific transform and transition for slide */
-                transform: translateY(0);
-                transition: transform var(--transition-speed-slow) var(--ease-in-out-quint);
             }
 
             /* MOD: Use dvh (dynamic viewport height) for mobile */
@@ -624,98 +598,7 @@
                 min-height: 100px; /* Ensure it has some height */
                 max-height: none; /* Remove max-height */
             }
-
-            /* MOD: Explicitly add header/footer styles for mobile */
-            /* (These rules also now inherit the border-top/bottom) */
-            .modal-content header {
-                padding-bottom: 15px;
-                border-bottom: 1px solid var(--background-4);
-            }
-            .pocket-modal-footer {
-                margin-top: 15px;
-                padding-top: 15px;
-                border-top: 1px solid var(--background-4);
-            }
             /* --- END: Full-screen mobile modal --- */
-        }
-
-        /* --- ADD: DESKTOP-ONLY STYLES --- */
-        @media (min-width: 641px) {
-            /* Override modal overlay to be a non-blocking container */
-            .modal-overlay {
-                /* Position it relative to the toolbar */
-                /* Toolbar is at left: 10px, bottom: 10px */
-                /* Toolbar width is approx 51px (8+35+8) */
-                left: calc(10px + 51px + 10px); /* toolbar.left + toolbar.width + gap */
-                bottom: 10px; /* Align with toolbar bottom */
-
-                /* Remove full-screen overlay properties */
-                top: auto; /* Override top: 0 */
-                width: auto; /* Override width: 100% */
-                height: auto; /* Override height: 100% */
-                background-color: transparent; /* No more scrim */
-                
-                /* Remove centering */
-                display: block; /* Override flex */
-                align-items: normal; /* Override center */
-                justify-content: normal; /* Override center */
-                
-                /* Allow clicks to pass through overlay, but not when hidden by JS */
-                /* pointer-events: none; - Handled by .modal-hidden */
-            }
-
-            /* The modal content is now the "box" */
-            .modal-content {
-                /* Re-enable pointer events for the box itself */
-                pointer-events: auto; 
-                
-                /* Set a defined size */
-                width: 350px;
-                max-width: 350px; /* Override 400px */
-                height: 500px;
-                max-height: 75vh; /* Don't let it be too tall */
-                
-                /* Restore/ensure properties overridden by mobile */
-                border-radius: 8px; /* MOD: Changed from 5px */
-                padding: 25px;
-
-                /* Ensure flex layout for footer */
-                display: flex;
-                flex-direction: column;
-
-                /* New transform for animation */
-                transform-origin: bottom left;
-                transition: transform var(--transition-speed-normal) var(--ease-in-out-quint), 
-                            opacity var(--transition-speed-normal) var(--ease-in-out-quint);
-            }
-            
-            /* Override .modal-hidden behavior for desktop */
-            .modal-overlay.modal-hidden .modal-content {
-                /* Override the default scale(0.95) */
-                transform: scale(0.9) translateY(20px); /* Fly out towards bottom left */
-                opacity: 0;
-            }
-
-            /* Make the list scrollable within the fixed height */
-            .pocket-modal-todoList {
-                flex-grow: 1; /* Fill available space */
-                min-height: 100px; /* Min height */
-                max-height: none; /* Remove default max-height, let flex-grow work */
-                overflow-y: auto; /* Ensure it's scrollable */
-            }
-
-            /* --- Tooltip styles --- */
-            /* MOD: Re-enable tooltips on desktop */
-            .reading-toolbar button::after,
-            .reading-toolbar button::before {
-                display: block; /* Show the tooltip elements */
-            }
-
-            .reading-toolbar button:hover::after,
-            .reading-toolbar button:hover::before {
-                visibility: visible;
-                opacity: 1;
-            }
         }
     </style>
 </head>
@@ -930,12 +813,7 @@
         function showPocketModal() {
             modalOverlay.classList.remove('modal-hidden');
             document.documentElement.classList.add('modal-open'); // ADD: Stop body scroll
-            
-            // MOD: Only hide toolbar on mobile
-            if (readingToolbar && window.innerWidth < 641) { 
-                readingToolbar.style.display = 'none'; // Hide toolbar on mobile
-            }
-
+            if (readingToolbar) readingToolbar.style.display = 'none'; // ADD: Hide toolbar
             renderPocketItems(); // Load and display items when modal opens
             pocketInput.focus();
         }
@@ -958,9 +836,6 @@
         }
         if (modalOverlay) {
             modalOverlay.addEventListener('click', (e) => {
-                // MOD: Check if the click is on the overlay *and* we are in mobile view
-                // On desktop, the overlay has no background and pointer-events: none,
-                // so this will only trigger on the mobile scrim.
                 if (e.target === modalOverlay) {
                     hidePocketModal();
                 }
@@ -1096,6 +971,4 @@
 </body>
 
 </html>
-
-
 
