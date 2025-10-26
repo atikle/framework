@@ -950,11 +950,25 @@
         // Function to get items from localStorage
         function getPocketItems() {
             const itemsJson = localStorage.getItem(POCKET_STORAGE_KEY);
-            if (itemsJson == null) {
-                return []; // Return a blank array if no data
-            } else {
-                return JSON.parse(itemsJson); // Parse the JSON string
+            let items = [];
+            if (itemsJson) {
+                items = JSON.parse(itemsJson);
             }
+
+            // --- ADD: Data Migration ---
+            // Check if data is in the old format (array of strings)
+            if (items.length > 0 && typeof items[0] === 'string') {
+                items = items.map(itemText => {
+                    return {
+                        text: itemText,
+                        dateAdded: new Date().toISOString() // Assign current date as fallback
+                    };
+                });
+                savePocketItems(items); // Re-save in new format
+            }
+            // --- END: Data Migration ---
+
+            return items;
         }
 
         // Function to save items to localStorage
@@ -983,9 +997,11 @@
             } else {
                 // MOD: Removed items.sort() - this fixes the delete bug
                 let newLiTag = "";
-                items.forEach((itemText, index) => {
+                items.forEach((itemObj, index) => {
                     // MOD: Wrap text in span for better styling/ellipsis
-                    newLiTag += `<li><span class="pocket-item-text">${itemText}</span><span class="pocket-delete-icon" data-index="${index}" title="Delete"><i class="fas fa-trash"></i></span></li>`;
+                    // MOD: Read from itemObj.text
+                    const safeText = itemObj.text.replace(/</g, "&lt;").replace(/>/g, "&gt;");
+                    newLiTag += `<li><span class="pocket-item-text">${safeText}</span><span class="pocket-delete-icon" data-index="${index}" title="Delete"><i class="fas fa-trash"></i></span></li>`;
                 });
                 pocketItemsListContainer.innerHTML = newLiTag;
             }
@@ -1065,11 +1081,18 @@
         // MOD: Add button click handler
         if (addPocketItemBtn) {
             addPocketItemBtn.addEventListener('click', () => {
-                const item = pocketInput.value.trim();
-                if (item) {
+                const itemText = pocketInput.value.trim();
+                if (itemText) {
                     try {
                         const currentItems = getPocketItems(); // Get existing items
-                        currentItems.push(item); // Add the new item
+                        
+                        // MOD: Save as an object
+                        const newItem = {
+                            text: itemText,
+                            dateAdded: new Date().toISOString()
+                        };
+                        currentItems.push(newItem); // Add the new item
+                        
                         savePocketItems(currentItems); // Save the updated list
                         
                         pocketInput.value = ''; // Clear input
@@ -1179,6 +1202,7 @@
 </body>
 
 </html>
+
 
 
 
