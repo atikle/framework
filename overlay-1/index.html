@@ -322,6 +322,36 @@
             background-color: var(--hover-overlay); /* ADD: Hover background */
         }
  
+        /* --- ADD: Styles for new header buttons --- */
+        .modal-header-controls {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .modal-open-app-btn {
+            background: none;
+            border: none;
+            font-size: 18px; /* Slightly smaller than close 'X' */
+            font-weight: 300;
+            color: var(--text-color-2);
+            cursor: pointer;
+            line-height: 1;
+            padding: 0;
+            width: 32px; 
+            height: 32px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: color var(--transition-speed-fast) var(--ease-out-quad), background-color var(--transition-speed-fast) var(--ease-out-quad);
+        }
+        .modal-open-app-btn:hover {
+            color: var(--text-color-1);
+            background-color: var(--hover-overlay);
+        }
+        /* --- END: Styles for new header buttons --- */
+
         /* Input field style */
         .pocket-modal-inputField {
             margin: 25px 0 20px 0; /* MOD: Adjusted margin */
@@ -517,6 +547,26 @@
             border-top: 1px solid var(--background-4);
         }
         
+        /* ADD: Style for the new full-app link */
+        .pocket-modal-footer a.pocket-app-link {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 32px;
+            height: 32px;
+            font-size: 14px;
+            border-radius: 50%;
+            text-decoration: none;
+            color: var(--text-color-2);
+            background-color: var(--button-background-2);
+            transition: all var(--transition-speed-fast) var(--ease-out-quad);
+        }
+        .pocket-modal-footer a.pocket-app-link:hover {
+            background-color: var(--hover-overlay);
+            color: var(--text-color-1);
+        }
+
+
         /* ADD: Styles for clear confirmation */
         .pocket-confirm-clear {
             font-size: 14px;
@@ -748,7 +798,13 @@
             
             <header>
                 <h2><i class="fa-solid fa-bookmark" style="color: #ef4056;"></i>&nbsp;My Pocket</h2>
-                <button id="closeModalBtn" class="modal-close-btn" title="Close">&times;</button>
+                <!-- ADD: Wrapper for header controls -->
+                <div class="modal-header-controls">
+                    <a href="pocket_app.html" target="_blank" class="modal-open-app-btn" title="Open Full App">
+                        <i class="fa-solid fa-arrow-up-right-from-square"></i>
+                    </a>
+                    <button id="closeModalBtn" class="modal-close-btn" title="Close">&times;</button>
+                </div>
             </header>
 
             <div class="pocket-modal-inputField">
@@ -769,6 +825,11 @@
                     <a id="pocketConfirmYes" class="confirm-yes">Yes</a> / 
                     <a id="pocketConfirmNo">No</a>
                 </span>
+
+                <!-- ADD: New button to open full app -->
+                <a id="openFullAppBtn" href="pocket_app.html" target="_blank" title="Open full app" class="pocket-app-link">
+                    <i class="fa-solid fa-arrow-up-right-from-square"></i>
+                </a>
 
                 <button id="clearPocketBtn">Clear All</button>
             </div>
@@ -941,7 +1002,10 @@
 
         function showPocketModal() {
             modalOverlay.classList.remove('modal-hidden');
-            document.documentElement.classList.add('modal-open'); // ADD: Stop body scroll
+            // MOD: Only stop scroll on mobile
+            if (window.innerWidth < 641) {
+                document.documentElement.classList.add('modal-open');
+            }
             
             // MOD: Only hide toolbar on mobile
             if (readingToolbar && window.innerWidth < 641) { 
@@ -956,7 +1020,7 @@
             // Check if modal is already hidden to prevent multiple triggers
             if (!modalOverlay.classList.contains('modal-hidden')) {
                 modalOverlay.classList.add('modal-hidden');
-                document.documentElement.classList.remove('modal-open'); // ADD: Re-enable body scroll
+                document.documentElement.classList.remove('modal-open'); // Re-enable body scroll (will only be set on mobile)
                 if (readingToolbar) readingToolbar.style.display = ''; // ADD: Show toolbar
             }
         }
@@ -1095,6 +1159,13 @@
             }
         });
 
+        // ADD: Listen for changes from other tabs/windows
+        window.addEventListener('storage', (e) => {
+            if (e.key === POCKET_STORAGE_KEY) {
+                renderPocketItems();
+            }
+        });
+
         // --- Translate Functionality (existing) ---
         const translateBtn = document.getElementById('translateBtn');
         if (translateBtn) {
@@ -1108,7 +1179,5 @@
 </body>
 
 </html>
-
-
 
 
