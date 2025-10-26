@@ -1059,24 +1059,32 @@
             });
         }
 
-        // ADD: Event listener for input field to activate button
+        // --- FIX: Refactored input event listeners ---
         if(pocketInput) {
-            pocketInput.onkeyup = (e) => {
-                let userEnteredValue = pocketInput.value; //getting user entered value
-                
-                // ADD: Handle Enter key
-                if (e.key === "Enter" && userEnteredValue.trim() != 0) {
-                    addPocketItemBtn.click(); // Trigger the add button click
-                    return; // Stop further execution
-                }
-
+            // This function handles enabling/disabling the button
+            const toggleAddButtonState = () => {
+                let userEnteredValue = pocketInput.value;
                 if(userEnteredValue.trim() != 0){ //if the user value isn't only spaces
                     addPocketItemBtn.classList.add("active"); //active the add button
                 } else {
                     addPocketItemBtn.classList.remove("active"); //unactive the add button
                 }
+            };
+
+            // Use 'oninput' to catch all value changes (paste, cut, typing)
+            pocketInput.oninput = toggleAddButtonState;
+
+            // Use 'onkeyup' specifically for the 'Enter' key press
+            pocketInput.onkeyup = (e) => {
+                if (e.key === "Enter") {
+                    let userEnteredValue = pocketInput.value;
+                    if (userEnteredValue.trim() != 0) {
+                        addPocketItemBtn.click(); // Trigger the add button click
+                    }
+                }
             }
         }
+        // --- END FIX ---
 
         // MOD: Add button click handler
         if (addPocketItemBtn) {
@@ -1202,7 +1210,3 @@
 </body>
 
 </html>
-
-
-
-
