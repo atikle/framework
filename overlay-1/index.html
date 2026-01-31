@@ -101,25 +101,25 @@
             color: var(--text-color-1);
         }
 
-        /* --- MODERNIZED READING TOOLBAR --- */
+        /* --- MODERNIZED READING TOOLBAR (Sleek Version) --- */
         .reading-toolbar {
             position: fixed;
             z-index: 1000;
             display: flex;
-            gap: 12px; /* More breathing room between icons */
+            gap: 8px; /* Tighter gap */
             
             /* Glassmorphism Base */
-            background-color: rgba(255, 255, 255, 0.75); /* Semi-transparent white */
-            backdrop-filter: blur(12px) saturate(180%); /* The "Frosted" effect */
+            background-color: rgba(255, 255, 255, 0.75);
+            backdrop-filter: blur(12px) saturate(180%);
             -webkit-backdrop-filter: blur(12px) saturate(180%);
             
             /* Modern Border & Shadow */
-            padding: 10px; /* Slightly larger pill */
+            padding: 5px; /* Minimal padding */
             border-radius: 50px;
-            border: 1px solid rgba(255, 255, 255, 0.3); /* Subtle glass border */
+            border: 1px solid rgba(255, 255, 255, 0.3);
             box-shadow: 
                 0 4px 24px -1px rgba(0, 0, 0, 0.1), 
-                0 0 0 1px rgba(0, 0, 0, 0.02); /* Multi-layered shadow for depth */
+                0 0 0 1px rgba(0, 0, 0, 0.02);
 
             transition: all var(--transition-speed-normal) var(--ease-out-quad);
             
@@ -132,8 +132,8 @@
 
         /* Dark Mode Glassmorphism */
         html.dark .reading-toolbar {
-            background-color: rgba(36, 37, 38, 0.70); /* Semi-transparent dark */
-            border: 1px solid rgba(255, 255, 255, 0.08); /* Subtle white border for contrast */
+            background-color: rgba(36, 37, 38, 0.70);
+            border: 1px solid rgba(255, 255, 255, 0.08);
             box-shadow: 0 4px 24px -1px rgba(0, 0, 0, 0.4);
         }
 
@@ -142,11 +142,11 @@
             background-color: transparent;
             color: var(--text-color-2);
             border: none;
-            width: 40px; /* Larger touch target */
-            height: 40px;
+            width: 35px; /* Smaller, sleeker buttons */
+            height: 35px;
             border-radius: 50%;
             cursor: pointer;
-            font-size: 18px;
+            font-size: 16px; /* Slightly refined icon size */
             display: flex;
             align-items: center;
             justify-content: center;
@@ -157,18 +157,18 @@
             transition: 
                 color 0.2s ease, 
                 background-color 0.2s ease, 
-                transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1); /* Springy effect */
+                transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
         }
 
         /* Hover Effects */
         .reading-toolbar button:hover {
             background-color: var(--hover-overlay);
             color: var(--text-color-1);
-            transform: scale(1.15); /* Subtle pop on hover */
+            transform: scale(1.1); /* Subtle pop */
         }
 
         .reading-toolbar button:active {
-            transform: scale(0.95); /* Click press effect */
+            transform: scale(0.95);
         }
 
         /* --- MODERN TOOLTIPS (Desktop Only) --- */
@@ -177,27 +177,27 @@
             position: absolute;
             
             /* Glassy Tooltip */
-            background-color: var(--card-background-1); /* Solid back for readability */
+            background-color: var(--card-background-1);
             color: var(--text-color-1);
             padding: 6px 14px;
-            border-radius: 8px; /* Slightly squarer than pill for contrast */
+            border-radius: 8px;
             font-size: 12px;
             font-weight: 600;
             white-space: nowrap;
-            pointer-events: none; /* Let clicks pass through */
+            pointer-events: none;
             z-index: 1010;
             box-shadow: var(--shadow-2);
-            border: 1px solid var(--background-4); /* Add border for definition */
+            border: 1px solid var(--background-4);
 
             /* Animation States */
             opacity: 0;
-            transform: translateY(-50%) translateX(10px); /* Start slightly offset */
+            transform: translateY(-50%) translateX(10px);
             transition: opacity 0.2s ease, transform 0.2s ease;
             
             /* Position */
             left: 140%; 
             top: 50%;
-            display: none; /* Hidden by default */
+            display: none;
         }
 
         /* Desktop: Show tooltips on hover */
@@ -205,7 +205,7 @@
             .reading-toolbar button:hover::after {
                 display: block;
                 opacity: 1;
-                transform: translateY(-50%) translateX(0); /* Slide in */
+                transform: translateY(-50%) translateX(0);
             }
         }
         /* --- END TOOLBAR --- */
@@ -624,7 +624,7 @@
                 /* Add support for iPhone Home Bar / Safe Area */
                 bottom: calc(20px + env(safe-area-inset-bottom)); 
                 
-                padding: 8px 16px; /* Wider padding on sides */
+                padding: 6px 12px; /* MOD: Reduced padding for sleekness */
                 width: auto;
                 max-width: 90%; /* Prevent overflow on tiny screens */
             }
@@ -698,8 +698,8 @@
             /* Override modal overlay to be a non-blocking container */
             .modal-overlay {
                 /* Align relative to the new Modern Toolbar */
-                /* Toolbar is left: 30px + Width approx 62px + Gap 15px */
-                left: 105px; 
+                /* Toolbar is left: 30px + Width approx 47px + Gap 15px */
+                left: 92px; 
                 bottom: 30px; /* Match toolbar bottom */
 
                 /* Remove full-screen overlay properties */
