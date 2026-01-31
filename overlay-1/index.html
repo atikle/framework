@@ -9,7 +9,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap" rel="stylesheet">
     
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" xintegrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 
     <style>
         /* ADD: Global box-sizing */
@@ -101,112 +101,114 @@
             color: var(--text-color-1);
         }
 
-        /* ADD: Class to stop body scroll (This is now handled in the mobile media query) */
-        /* html.modal-open {
-            overflow: hidden;
-        } */
-
+        /* --- MODERNIZED READING TOOLBAR --- */
         .reading-toolbar {
             position: fixed;
-            bottom: 10px;
-            left: 10px;
-            z-index: 1000; /* Ensures toolbar is on top of other content */
+            z-index: 1000;
             display: flex;
-            flex-direction: column;
-            gap: 8px;
-            /* MOD: Use theme variables */
-            background-color: var(--card-background-1);
-            padding: 8px;
+            gap: 12px; /* More breathing room between icons */
+            
+            /* Glassmorphism Base */
+            background-color: rgba(255, 255, 255, 0.75); /* Semi-transparent white */
+            backdrop-filter: blur(12px) saturate(180%); /* The "Frosted" effect */
+            -webkit-backdrop-filter: blur(12px) saturate(180%);
+            
+            /* Modern Border & Shadow */
+            padding: 10px; /* Slightly larger pill */
             border-radius: 50px;
-            box-shadow: var(--shadow-2); 
+            border: 1px solid rgba(255, 255, 255, 0.3); /* Subtle glass border */
+            box-shadow: 
+                0 4px 24px -1px rgba(0, 0, 0, 0.1), 
+                0 0 0 1px rgba(0, 0, 0, 0.02); /* Multi-layered shadow for depth */
+
+            transition: all var(--transition-speed-normal) var(--ease-out-quad);
+            
+            /* Desktop Position: Floating Bottom Left */
+            flex-direction: column;
+            bottom: 30px;
+            left: 30px;
             width: auto;
-            transition: all var(--transition-speed-normal) var(--ease-out-quad); /* MOD: Use theme variables */
         }
 
+        /* Dark Mode Glassmorphism */
+        html.dark .reading-toolbar {
+            background-color: rgba(36, 37, 38, 0.70); /* Semi-transparent dark */
+            border: 1px solid rgba(255, 255, 255, 0.08); /* Subtle white border for contrast */
+            box-shadow: 0 4px 24px -1px rgba(0, 0, 0, 0.4);
+        }
+
+        /* Buttons */
         .reading-toolbar button {
             background-color: transparent;
-            /* MOD: Use theme variables */
             color: var(--text-color-2);
             border: none;
-            width: 35px;
-            height: 35px;
+            width: 40px; /* Larger touch target */
+            height: 40px;
             border-radius: 50%;
             cursor: pointer;
-            font-size: 20px;
+            font-size: 18px;
             display: flex;
             align-items: center;
             justify-content: center;
-            /* MOD: Use theme variables */
-            transition: background-color var(--transition-speed-normal) var(--ease-out-quad), color var(--transition-speed-normal) var(--ease-out-quad);
-            position: relative; /* Added for tooltip positioning */
-            /* ADD: Prevent text selection on tap */
+            position: relative;
             user-select: none;
+            
+            /* Smooth Color & Scale Transition */
+            transition: 
+                color 0.2s ease, 
+                background-color 0.2s ease, 
+                transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1); /* Springy effect */
         }
 
+        /* Hover Effects */
         .reading-toolbar button:hover {
-            /* MOD: Use theme variables */
             background-color: var(--hover-overlay);
-        }
-
-        /* --- TOOLTIP STYLES --- */
-        /* MOD: Set display to none to hide tooltips */
-        .reading-toolbar button::after {
-            display: none;
-            content: attr(title); /* Read text from title attribute */
-            position: absolute;
-            /* MOD: Use theme variables */
-            background-color: var(--card-background-1);
             color: var(--text-color-1);
-            padding: 6px 12px;
-            border-radius: 50px;
-            font-size: 12px;
-            font-family: 'Inter', sans-serif;
-            font-weight: 400;
-            white-space: nowrap;
-            z-index: 1010;
-            box-shadow: var(--shadow-2); /* MOD: Use theme variables */
-
-            /* Hidden by default */
-            visibility: hidden;
-            opacity: 0;
-            /* MOD: Use theme variables */
-            transition: opacity var(--transition-speed-fast) var(--ease-out-quad);
-
-            /* Desktop position (to the right) */
-            left: 130%; 
-            top: 50%;
-            transform: translateY(-50%);
+            transform: scale(1.15); /* Subtle pop on hover */
         }
 
-        /* MOD: Set display to none to hide tooltips */
-        .reading-toolbar button::before {
-            display: none;
-            content: '';
+        .reading-toolbar button:active {
+            transform: scale(0.95); /* Click press effect */
+        }
+
+        /* --- MODERN TOOLTIPS (Desktop Only) --- */
+        .reading-toolbar button::after {
+            content: attr(title);
             position: absolute;
             
-            /* Hidden by default */
-            visibility: hidden;
+            /* Glassy Tooltip */
+            background-color: var(--card-background-1); /* Solid back for readability */
+            color: var(--text-color-1);
+            padding: 6px 14px;
+            border-radius: 8px; /* Slightly squarer than pill for contrast */
+            font-size: 12px;
+            font-weight: 600;
+            white-space: nowrap;
+            pointer-events: none; /* Let clicks pass through */
+            z-index: 1010;
+            box-shadow: var(--shadow-2);
+            border: 1px solid var(--background-4); /* Add border for definition */
+
+            /* Animation States */
             opacity: 0;
-            /* MOD: Use theme variables */
-            transition: opacity var(--transition-speed-fast) var(--ease-out-quad);
-            z-index: 1011;
-
-            /* Desktop position (arrow on the left) */
-            left: 130%;
+            transform: translateY(-50%) translateX(10px); /* Start slightly offset */
+            transition: opacity 0.2s ease, transform 0.2s ease;
+            
+            /* Position */
+            left: 140%; 
             top: 50%;
-            transform: translateY(-50%) translateX(-8px); /* 8px = 5px border + 3px gap */
-            border: 5px solid transparent;
-            /* MOD: Use theme variables */
-            border-right-color: var(--card-background-1);
+            display: none; /* Hidden by default */
         }
 
-        /* FIX: Removed empty rule that caused linter warnings */
-        /*
-        .reading-toolbar button:hover::after,
-        .reading-toolbar button:hover::before {
+        /* Desktop: Show tooltips on hover */
+        @media (min-width: 641px) {
+            .reading-toolbar button:hover::after {
+                display: block;
+                opacity: 1;
+                transform: translateY(-50%) translateX(0); /* Slide in */
+            }
         }
-        */
-        /* --- END TOOLTIP STYLES --- */
+        /* --- END TOOLBAR --- */
 
 
         /* Icon for Light Mode */
@@ -217,11 +219,6 @@
         /* Icon for Dark Mode */
         .fa-moon {
             color: #e0e0e0; /* A light grey for the moon */
-        }
-
-        /* Icon for System/Auto Mode - NO LONGER USED, but style kept for reference */
-        .fa-circle-half-stroke {
-            color: #80deea; /* A teal/cyan color to signify 'auto' */
         }
 
         /* --- ADD: Icon for Pocket --- */
@@ -618,28 +615,23 @@
             }
 
             .reading-toolbar {
-                flex-direction: row;
+                flex-direction: row; /* Horizontal row */
                 left: 50%;
-                transform: translateX(-50%);
-                bottom: 0px;
+                transform: translateX(-50%); /* Center perfectly */
+                
+                /* Float above the bottom edge */
+                bottom: 20px; 
+                /* Add support for iPhone Home Bar / Safe Area */
+                bottom: calc(20px + env(safe-area-inset-bottom)); 
+                
+                padding: 8px 16px; /* Wider padding on sides */
                 width: auto;
-                padding: 8px 12px;
+                max-width: 90%; /* Prevent overflow on tiny screens */
             }
 
+            /* Disable tooltips on mobile to prevent clutter */
             .reading-toolbar button::after {
-                bottom: 130%; 
-                left: 50%;
-                top: auto;
-                transform: translateX(-50%);
-            }
-
-            .reading-toolbar button::before {
-                bottom: 130%; 
-                left: 50%;
-                top: auto;
-                transform: translateX(-50%) translateY(8px);
-                border-right-color: transparent;
-                border-top-color: var(--card-background-1);
+                display: none !important;
             }
             
             /* --- MOD: Restoring Full-screen mobile modal --- */
@@ -705,11 +697,10 @@
         @media (min-width: 641px) {
             /* Override modal overlay to be a non-blocking container */
             .modal-overlay {
-                /* Position it relative to the toolbar */
-                /* Toolbar is at left: 10px, bottom: 10px */
-                /* Toolbar width is approx 51px (8+35+8) */
-                left: calc(10px + 51px + 10px); /* toolbar.left + toolbar.width + gap */
-                bottom: 10px; /* Align with toolbar bottom */
+                /* Align relative to the new Modern Toolbar */
+                /* Toolbar is left: 30px + Width approx 62px + Gap 15px */
+                left: 105px; 
+                bottom: 30px; /* Match toolbar bottom */
 
                 /* Remove full-screen overlay properties */
                 top: auto; /* Override top: 0 */
@@ -765,19 +756,6 @@
                 max-height: none; /* Remove default max-height, let flex-grow work */
                 overflow-y: auto; /* Ensure it's scrollable */
             }
-
-            /* --- Tooltip styles --- */
-            /* MOD: Re-enable tooltips on desktop */
-            .reading-toolbar button::after,
-            .reading-toolbar button::before {
-                display: block; /* Show the tooltip elements */
-            }
-
-            .reading-toolbar button:hover::after,
-            .reading-toolbar button:hover::before {
-                visibility: visible;
-                opacity: 1;
-            }
         }
     </style>
 </head>
@@ -786,19 +764,14 @@
 
     <nav class="reading-toolbar">
         <button id="translateBtn" title="Translate"><i class="fa-solid fa-language"></i></button>
-        <!-- MOD: Icon class will be managed by JS -->
         <button id="darkModeToggle" title="Toggle Theme"><i class="fa-solid fa-moon"></i></button>
         <button id="screenshotBtn" title="Screenshot"><i class="fa-solid fa-image"></i></button>
         <button id="pocketBtn" title="Add to Pocket"><i class="fa-solid fa-bookmark"></i></button>
     </nav>
 
-    <!-- MOD: Pocket Modal Structure updated to match Todo app -->
     <div id="pocketModalOverlay" class="modal-overlay modal-hidden">
-        <div class="modal-content"> <!-- Removed .pocket-modal-wrapper, styling modal-content directly -->
-            
-            <header>
+        <div class="modal-content"> <header>
                 <h2><i class="fa-solid fa-bookmark" style="color: #ef4056;"></i>&nbsp;My Pocket</h2>
-                <!-- ADD: Wrapper for header controls -->
                 <div class="modal-header-controls">
                     <a href="https://atikle.github.io/mypocket" target="_blank" class="modal-open-app-btn" title="Open Full App">
                         <i class="fa-solid fa-arrow-up-right-from-square"></i>
@@ -813,10 +786,8 @@
             </div>
 
             <ul class="pocket-modal-todoList" id="pocketItemsListContainer">
-                <!-- Items will be dynamically added here by JS -->
-            </ul>
+                </ul>
 
-            <!-- MOD: Footer updated with confirmation state -->
             <div class="pocket-modal-footer" id="pocketFooter">
                 <span id="pocketTaskCounter">You have <span class="pocketPendingTasks">0</span> items</span>
                 
@@ -826,7 +797,6 @@
                     <a id="pocketConfirmNo">No</a>
                 </span>
 
-                <!-- ADD: New button to open full app -->
                 <a id="openFullAppBtn" href="https://atikle.github.io/mypocket" target="_blank" title="Open full app" class="pocket-app-link">
                     <i class="fa-solid fa-arrow-up-right-from-square"></i>
                 </a>
@@ -836,18 +806,9 @@
 
         </div>
     </div>
-    <!-- End Pocket Modal -->
-
-
     <script src="https://atikle.github.io/framework/screenshot-module/html2canvas/1.4.1.min.js"></script>
     <script src="https://atikle.github.io/framework/screenshot-module/script-v1.0.0.js"></script>
 
-    <!-- <script src="https://atikle.github.io/framework/universal/theme.js"></script> -->
-
-    <!-- 
-      MOD: Script updated with confirmation, animations, and bug fixes.
-      MOD: Replaced theme.js logic with simple toggle.
-    -->
     <script>
         // --- Custom Alert Function (must be defined globally) ---
         function showCustomAlert(message) {
