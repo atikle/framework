@@ -12,22 +12,14 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" xintegrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 
     <style>
-        /* ADD: Global box-sizing */
-        * {
-            box-sizing: border-box;
-            /* ADD: Remove tap highlight on mobile */
-            -webkit-tap-highlight-color: transparent;
-        }
-
-        /* --- ADD: User Style Variables --- */
+        /* --- User Style Variables (Kept here as the Theme Provider) --- */
         :root {
-            --transition-speed-fast: 0.2s; /* For quick interactions like hamburger click */
-            --transition-speed-normal: 0.3s; /* For standard hovers */
-            --transition-speed-slow: 0.4s; /* For menu slide-in/out */
+            --transition-speed-fast: 0.2s;
+            --transition-speed-normal: 0.3s;
+            --transition-speed-slow: 0.4s;
 
-            /* Smoother Cubic-Bezier Functions (Google/Apple-like) */
-            --ease-in-out-quint: cubic-bezier(0.86, 0, 0.07, 1); /* Aggressive acceleration/deceleration */
-            --ease-out-quad: cubic-bezier(0.25, 0.46, 0.45, 0.94); /* Smooth deceleration */
+            --ease-in-out-quint: cubic-bezier(0.86, 0, 0.07, 1);
+            --ease-out-quad: cubic-bezier(0.25, 0.46, 0.45, 0.94);
             
             --navbar-background-1: white;
             --background-1: white;
@@ -51,13 +43,11 @@
             --button-text-3: #ffffff;
             --hover-overlay: rgba(0, 0, 0, 0.05);
 
-            /* --- ADD: Todo-inspired variables (adapted) --- */
             --pocket-todo-add-btn-bg: #ef4056;
-            --pocket-todo-add-btn-hover: #D93A4C; /* Darker red for hover */
+            --pocket-todo-add-btn-hover: #D93A4C;
             --pocket-todo-delete-bg: #e74c3c;
         }
 
-        /* MOD: Now controlled by script */
         html.dark {
             --navbar-background-1: #242526;
             --background-1: black;
@@ -65,8 +55,8 @@
             --background-3: white;
             --background-4: #242526;
             --background-5: #18191a;
-            --card-background-1: #242526; /* #3c3f56 */
-            --card-background-2: #242526; /* #3c3f56 */
+            --card-background-1: #242526;
+            --card-background-2: #242526;
             --text-color-1: white;
             --text-color-2: #b0b3b8;
             --text-color-3: black;
@@ -81,51 +71,34 @@
             --button-text-3: #ffffff;
             --hover-overlay: rgba(255, 255, 255, 0.08);
 
-            /* --- ADD: Todo-inspired variables (dark) --- */
             --pocket-todo-add-btn-bg: #ef4056;
-            --pocket-todo-add-btn-hover: #D93A4C; /* Darker red for hover */
+            --pocket-todo-add-btn-hover: #D93A4C;
             --pocket-todo-delete-bg: #e74c3c;
         }
-        /* --- END: User Style Variables --- */
 
+        /* REMOVED: Global body/html/* selectors to avoid conflict with finatikle.css */
 
-        /* Apply a consistent font family */
-        body, html {
-            /* ADD: Set height for robust viewport calculations */
-            height: 100%;
-            margin: 0;
-            padding: 0;
-            font-family: 'Inter', sans-serif;
-            /* ADD: Set base theme colors */
-            background-color: var(--background-1);
-            color: var(--text-color-1);
-        }
-
-        /* ADD: Class to stop body scroll (This is now handled in the mobile media query) */
-        /* html.modal-open {
-            overflow: hidden;
-        } */
-
-        .reading-toolbar {
+        /* --- Floating Pill Toolbar --- */
+        .fp-toolbar {
             position: fixed;
             bottom: 10px;
             left: 10px;
-            z-index: 1000; /* Ensures toolbar is on top of other content */
+            z-index: 1000;
             display: flex;
             flex-direction: column;
             gap: 8px;
-            /* MOD: Use theme variables */
             background-color: var(--card-background-1);
             padding: 8px;
             border-radius: 50px;
             box-shadow: var(--shadow-2); 
             width: auto;
-            transition: all var(--transition-speed-normal) var(--ease-out-quad); /* MOD: Use theme variables */
+            transition: all var(--transition-speed-normal) var(--ease-out-quad);
+            /* Reset font for widget */
+            font-family: 'Inter', sans-serif; 
         }
 
-        .reading-toolbar button {
+        .fp-toolbar button {
             background-color: transparent;
-            /* MOD: Use theme variables */
             color: var(--text-color-2);
             border: none;
             width: 35px;
@@ -136,25 +109,20 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            /* MOD: Use theme variables */
             transition: background-color var(--transition-speed-normal) var(--ease-out-quad), color var(--transition-speed-normal) var(--ease-out-quad);
-            position: relative; /* Added for tooltip positioning */
-            /* ADD: Prevent text selection on tap */
+            position: relative;
             user-select: none;
         }
 
-        .reading-toolbar button:hover {
-            /* MOD: Use theme variables */
+        .fp-toolbar button:hover {
             background-color: var(--hover-overlay);
         }
 
         /* --- TOOLTIP STYLES --- */
-        /* MOD: Set display to none to hide tooltips */
-        .reading-toolbar button::after {
+        .fp-toolbar button::after {
             display: none;
-            content: attr(title); /* Read text from title attribute */
+            content: attr(title);
             position: absolute;
-            /* MOD: Use theme variables */
             background-color: var(--card-background-1);
             color: var(--text-color-1);
             padding: 6px 12px;
@@ -164,133 +132,91 @@
             font-weight: 400;
             white-space: nowrap;
             z-index: 1010;
-            box-shadow: var(--shadow-2); /* MOD: Use theme variables */
-
-            /* Hidden by default */
+            box-shadow: var(--shadow-2);
             visibility: hidden;
             opacity: 0;
-            /* MOD: Use theme variables */
             transition: opacity var(--transition-speed-fast) var(--ease-out-quad);
-
-            /* Desktop position (to the right) */
             left: 130%; 
             top: 50%;
             transform: translateY(-50%);
         }
 
-        /* MOD: Set display to none to hide tooltips */
-        .reading-toolbar button::before {
+        .fp-toolbar button::before {
             display: none;
             content: '';
             position: absolute;
-            
-            /* Hidden by default */
             visibility: hidden;
             opacity: 0;
-            /* MOD: Use theme variables */
             transition: opacity var(--transition-speed-fast) var(--ease-out-quad);
             z-index: 1011;
-
-            /* Desktop position (arrow on the left) */
             left: 130%;
             top: 50%;
-            transform: translateY(-50%) translateX(-8px); /* 8px = 5px border + 3px gap */
+            transform: translateY(-50%) translateX(-8px);
             border: 5px solid transparent;
-            /* MOD: Use theme variables */
             border-right-color: var(--card-background-1);
         }
 
-        /* FIX: Removed empty rule that caused linter warnings */
-        /*
-        .reading-toolbar button:hover::after,
-        .reading-toolbar button:hover::before {
-        }
-        */
-        /* --- END TOOLTIP STYLES --- */
+        /* Icon Colors */
+        .fa-sun { color: #fdd835; }
+        .fa-moon { color: #e0e0e0; }
+        .fa-circle-half-stroke { color: #80deea; }
+        .fa-bookmark { color: #ef4056; font-size: 18px; }
 
-
-        /* Icon for Light Mode */
-        .fa-sun {
-            color: #fdd835; /* A nice yellow for the sun */
-        }
-
-        /* Icon for Dark Mode */
-        .fa-moon {
-            color: #e0e0e0; /* A light grey for the moon */
-        }
-
-        /* Icon for System/Auto Mode - NO LONGER USED, but style kept for reference */
-        .fa-circle-half-stroke {
-            color: #80deea; /* A teal/cyan color to signify 'auto' */
-        }
-
-        /* --- ADD: Icon for Pocket --- */
-        .fa-bookmark {
-            color: #ef4056; /* Pocket's brand color - kept as semantic color */
-            font-size: 18px; /* Slightly smaller to fit well */
-        }
-
-        /* --- REFACTORED: Pocket Modal Styles (Todo-inspired) --- */
-        .modal-overlay {
+        /* --- Pocket Modal Styles (Prefix: fp-) --- */
+        .fp-overlay {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background-color: rgba(0, 0, 0, 0.6); /* Scrim */
+            background-color: rgba(0, 0, 0, 0.6);
             display: flex;
             align-items: center;
             justify-content: center;
             z-index: 2000;
             opacity: 1;
-            /* ADD: Prevent body scroll when modal is open */
             overscroll-behavior: contain;
-            /* MOD: Added ease-in-out-quint */
             transition: opacity var(--transition-speed-normal) var(--ease-in-out-quint), visibility var(--transition-speed-normal) var(--ease-in-out-quint);
-            font-family: 'Inter', sans-serif; /* MOD: Match page font */
+            font-family: 'Inter', sans-serif;
         }
 
-        .modal-content {
-            /* MOD: Use theme variables */
+        .fp-modal-box {
             background-color: var(--card-background-1);
             color: var(--text-color-1);
             padding: 25px;
-            border-radius: 8px; /* MOD: Softer corners */
-            box-shadow: var(--shadow-1); /* MOD: Softer shadow */
-            border: 1px solid var(--background-4); /* ADD: Subtle border */
+            border-radius: 8px;
+            box-shadow: var(--shadow-1);
+            border: 1px solid var(--background-4);
             width: 90%;
-            max-width: 400px; /* Match Todo app */
+            max-width: 400px;
             transform: scale(1);
-            /* MOD: Use user's quint transition */
             transition: transform var(--transition-speed-normal) var(--ease-in-out-quint), opacity var(--transition-speed-normal) var(--ease-in-out-quint);
         }
 
-        /* Styles for when modal is hidden */
-        .modal-hidden {
+        /* Hidden State */
+        .fp-hidden {
             visibility: hidden;
             opacity: 0;
             pointer-events: none;
         }
 
-        .modal-hidden .modal-content {
-            transform: scale(0.95); /* MOD: More subtle scale */
+        .fp-hidden .fp-modal-box {
+            transform: scale(0.95);
             opacity: 0;
         }
         
-        /* New header style */
-        .modal-content header {
+        .fp-modal-box header {
             display: flex;
             justify-content: space-between;
             align-items: center;
             font-size: 30px;
             font-weight: 600;
-            /* ADD: Separator line */
             padding-bottom: 15px;
             border-bottom: 1px solid var(--background-4);
         }
  
-        .modal-content header h2 {
-            font-size: 24px; /* MOD: Reduced size */
+        .fp-modal-box header h2 {
+            font-size: 24px;
             font-weight: 600;
             margin: 0;
             display: flex;
@@ -298,8 +224,7 @@
             gap: 10px;
         }
 
-        /* Re-style close button for new header */
-        .modal-close-btn {
+        .fp-close-btn {
             background: none;
             border: none;
             font-size: 24px;
@@ -308,7 +233,6 @@
             cursor: pointer;
             line-height: 1;
             padding: 0;
-            /* ADD: Make it a round button */
             width: 32px; 
             height: 32px;
             border-radius: 50%;
@@ -317,22 +241,21 @@
             justify-content: center;
             transition: color var(--transition-speed-fast) var(--ease-out-quad), background-color var(--transition-speed-fast) var(--ease-out-quad);
         }
-        .modal-close-btn:hover {
+        .fp-close-btn:hover {
             color: var(--text-color-1);
-            background-color: var(--hover-overlay); /* ADD: Hover background */
+            background-color: var(--hover-overlay);
         }
  
-        /* --- ADD: Styles for new header buttons --- */
-        .modal-header-controls {
+        .fp-header-controls {
             display: flex;
             align-items: center;
             gap: 8px;
         }
 
-        .modal-open-app-btn {
+        .fp-open-app-btn {
             background: none;
             border: none;
-            font-size: 18px; /* Slightly smaller than close 'X' */
+            font-size: 18px;
             font-weight: 300;
             color: var(--text-color-2);
             cursor: pointer;
@@ -346,46 +269,42 @@
             justify-content: center;
             transition: color var(--transition-speed-fast) var(--ease-out-quad), background-color var(--transition-speed-fast) var(--ease-out-quad);
         }
-        .modal-open-app-btn:hover {
+        .fp-open-app-btn:hover {
             color: var(--text-color-1);
             background-color: var(--hover-overlay);
         }
-        /* --- END: Styles for new header buttons --- */
 
         /* Input field style */
-        .pocket-modal-inputField {
-            margin: 25px 0 20px 0; /* MOD: Adjusted margin */
+        .fp-input-group {
+            margin: 25px 0 20px 0;
             width: 100%;
             display: flex;
             height: 45px;
         }
 
-        .pocket-modal-inputField input {
+        .fp-input-group input {
             width: 85%;
             height: 100%;
             outline: none;
             border-radius: 3px;
-            /* MOD: Use theme variable for border */
             border: 1px solid var(--background-4); 
-            background-color: var(--background-2); /* Adapted theme */
-            color: var(--text-color-1); /* Adapted theme */
+            background-color: var(--background-2);
+            color: var(--text-color-1);
             font-size: 17px;
             padding-left: 15px;
             transition: all 0.3s ease;
-            font-family: 'Inter', sans-serif; /* MOD: Match page font */
+            font-family: 'Inter', sans-serif;
         }
-        .pocket-modal-inputField input::placeholder {
+        .fp-input-group input::placeholder {
             color: var(--text-color-2);
         }
         
-        /* ADD: Focus style for input */
-        .pocket-modal-inputField input:focus {
+        .fp-input-group input:focus {
             border-color: var(--pocket-todo-add-btn-bg);
             box-shadow: 0 0 0 2px rgba(239, 64, 86, 0.2);
         }
 
-
-        .pocket-modal-inputField button {
+        .fp-input-group button {
             width: 50px;
             height: 100%;
             border: none;
@@ -400,66 +319,58 @@
             pointer-events: none;
             transition: all 0.3s ease;
         }
-        .pocket-modal-inputField button:hover {
+        .fp-input-group button:hover {
             background: var(--pocket-todo-add-btn-hover);
         }
-        .pocket-modal-inputField button.active {
+        .fp-input-group button.active {
             opacity: 1;
             pointer-events: auto;
         }
 
         /* List style */
-        .pocket-modal-todoList {
+        .fp-list {
             max-height: 250px;
             overflow-y: auto;
             margin: 0;
             padding: 0;
-            /* ADD: Prevent scroll-chaining on list */
             overscroll-behavior: contain;
         }
 
-        /* ADD: Styled scrollbar */
-        .pocket-modal-todoList::-webkit-scrollbar {
+        .fp-list::-webkit-scrollbar {
             width: 6px;
         }
-        .pocket-modal-todoList::-webkit-scrollbar-track {
+        .fp-list::-webkit-scrollbar-track {
             background: transparent;
         }
-        .pocket-modal-todoList::-webkit-scrollbar-thumb {
+        .fp-list::-webkit-scrollbar-thumb {
             background: var(--text-color-2);
             border-radius: 3px;
         }
-        .pocket-modal-todoList::-webkit-scrollbar-thumb:hover {
+        .fp-list::-webkit-scrollbar-thumb:hover {
             background: var(--text-color-1);
         }
         
-
-        .pocket-modal-todoList li {
+        .fp-list li {
             position: relative;
             list-style: none;
             height: 45px;
-            /* MOD: Use flex for better vertical centering */
             display: flex;
             align-items: center;
             margin-bottom: 8px;
-            background: var(--background-2); /* Adapted theme */
+            background: var(--background-2);
             border-radius: 3px;
             padding: 0 15px;
             cursor: default;
             overflow: hidden;
-            /* MOD: Removed line-height, flex handles centering */
-            /* Ellipsis for long text */
             white-space: nowrap;
             text-overflow: ellipsis;
-            /* MOD: Added background/color transition for flash effect */
             transition: opacity var(--transition-speed-normal) var(--ease-out-quad), 
                         transform var(--transition-speed-normal) var(--ease-out-quad),
                         background-color var(--transition-speed-fast) var(--ease-out-quad), 
                         color 0.1s ease;
         }
  
-        /* ADD: Keyframes for item add animation */
-        @keyframes fadeInSlideUp {
+        @keyframes fpFadeInSlideUp {
             from {
                 opacity: 0;
                 transform: translateY(10px);
@@ -470,50 +381,43 @@
             }
         }
 
-        /* ADD: Class for item add animation */
-        .pocket-modal-todoList li.pocket-item-fade-in {
-            animation: fadeInSlideUp var(--transition-speed-normal) var(--ease-out-quad);
+        .fp-list li.fp-item-fade-in {
+            animation: fpFadeInSlideUp var(--transition-speed-normal) var(--ease-out-quad);
         }
 
-        /* ADD: New style for the text span */
-        .pocket-item-text {
-            flex-grow: 1; /* Take up available space */
+        .fp-item-text {
+            flex-grow: 1;
             white-space: nowrap;
             overflow: hidden;
             text-overflow: ellipsis;
-            padding-right: 10px; /* Space before delete icon appears */
+            padding-right: 10px;
         }
 
-        /* ADD: Empty message style */
-        .pocket-modal-todoList li.pocket-empty-message {
+        .fp-list li.fp-empty-msg {
             background: transparent;
             color: var(--text-color-2);
             text-align: center;
             height: auto;
             padding: 20px 0;
             line-height: 1.5;
-            display: block; /* Override flex */
+            display: block;
         }
 
-        /* ADD: Delete animation class */
-        .pocket-modal-todoList li.pocket-item-fade-out {
+        .fp-list li.fp-item-fade-out {
             opacity: 0;
             transform: scale(0.95);
         }
  
-        /* ADD: Hover effect for list items */
-        .pocket-modal-todoList li:not(.pocket-empty-message):hover {
-            background: var(--background-4); /* Subtle hover effect */
+        .fp-list li:not(.fp-empty-msg):hover {
+            background: var(--background-4);
         }
  
- 
         /* Delete icon style */
-        .pocket-modal-todoList li .pocket-delete-icon {
+        .fp-list li .fp-delete-icon {
             position: absolute;
-            right: -45px; /* Hidden by default */
+            right: -45px;
             background: var(--pocket-todo-delete-bg);
             width: 45px;
-            /* MOD: Make full height and center icon with flex */
             height: 100%;
             top: 0;
             display: flex;
@@ -526,29 +430,26 @@
             transition: all 0.2s ease;
         }
 
-        .pocket-modal-todoList li:hover .pocket-delete-icon {
-            right: 0px; /* Show on hover */
+        .fp-list li:hover .fp-delete-icon {
+            right: 0px;
         }
-        /* Don't show delete icon on empty message */
-        .pocket-modal-todoList li.pocket-empty-message:hover .pocket-delete-icon {
+        .fp-list li.fp-empty-msg:hover .fp-delete-icon {
             right: -45px;
         }
 
         /* Footer style */
-        .pocket-modal-footer {
+        .fp-footer {
             display: flex;
             width: 100%;
-            margin-top: 15px; /* MOD: Adjusted margin */
+            margin-top: 15px;
             align-items: center;
             justify-content: space-between;
-            color: var(--text-color-1); /* Adapted theme */
-            /* ADD: Separator line */
+            color: var(--text-color-1);
             padding-top: 15px;
             border-top: 1px solid var(--background-4);
         }
         
-        /* ADD: Style for the new full-app link */
-        .pocket-modal-footer a.pocket-app-link {
+        .fp-footer a.fp-app-link {
             display: flex;
             align-items: center;
             justify-content: center;
@@ -561,28 +462,25 @@
             background-color: var(--button-background-2);
             transition: all var(--transition-speed-fast) var(--ease-out-quad);
         }
-        .pocket-modal-footer a.pocket-app-link:hover {
+        .fp-footer a.fp-app-link:hover {
             background-color: var(--hover-overlay);
             color: var(--text-color-1);
         }
 
-
-        /* ADD: Styles for clear confirmation */
-        .pocket-confirm-clear {
+        .fp-confirm-clear {
             font-size: 14px;
             color: var(--text-color-1);
         }
-        .pocket-confirm-clear a {
+        .fp-confirm-clear a {
             cursor: pointer;
             text-decoration: underline;
             margin: 0 4px;
         }
-        .pocket-confirm-clear a.confirm-yes {
+        .fp-confirm-clear a.fp-confirm-yes {
             color: var(--pocket-todo-delete-bg);
         }
-        
 
-        .pocket-modal-footer button {
+        .fp-footer button {
             padding: 6px 10px;
             border-radius: 3px;
             border: none;
@@ -599,25 +497,23 @@
             transition: all 0.3s ease;
         }
         
-        .pocket-modal-footer button:hover {
+        .fp-footer button:hover {
              background: var(--pocket-todo-add-btn-hover);
         }
 
-        .pocket-modal-footer button.active {
+        .fp-footer button.active {
             opacity: 1;
             pointer-events: auto;
         }
-        /* --- END: Pocket Modal Styles --- */
 
 
         /* --- MOBILE STYLES --- */
         @media (max-width: 640px) {
-            /* ADD: Stop body scroll on mobile when modal is open */
-            html.modal-open {
+            html.fp-modal-open {
                 overflow: hidden;
             }
 
-            .reading-toolbar {
+            .fp-toolbar {
                 flex-direction: row;
                 left: 50%;
                 transform: translateX(-50%);
@@ -626,14 +522,14 @@
                 padding: 8px 12px;
             }
 
-            .reading-toolbar button::after {
+            .fp-toolbar button::after {
                 bottom: 130%; 
                 left: 50%;
                 top: auto;
                 transform: translateX(-50%);
             }
 
-            .reading-toolbar button::before {
+            .fp-toolbar button::before {
                 bottom: 130%; 
                 left: 50%;
                 top: auto;
@@ -642,139 +538,102 @@
                 border-top-color: var(--card-background-1);
             }
             
-            /* --- MOD: Restoring Full-screen mobile modal --- */
-            .modal-content {
+            .fp-modal-box {
                 width: 100%;
-                height: 100%; /* Will be 100% of the 100dvh overlay */
+                height: 100%;
                 max-width: 100%;
                 border-radius: 0;
-                border: none; /* ADD: Remove the border for full-screen mobile */
-                padding: 25px 20px; /* Adjust padding */
-                /* ADD: Respect safe areas (notches, home bars) */
+                border: none;
+                padding: 25px 20px;
                 padding-top: calc(25px + env(safe-area-inset-top));
                 padding-bottom: calc(25px + env(safe-area-inset-bottom));
-                /* Use flex to make list fill space */
                 display: flex;
                 flex-direction: column;
                 justify-content: flex-start;
-
-                /* MOD: Add mobile-specific transform and transition for slide */
                 transform: translateY(0);
                 transition: transform var(--transition-speed-slow) var(--ease-in-out-quint);
             }
 
-            /* MOD: Use dvh (dynamic viewport height) for mobile */
-            .modal-overlay {
+            .fp-overlay {
                 height: 100dvh;
             }
 
-            .modal-hidden .modal-content {
-                /* MOD: Slide up from bottom animation */
+            .fp-hidden .fp-modal-box {
                 transform: translateY(100%);
-                opacity: 1; /* Keep opacity for slide */
+                opacity: 1;
             }
 
-            .pocket-modal-todoList {
-                flex-grow: 1; /* This makes the list fill available space */
-                min-height: 100px; /* Ensure it has some height */
-                max-height: none; /* Remove max-height */
+            .fp-list {
+                flex-grow: 1;
+                min-height: 100px;
+                max-height: none;
             }
 
-            /* ADD: Prevent input field from shrinking */
-            .pocket-modal-inputField {
+            .fp-input-group {
                 flex-shrink: 0;
             }
 
-            /* MOD: Explicitly add header/footer styles for mobile */
-            /* (These rules also now inherit the border-top/bottom) */
-            .modal-content header {
+            .fp-modal-box header {
                 padding-bottom: 15px;
                 border-bottom: 1px solid var(--background-4);
-                flex-shrink: 0; /* ADD: Prevent shrinking */
+                flex-shrink: 0;
             }
-            .pocket-modal-footer {
+            .fp-footer {
                 margin-top: 15px;
                 padding-top: 15px;
                 border-top: 1px solid var(--background-4);
-                flex-shrink: 0; /* ADD: Prevent shrinking */
+                flex-shrink: 0;
             }
-            /* --- END: Full-screen mobile modal --- */
         }
 
-        /* --- ADD: DESKTOP-ONLY STYLES --- */
+        /* --- DESKTOP-ONLY STYLES --- */
         @media (min-width: 641px) {
-            /* Override modal overlay to be a non-blocking container */
-            .modal-overlay {
-                /* Position it relative to the toolbar */
-                /* Toolbar is at left: 10px, bottom: 10px */
-                /* Toolbar width is approx 51px (8+35+8) */
-                left: calc(10px + 51px + 10px); /* toolbar.left + toolbar.width + gap */
-                bottom: 10px; /* Align with toolbar bottom */
-
-                /* Remove full-screen overlay properties */
-                top: auto; /* Override top: 0 */
-                width: auto; /* Override width: 100% */
-                height: auto; /* Override height: 100% */
-                background-color: transparent; /* No more scrim */
-                
-                /* Remove centering */
-                display: block; /* Override flex */
-                align-items: normal; /* Override center */
-                justify-content: normal; /* Override center */
-                
-                /* Allow clicks to pass through overlay, but not when hidden by JS */
-                /* pointer-events: none; - Handled by .modal-hidden */
+            .fp-overlay {
+                left: calc(10px + 51px + 10px);
+                bottom: 10px;
+                top: auto;
+                width: auto;
+                height: auto;
+                background-color: transparent;
+                display: block;
+                align-items: normal;
+                justify-content: normal;
             }
 
-            /* The modal content is now the "box" */
-            .modal-content {
-                /* Re-enable pointer events for the box itself */
+            .fp-modal-box {
                 pointer-events: auto; 
-                
-                /* Set a defined size */
                 width: 350px;
-                max-width: 350px; /* Override 400px */
+                max-width: 350px;
                 height: 500px;
-                max-height: 75vh; /* Don't let it be too tall */
-                
-                /* Restore/ensure properties overridden by mobile */
-                border-radius: 8px; /* MOD: Changed from 5px */
+                max-height: 75vh;
+                border-radius: 8px;
                 padding: 25px;
-
-                /* Ensure flex layout for footer */
                 display: flex;
                 flex-direction: column;
-
-                /* New transform for animation */
                 transform-origin: bottom left;
                 transition: transform var(--transition-speed-normal) var(--ease-in-out-quint), 
                             opacity var(--transition-speed-normal) var(--ease-in-out-quint);
             }
             
-            /* Override .modal-hidden behavior for desktop */
-            .modal-overlay.modal-hidden .modal-content {
-                /* Override the default scale(0.95) */
-                transform: scale(0.9) translateY(20px); /* Fly out towards bottom left */
+            .fp-overlay.fp-hidden .fp-modal-box {
+                transform: scale(0.9) translateY(20px);
                 opacity: 0;
             }
 
-            /* Make the list scrollable within the fixed height */
-            .pocket-modal-todoList {
-                flex-grow: 1; /* Fill available space */
-                min-height: 100px; /* Min height */
-                max-height: none; /* Remove default max-height, let flex-grow work */
-                overflow-y: auto; /* Ensure it's scrollable */
+            .fp-list {
+                flex-grow: 1;
+                min-height: 100px;
+                max-height: none;
+                overflow-y: auto;
             }
 
-            /* --- Tooltip styles --- */
-            /* MOD: Re-enable tooltips on desktop */
-            .reading-toolbar button::after,
-            .reading-toolbar button::before {
-                display: block; /* Show the tooltip elements */
+            .fp-toolbar button::after,
+            .fp-toolbar button::before {
+                display: block;
             }
 
-            .reading-toolbar button:hover::after,
-            .reading-toolbar button:hover::before {
+            .fp-toolbar button:hover::after,
+            .fp-toolbar button:hover::before {
                 visibility: visible;
                 opacity: 1;
             }
@@ -784,72 +643,57 @@
 
 <body>
 
-    <nav class="reading-toolbar">
-        <button id="translateBtn" title="Translate"><i class="fa-solid fa-language"></i></button>
-        <!-- MOD: Icon class will be managed by JS -->
-        <button id="darkModeToggle" title="Toggle Theme"><i class="fa-solid fa-moon"></i></button>
-        <button id="screenshotBtn" title="Screenshot"><i class="fa-solid fa-image"></i></button>
-        <button id="pocketBtn" title="Add to Pocket"><i class="fa-solid fa-bookmark"></i></button>
+    <nav class="fp-toolbar">
+        <button id="fp-id-translate" title="Translate"><i class="fa-solid fa-language"></i></button>
+        <button id="fp-id-dark-toggle" title="Toggle Theme"><i class="fa-solid fa-moon"></i></button>
+        <button id="fp-id-screenshot" title="Screenshot"><i class="fa-solid fa-image"></i></button>
+        <button id="fp-id-pocket" title="Add to Pocket"><i class="fa-solid fa-bookmark"></i></button>
     </nav>
 
-    <!-- MOD: Pocket Modal Structure updated to match Todo app -->
-    <div id="pocketModalOverlay" class="modal-overlay modal-hidden">
-        <div class="modal-content"> <!-- Removed .pocket-modal-wrapper, styling modal-content directly -->
+    <div id="fp-id-overlay" class="fp-overlay fp-hidden">
+        <div class="fp-modal-box">
             
             <header>
                 <h2><i class="fa-solid fa-bookmark" style="color: #ef4056;"></i>&nbsp;My Pocket</h2>
-                <!-- ADD: Wrapper for header controls -->
-                <div class="modal-header-controls">
-                    <a href="https://atikle.github.io/mypocket" target="_blank" class="modal-open-app-btn" title="Open Full App">
+                <div class="fp-header-controls">
+                    <a href="https://atikle.github.io/mypocket" target="_blank" class="fp-open-app-btn" title="Open Full App">
                         <i class="fa-solid fa-arrow-up-right-from-square"></i>
                     </a>
-                    <button id="closeModalBtn" class="modal-close-btn" title="Close">&times;</button>
+                    <button id="fp-id-close" class="fp-close-btn" title="Close">&times;</button>
                 </div>
             </header>
 
-            <div class="pocket-modal-inputField">
-                <input type="text" id="pocketInput" placeholder="Add a URL or note...">
-                <button id="addPocketItemBtn"><i class="fas fa-plus"></i></button>
+            <div class="fp-input-group">
+                <input type="text" id="fp-id-input" placeholder="Add a URL or note...">
+                <button id="fp-id-add-btn"><i class="fas fa-plus"></i></button>
             </div>
 
-            <ul class="pocket-modal-todoList" id="pocketItemsListContainer">
-                <!-- Items will be dynamically added here by JS -->
-            </ul>
+            <ul class="fp-list" id="fp-id-list">
+                </ul>
 
-            <!-- MOD: Footer updated with confirmation state -->
-            <div class="pocket-modal-footer" id="pocketFooter">
-                <span id="pocketTaskCounter">You have <span class="pocketPendingTasks">0</span> items</span>
+            <div class="fp-footer" id="fp-id-footer">
+                <span id="fp-id-counter">You have <span class="fp-pending-tasks">0</span> items</span>
                 
-                <span id="pocketConfirmClear" class="pocket-confirm-clear" style="display: none;">
+                <span id="fp-id-confirm-box" class="fp-confirm-clear" style="display: none;">
                     Are you sure? 
-                    <a id="pocketConfirmYes" class="confirm-yes">Yes</a> / 
-                    <a id="pocketConfirmNo">No</a>
+                    <a id="fp-id-yes" class="fp-confirm-yes">Yes</a> / 
+                    <a id="fp-id-no">No</a>
                 </span>
 
-                <!-- ADD: New button to open full app -->
-                <a id="openFullAppBtn" href="https://atikle.github.io/mypocket" target="_blank" title="Open full app" class="pocket-app-link">
+                <a id="fp-id-full-app" href="https://atikle.github.io/mypocket" target="_blank" title="Open full app" class="fp-app-link">
                     <i class="fa-solid fa-arrow-up-right-from-square"></i>
                 </a>
 
-                <button id="clearPocketBtn">Clear All</button>
+                <button id="fp-id-clear">Clear All</button>
             </div>
 
         </div>
     </div>
-    <!-- End Pocket Modal -->
-
-
     <script src="https://atikle.github.io/framework/screenshot-module/html2canvas/1.4.1.min.js"></script>
     <script src="https://atikle.github.io/framework/screenshot-module/script-v1.0.0.js"></script>
 
-    <!-- <script src="https://atikle.github.io/framework/universal/theme.js"></script> -->
-
-    <!-- 
-      MOD: Script updated with confirmation, animations, and bug fixes.
-      MOD: Replaced theme.js logic with simple toggle.
-    -->
     <script>
-        // --- Custom Alert Function (must be defined globally) ---
+        // --- Custom Alert Function ---
         function showCustomAlert(message) {
             let alertBox = document.createElement('div');
             alertBox.style.cssText = `
@@ -870,30 +714,18 @@
             alertBox.textContent = message;
             document.body.appendChild(alertBox);
 
-            // Fade in
-            setTimeout(() => {
-                alertBox.style.opacity = '1';
-            }, 10);
-            
-            // Fade out
+            setTimeout(() => { alertBox.style.opacity = '1'; }, 10);
             setTimeout(() => {
                 alertBox.style.opacity = '0';
-                setTimeout(() => {
-                    if (document.body.contains(alertBox)) {
-                        document.body.removeChild(alertBox);
-                    }
-                }, 500); // Wait for transition to finish
-            }, 3000); // Show for 3 seconds
+                setTimeout(() => { if (document.body.contains(alertBox)) document.body.removeChild(alertBox); }, 500);
+            }, 3000);
         }
 
-        // --- Main App Logic ---
-            
-        // --- ADD: Simplified Theme Toggle Logic ---
-        const themeToggleButton = document.getElementById('darkModeToggle');
+        // --- Theme Toggle Logic ---
+        const themeToggleButton = document.getElementById('fp-id-dark-toggle');
         if (themeToggleButton) {
             const themeIcon = themeToggleButton.querySelector('i');
 
-            // Function to apply the theme and update the icon
             function applyTheme(theme) {
                 if (theme === 'dark') {
                     document.documentElement.classList.add('dark');
@@ -909,237 +741,162 @@
                 localStorage.setItem('theme', theme);
             }
 
-            // On load, check localStorage
-            let currentTheme = localStorage.getItem('theme');
-            if (!currentTheme) {
-                // Default to light if no setting
-                currentTheme = 'light'; 
-            }
+            let currentTheme = localStorage.getItem('theme') || 'light';
             applyTheme(currentTheme);
 
-            // Add click listener to toggle
             themeToggleButton.addEventListener('click', () => {
                 let theme = document.documentElement.classList.contains('dark') ? 'light' : 'dark';
                 applyTheme(theme);
             });
         }
-        // --- END: Simplified Theme Toggle Logic ---
 
 
-        // --- Pocket Modal Functionality (Refactored for new UI) ---
-        const readingToolbar = document.querySelector('.reading-toolbar');
-        const pocketBtn = document.getElementById('pocketBtn');
-        const modalOverlay = document.getElementById('pocketModalOverlay');
-        const closeModalBtn = document.getElementById('closeModalBtn');
-        const addPocketItemBtn = document.getElementById('addPocketItemBtn');
-        const pocketInput = document.getElementById('pocketInput');
-        const pocketItemsListContainer = document.getElementById('pocketItemsListContainer');
+        // --- Pocket Modal Functionality ---
+        const readingToolbar = document.querySelector('.fp-toolbar');
+        const pocketBtn = document.getElementById('fp-id-pocket');
+        const modalOverlay = document.getElementById('fp-id-overlay');
+        const closeModalBtn = document.getElementById('fp-id-close');
+        const addPocketItemBtn = document.getElementById('fp-id-add-btn');
+        const pocketInput = document.getElementById('fp-id-input');
+        const pocketItemsListContainer = document.getElementById('fp-id-list');
         
-        // MOD: Get new footer elements
-        const clearPocketBtn = document.getElementById('clearPocketBtn');
-        const pendingTasksSpan = document.querySelector(".pocketPendingTasks");
-        const pocketTaskCounter = document.getElementById('pocketTaskCounter');
-        const pocketConfirmClear = document.getElementById('pocketConfirmClear');
-        const pocketConfirmYes = document.getElementById('pocketConfirmYes');
-        const pocketConfirmNo = document.getElementById('pocketConfirmNo');
+        const clearPocketBtn = document.getElementById('fp-id-clear');
+        const pendingTasksSpan = document.querySelector(".fp-pending-tasks");
+        const pocketTaskCounter = document.getElementById('fp-id-counter');
+        const pocketConfirmClear = document.getElementById('fp-id-confirm-box');
+        const pocketConfirmYes = document.getElementById('fp-id-yes');
+        const pocketConfirmNo = document.getElementById('fp-id-no');
 
-
-        // Define the key for localStorage
         const POCKET_STORAGE_KEY = "pocketItemsList";
 
-        // Function to get items from localStorage
         function getPocketItems() {
             const itemsJson = localStorage.getItem(POCKET_STORAGE_KEY);
             let items = [];
             if (itemsJson) {
                 items = JSON.parse(itemsJson);
             }
-
-            // --- ADD: Data Migration ---
-            // Check if data is in the old format (array of strings)
             if (items.length > 0 && typeof items[0] === 'string') {
-                items = items.map(itemText => {
-                    return {
-                        text: itemText,
-                        dateAdded: new Date().toISOString() // Assign current date as fallback
-                    };
-                });
-                savePocketItems(items); // Re-save in new format
+                items = items.map(itemText => ({ text: itemText, dateAdded: new Date().toISOString() }));
+                savePocketItems(items);
             }
-            // --- END: Data Migration ---
-
             return items;
         }
 
-        // Function to save items to localStorage
         function savePocketItems(items) {
             localStorage.setItem(POCKET_STORAGE_KEY, JSON.stringify(items));
         }
 
-        // MOD: Function to render the list of items
         function renderPocketItems(itemJustAdded = null) {
-            const items = getPocketItems(); // Get current items
+            const items = getPocketItems();
+            pocketItemsListContainer.innerHTML = '';
             
-            pocketItemsListContainer.innerHTML = ''; // Clear the list
-            
-            // Update pending tasks count
-            pendingTasksSpan.textContent = items.length;
+            if (pendingTasksSpan) pendingTasksSpan.textContent = items.length;
 
             if (items.length > 0) {
-                clearPocketBtn.classList.add("active"); // Active the delete button
+                clearPocketBtn.classList.add("active");
             } else {
-                clearPocketBtn.classList.remove("active"); // Unactive the delete button
+                clearPocketBtn.classList.remove("active");
             }
             
             if (items.length === 0) {
-                // MOD: Add styled empty message
-                pocketItemsListContainer.innerHTML = '<li class="pocket-empty-message">No items saved yet.</li>';
+                pocketItemsListContainer.innerHTML = '<li class="fp-empty-msg">No items saved yet.</li>';
             } else {
-                // MOD: Removed items.sort() - this fixes the delete bug
                 let newLiTag = "";
                 items.forEach((itemObj, index) => {
-                    // MOD: Wrap text in span for better styling/ellipsis
-                    // MOD: Read from itemObj.text
                     const safeText = itemObj.text.replace(/</g, "&lt;").replace(/>/g, "&gt;");
-                    newLiTag += `<li><span class="pocket-item-text">${safeText}</span><span class="pocket-delete-icon" data-index="${index}" title="Delete"><i class="fas fa-trash"></i></span></li>`;
+                    newLiTag += `<li><span class="fp-item-text">${safeText}</span><span class="fp-delete-icon" data-index="${index}" title="Delete"><i class="fas fa-trash"></i></span></li>`;
                 });
                 pocketItemsListContainer.innerHTML = newLiTag;
             }
         }
 
-        // MOD: Delete logic split for animation
         function deletePocketItemLogic(index) {
             let items = getPocketItems();
-            // MOD: Index is now correct because we removed sort()
             items.splice(index, 1); 
             savePocketItems(items);
-            renderPocketItems(); // Re-render the list
+            renderPocketItems();
         }
 
         function showPocketModal() {
-            modalOverlay.classList.remove('modal-hidden');
-            // MOD: Only stop scroll on mobile
+            modalOverlay.classList.remove('fp-hidden');
             if (window.innerWidth < 641) {
-                document.documentElement.classList.add('modal-open');
+                document.documentElement.classList.add('fp-modal-open');
             }
-            
-            // MOD: Only hide toolbar on mobile
             if (readingToolbar && window.innerWidth < 641) { 
-                readingToolbar.style.display = 'none'; // Hide toolbar on mobile
+                readingToolbar.style.display = 'none';
             }
-
-            renderPocketItems(); // Load and display items when modal opens
+            renderPocketItems();
             pocketInput.focus();
         }
 
         function hidePocketModal() {
-            // Check if modal is already hidden to prevent multiple triggers
-            if (!modalOverlay.classList.contains('modal-hidden')) {
-                modalOverlay.classList.add('modal-hidden');
-                document.documentElement.classList.remove('modal-open'); // Re-enable body scroll (will only be set on mobile)
-                if (readingToolbar) readingToolbar.style.display = ''; // ADD: Show toolbar
+            if (!modalOverlay.classList.contains('fp-hidden')) {
+                modalOverlay.classList.add('fp-hidden');
+                document.documentElement.classList.remove('fp-modal-open');
+                if (readingToolbar) readingToolbar.style.display = '';
             }
         }
 
-        // --- Event Listeners for Pocket Modal ---
-        if (pocketBtn) {
-            pocketBtn.addEventListener('click', showPocketModal);
-        }
-        if (closeModalBtn) {
-            closeModalBtn.addEventListener('click', hidePocketModal);
-        }
+        if (pocketBtn) pocketBtn.addEventListener('click', showPocketModal);
+        if (closeModalBtn) closeModalBtn.addEventListener('click', hidePocketModal);
         if (modalOverlay) {
             modalOverlay.addEventListener('click', (e) => {
-                // MOD: Check if the click is on the overlay *and* we are in mobile view
-                // On desktop, the overlay has no background and pointer-events: none,
-                // so this will only trigger on the mobile scrim.
-                if (e.target === modalOverlay) {
-                    hidePocketModal();
-                }
+                if (e.target === modalOverlay) hidePocketModal();
             });
         }
 
-        // --- FIX: Refactored input event listeners ---
         if(pocketInput) {
-            // This function handles enabling/disabling the button
             const toggleAddButtonState = () => {
                 let userEnteredValue = pocketInput.value;
-                if(userEnteredValue.trim() != 0){ //if the user value isn't only spaces
-                    addPocketItemBtn.classList.add("active"); //active the add button
+                if(userEnteredValue.trim() != 0){ 
+                    addPocketItemBtn.classList.add("active");
                 } else {
-                    addPocketItemBtn.classList.remove("active"); //unactive the add button
+                    addPocketItemBtn.classList.remove("active");
                 }
             };
-
-            // Use 'oninput' to catch all value changes (paste, cut, typing)
             pocketInput.oninput = toggleAddButtonState;
-
-            // Use 'onkeyup' specifically for the 'Enter' key press
             pocketInput.onkeyup = (e) => {
                 if (e.key === "Enter") {
                     let userEnteredValue = pocketInput.value;
-                    if (userEnteredValue.trim() != 0) {
-                        addPocketItemBtn.click(); // Trigger the add button click
-                    }
+                    if (userEnteredValue.trim() != 0) addPocketItemBtn.click();
                 }
             }
         }
-        // --- END FIX ---
 
-        // MOD: Add button click handler
         if (addPocketItemBtn) {
             addPocketItemBtn.addEventListener('click', () => {
                 const itemText = pocketInput.value.trim();
                 if (itemText) {
                     try {
-                        const currentItems = getPocketItems(); // Get existing items
-                        
-                        // MOD: Save as an object
-                        const newItem = {
-                            text: itemText,
-                            dateAdded: new Date().toISOString()
-                        };
-                        currentItems.push(newItem); // Add the new item
-                        
-                        savePocketItems(currentItems); // Save the updated list
-                        
-                        pocketInput.value = ''; // Clear input
-                        addPocketItemBtn.classList.remove("active"); // Deactivate button
-                        
-                        renderPocketItems(); // Re-render the list immediately
+                        const currentItems = getPocketItems();
+                        const newItem = { text: itemText, dateAdded: new Date().toISOString() };
+                        currentItems.push(newItem);
+                        savePocketItems(currentItems);
+                        pocketInput.value = '';
+                        addPocketItemBtn.classList.remove("active");
+                        renderPocketItems();
 
-                        // ADD: Add animation and flash to the new item
                         const newItemLi = pocketItemsListContainer.lastElementChild;
-                        if (newItemLi && !newItemLi.classList.contains('pocket-empty-message')) {
-                            newItemLi.classList.add('pocket-item-fade-in');
-                            
-                            // Flash effect
+                        if (newItemLi && !newItemLi.classList.contains('fp-empty-msg')) {
+                            newItemLi.classList.add('fp-item-fade-in');
                             newItemLi.style.backgroundColor = 'var(--pocket-todo-add-btn-bg)';
                             newItemLi.style.color = 'white';
                             setTimeout(() => {
                                 newItemLi.style.backgroundColor = '';
                                 newItemLi.style.color = '';
                             }, 200);
-
-                            // Remove animation class after it plays
-                            setTimeout(() => {
-                                newItemLi.classList.remove('pocket-item-fade-in');
-                            }, 400); // 0.4s
+                            setTimeout(() => { newItemLi.classList.remove('fp-item-fade-in'); }, 400);
                         }
-                        
                     } catch (error) {
-                        console.error("Error saving to localStorage: ", error);
+                        console.error("Error saving: ", error);
                         showCustomAlert("Error: Could not save item.");
                     }
                 }
-                // No 'else' needed, button is disabled if input is empty
             });
         }
 
-        // MOD: Clear All button handler (with confirmation)
         if (clearPocketBtn) {
             clearPocketBtn.onclick = () => {
-                // Show confirmation
                 pocketTaskCounter.style.display = 'none';
                 clearPocketBtn.style.display = 'none';
                 pocketConfirmClear.style.display = 'inline';
@@ -1147,7 +904,6 @@
         }
         if (pocketConfirmNo) {
             pocketConfirmNo.onclick = () => {
-                // Hide confirmation
                 pocketTaskCounter.style.display = '';
                 clearPocketBtn.style.display = '';
                 pocketConfirmClear.style.display = 'none';
@@ -1155,58 +911,38 @@
         }
         if (pocketConfirmYes) {
             pocketConfirmYes.onclick = () => {
-                savePocketItems([]); // Save an empty array
-                renderPocketItems(); // Re-render the (now empty) list
-                // Hide confirmation
+                savePocketItems([]);
+                renderPocketItems();
                 pocketConfirmNo.click();
             }
         }
 
-
-        // MOD: Event Delegation for delete buttons (with animation)
         if (pocketItemsListContainer) {
             pocketItemsListContainer.addEventListener('click', (e) => {
-                // Find the closest delete icon
-                const deleteIcon = e.target.closest('.pocket-delete-icon');
+                const deleteIcon = e.target.closest('.fp-delete-icon');
                 if (deleteIcon) {
                     const li = deleteIcon.closest('li');
                     const index = parseInt(deleteIcon.dataset.index, 10);
-                    
-                    // Add fade-out class
-                    li.classList.add('pocket-item-fade-out');
-
-                    // Wait for animation to finish before removing
-                    setTimeout(() => {
-                        deletePocketItemLogic(index);
-                    }, 300); // Match transition-speed-normal (0.3s)
+                    li.classList.add('fp-item-fade-out');
+                    setTimeout(() => { deletePocketItemLogic(index); }, 300);
                 }
             });
         }
 
-        // ADD: Listener for Escape key to close modal
         document.addEventListener('keydown', (e) => {
-            if (e.key === "Escape") {
-                hidePocketModal();
-            }
+            if (e.key === "Escape") hidePocketModal();
         });
 
-        // ADD: Listen for changes from other tabs/windows
         window.addEventListener('storage', (e) => {
-            if (e.key === POCKET_STORAGE_KEY) {
-                renderPocketItems();
-            }
+            if (e.key === POCKET_STORAGE_KEY) renderPocketItems();
         });
 
-        // --- Translate Functionality (existing) ---
-        const translateBtn = document.getElementById('translateBtn');
+        const translateBtn = document.getElementById('fp-id-translate');
         if (translateBtn) {
             translateBtn.addEventListener('click', () => {
                 showCustomAlert('Can not fetch translation API');
             });
         }
-
     </script>
-
 </body>
-
 </html>
