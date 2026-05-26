@@ -57,7 +57,7 @@
             color: var(--text-color-1);
         }
 
-        html.dark #mypocket-widget-root,
+        html.dark #mypocket-widget-root:not(.light),
         #mypocket-widget-root.dark {
             --navbar-background-1: #242526;
             --background-1: black;
@@ -94,7 +94,7 @@
             width: auto;
         }
 
-        html.dark #mypocket-widget-root .reading-toolbar,
+        html.dark #mypocket-widget-root:not(.light) .reading-toolbar,
         #mypocket-widget-root.dark .reading-toolbar {
             background-color: rgba(36, 37, 38, 0.70);
             border: 1px solid rgba(255, 255, 255, 0.08);
@@ -721,7 +721,6 @@
         };
 
         try {
-            // Smart initialization: Reuses existing Firebase app if host page already has it running
             const app = getApps().length === 0 ? initializeApp(firebaseConfig) : getApp();
             auth = getAuth(app);
             db = getFirestore(app);
@@ -767,17 +766,41 @@
         const themeToggle = root.querySelector('#mypocket-themeToggle');
         if (themeToggle) {
             const themeIcon = themeToggle.querySelector('i');
+            
             function applyTheme(theme) {
                 if (theme === 'dark') {
+                    // Update Widget Sandbox
                     root.classList.add('dark');
-                    themeIcon.classList.replace('fa-sun', 'fa-moon');
+                    root.classList.remove('light');
+                    
+                    // Update Host Page
+                    document.documentElement.classList.add('dark');
+                    document.documentElement.classList.remove('light');
+                    
+                    themeIcon.classList.remove('fa-moon');
+                    themeIcon.classList.add('fa-sun');
                 } else {
+                    // Update Widget Sandbox
+                    root.classList.add('light');
                     root.classList.remove('dark');
-                    themeIcon.classList.replace('fa-moon', 'fa-sun');
+                    
+                    // Update Host Page
+                    document.documentElement.classList.add('light');
+                    document.documentElement.classList.remove('dark');
+                    
+                    themeIcon.classList.remove('fa-sun');
+                    themeIcon.classList.add('fa-moon');
                 }
+                
+                // Save for both widget specifically and host app generally
                 localStorage.setItem('mypocket-theme', theme);
+                localStorage.setItem('theme', theme); 
             }
-            applyTheme(localStorage.getItem('mypocket-theme') || 'light');
+
+            // Sync with host page initially, or use saved preference
+            let defaultTheme = document.documentElement.classList.contains('dark') ? 'dark' : 'light';
+            applyTheme(localStorage.getItem('mypocket-theme') || defaultTheme);
+
             themeToggle.addEventListener('click', () => {
                 applyTheme(root.classList.contains('dark') ? 'light' : 'dark');
             });
