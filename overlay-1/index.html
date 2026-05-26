@@ -57,7 +57,6 @@
             color: var(--text-color-1);
         }
 
-        /* Fixed: Use :not(.light) to allow the widget to override the host page */
         html.dark #mypocket-widget-root:not(.light),
         #mypocket-widget-root.dark {
             --navbar-background-1: #242526;
@@ -95,7 +94,6 @@
             width: auto;
         }
 
-        /* Fixed: Matches root logic */
         html.dark #mypocket-widget-root:not(.light) .reading-toolbar,
         #mypocket-widget-root.dark .reading-toolbar {
             background-color: rgba(36, 37, 38, 0.70);
@@ -771,17 +769,32 @@
             
             function applyTheme(theme) {
                 if (theme === 'dark') {
+                    // Update Widget Sandbox
                     root.classList.add('dark');
                     root.classList.remove('light');
+                    
+                    // Update Host Page
+                    document.documentElement.classList.add('dark');
+                    document.documentElement.classList.remove('light');
+                    
                     themeIcon.classList.remove('fa-moon');
                     themeIcon.classList.add('fa-sun');
                 } else {
+                    // Update Widget Sandbox
                     root.classList.add('light');
                     root.classList.remove('dark');
+                    
+                    // Update Host Page
+                    document.documentElement.classList.add('light');
+                    document.documentElement.classList.remove('dark');
+                    
                     themeIcon.classList.remove('fa-sun');
                     themeIcon.classList.add('fa-moon');
                 }
+                
+                // Save for both widget specifically and host app generally
                 localStorage.setItem('mypocket-theme', theme);
+                localStorage.setItem('theme', theme); 
             }
 
             // Sync with host page initially, or use saved preference
