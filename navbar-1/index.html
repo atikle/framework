@@ -1,895 +1,201 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
+
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MyPocket Widget</title>
+
+        <!-- <meta name="theme-color" content="#HEXCODE"> -->
+        <meta name="theme-color" content="#fff">
+
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-</head>
-<body>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 
-<div id="mypocket-widget-root">
+    <title>atikle/framework/navbar-1</title>
 
     <style>
-        /* --- SCOPED CSS: Will not bleed into host page --- */
-        #mypocket-widget-root * {
-            box-sizing: border-box;
-            -webkit-tap-highlight-color: transparent;
+        a {
+            text-decoration: none;
+            -webkit-tap-highlight-color: transparent; /* Remove tap highlight on mobile */
         }
-
-        #mypocket-widget-root {
-            --transition-speed-fast: 0.2s;
-            --transition-speed-normal: 0.3s;
-            --transition-speed-slow: 0.4s;
-            --ease-in-out-quint: cubic-bezier(0.86, 0, 0.07, 1);
-            --ease-out-quad: cubic-bezier(0.25, 0.46, 0.45, 0.94);
-            
-            --navbar-background-1: white;
-            --background-1: white;
-            --background-2: whitesmoke;
-            --background-3: black;
-            --background-4: #f0f2f5;
-            --background-5: #eaebf5;
-            --card-background-1: white;
-            --card-background-2: whitesmoke;
-            --text-color-1: #050505;
-            --text-color-2: #65676b;
-            --text-color-3: white;
-            --shadow-1: 0 2px 6px 0 rgba(136, 148, 171, 0.2), 0 24px 20px -24px rgba(71, 82, 107, 0.1);
-            --shadow-2: 0 2px 10px rgba(0, 0, 0, 0.1);
-
-            --button-background-1: #1877f2;
-            --button-background-2: #e4e6eb;
-            --button-background-3: #3d42df;
-            --button-text-1: #ffffff;
-            --button-text-2: #050505;
-            --button-text-3: #ffffff;
-            --hover-overlay: rgba(0, 0, 0, 0.05);
-
-            --pocket-todo-add-btn-bg: #ef4056;
-            --pocket-todo-add-btn-hover: #D93A4C;
-            --pocket-todo-delete-bg: #e74c3c;
-
-            font-family: 'Inter', sans-serif;
-            color: var(--text-color-1);
-        }
-
-        html.dark #mypocket-widget-root,
-        #mypocket-widget-root.dark {
-            --navbar-background-1: #242526;
-            --background-1: black;
-            --background-2: black;
-            --background-3: white;
-            --background-4: #242526;
-            --background-5: #18191a;
-            --card-background-1: #242526; 
-            --card-background-2: #242526; 
-            --text-color-1: white;
-            --text-color-2: #b0b3b8;
-            --text-color-3: black;
-            --shadow-1: 0px 0px 8px 0px #282b33;
-            --shadow-2: 0 2px 8px rgba(0, 0, 0, 0.25);
-            --hover-overlay: rgba(255, 255, 255, 0.08);
-        }
-
-        #mypocket-widget-root .reading-toolbar {
+        
+        .navigation-header {
             position: fixed;
-            z-index: 1000;
-            display: flex;
-            gap: 8px;
-            background-color: rgba(255, 255, 255, 0.75);
-            backdrop-filter: blur(12px) saturate(180%);
-            -webkit-backdrop-filter: blur(12px) saturate(180%);
-            padding: 5px;
-            border-radius: 50px;
-            border: 1px solid rgba(255, 255, 255, 0.3);
-            box-shadow: 0 4px 24px -1px rgba(0, 0, 0, 0.1), 0 0 0 1px rgba(0, 0, 0, 0.02);
-            transition: all var(--transition-speed-normal) var(--ease-out-quad);
-            flex-direction: column;
-            bottom: 30px;
-            left: 30px;
-            width: auto;
-        }
-
-        html.dark #mypocket-widget-root .reading-toolbar,
-        #mypocket-widget-root.dark .reading-toolbar {
-            background-color: rgba(36, 37, 38, 0.70);
-            border: 1px solid rgba(255, 255, 255, 0.08);
-            box-shadow: 0 4px 24px -1px rgba(0, 0, 0, 0.4);
-        }
-
-        #mypocket-widget-root .reading-toolbar button {
-            background-color: transparent;
-            color: var(--text-color-2);
-            border: none;
-            width: 35px;
-            height: 35px;
-            border-radius: 50%;
-            cursor: pointer;
-            font-size: 16px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            position: relative;
-            user-select: none;
-            transition: color 0.2s ease, background-color 0.2s ease, transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
-        }
-
-        #mypocket-widget-root .reading-toolbar button:hover {
-            background-color: var(--hover-overlay);
-            color: var(--text-color-1);
-            transform: scale(1.1);
-        }
-
-        #mypocket-widget-root .reading-toolbar button:active {
-            transform: scale(0.95);
-        }
-
-        #mypocket-widget-root .reading-toolbar button::after {
-            content: attr(title);
-            position: absolute;
-            background-color: var(--card-background-1);
-            color: var(--text-color-1);
-            padding: 6px 14px;
-            border-radius: 8px;
-            font-size: 12px;
-            font-weight: 600;
-            white-space: nowrap;
-            pointer-events: none;
-            z-index: 1010;
-            box-shadow: var(--shadow-2);
-            border: 1px solid var(--background-4);
-            opacity: 0;
-            transform: translateY(-50%) translateX(10px);
-            transition: opacity 0.2s ease, transform 0.2s ease;
-            left: 140%; 
-            top: 50%;
-            display: none;
-        }
-
-        @media (min-width: 641px) {
-            #mypocket-widget-root .reading-toolbar button:hover::after {
-                display: block;
-                opacity: 1;
-                transform: translateY(-50%) translateX(0);
-            }
-        }
-
-        #mypocket-widget-root .fa-sun { color: #fdd835; }
-        #mypocket-widget-root .fa-moon { color: #e0e0e0; }
-        #mypocket-widget-root .fa-bookmark { color: #ef4056; font-size: 18px; }
-
-        #mypocket-widget-root .modal-overlay {
-            position: fixed;
+            background-color: var(--navbar-background-1);
+            /* padding: 0px 10px; */
+            height: 66px;
+            width: 100%;
             top: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            /* box-shadow: var(--shadow-1); */
+
+            z-index: 1000; /* Ensure navbar is on top */
+            will-change: transform, box-shadow;
+        }
+
+        nav {
+            width: 95%;
+            border-radius: 10px;
+            /* max-width: 1650px; */
+            max-width: 1725px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .branding {
+            width: 300px;
             left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0, 0, 0, 0.6);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            z-index: 2000;
-            opacity: 1;
-            overscroll-behavior: contain;
-            transition: opacity var(--transition-speed-normal) var(--ease-in-out-quint), visibility var(--transition-speed-normal) var(--ease-in-out-quint);
-        }
-
-        #mypocket-widget-root .modal-content {
-            background-color: var(--card-background-1);
-            color: var(--text-color-1);
-            padding: 25px;
-            border-radius: 8px;
-            box-shadow: var(--shadow-1);
-            border: 1px solid var(--background-4);
-            width: 90%;
-            max-width: 400px;
-            transform: scale(1);
-            transition: transform var(--transition-speed-normal) var(--ease-in-out-quint), opacity var(--transition-speed-normal) var(--ease-in-out-quint);
-        }
-
-        #mypocket-widget-root .modal-hidden {
-            visibility: hidden;
-            opacity: 0;
-            pointer-events: none;
-        }
-
-        #mypocket-widget-root .modal-hidden .modal-content {
-            transform: scale(0.95);
-            opacity: 0;
-        }
-        
-        #mypocket-widget-root .modal-content header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            font-size: 30px;
+            font-size: 40px;
             font-weight: 600;
-            padding-bottom: 15px;
-            border-bottom: 1px solid var(--background-4);
-        }
- 
-        #mypocket-widget-root .modal-content header h2 {
-            font-size: 24px;
-            font-weight: 600;
-            margin: 0;
-            display: flex;
-            align-items: center;
-            gap: 10px;
+
+            padding-left: 5px;
+            z-index: 1001; /* Above mobile menu */
         }
 
-        #mypocket-widget-root .modal-close-btn {
-            background: none;
-            border: none;
-            font-size: 24px;
-            font-weight: 300;
-            color: var(--text-color-2);
-            cursor: pointer;
-            line-height: 1;
-            padding: 0;
-            width: 32px; 
-            height: 32px;
-            border-radius: 50%;
+        .navigation-items {
             display: flex;
+            gap: 60px;
+
             align-items: center;
-            justify-content: center;
-            transition: color var(--transition-speed-fast) var(--ease-out-quad), background-color var(--transition-speed-fast) var(--ease-out-quad);
         }
-        #mypocket-widget-root .modal-close-btn:hover {
+
+        .navigation-items>a {
+            display: flex;
             color: var(--text-color-1);
-            background-color: var(--hover-overlay);
-        }
- 
-        #mypocket-widget-root .modal-header-controls {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-
-        #mypocket-widget-root .modal-open-app-btn {
-            background: none;
-            border: none;
-            font-size: 18px;
-            font-weight: 300;
-            color: var(--text-color-2);
-            cursor: pointer;
-            line-height: 1;
-            padding: 0;
-            width: 32px; 
-            height: 32px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: color var(--transition-speed-fast) var(--ease-out-quad), background-color var(--transition-speed-fast) var(--ease-out-quad);
-        }
-        #mypocket-widget-root .modal-open-app-btn:hover {
-            color: var(--text-color-1);
-            background-color: var(--hover-overlay);
-        }
-
-        #mypocket-widget-root .pocket-login-container {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            padding: 40px 10px;
-            text-align: center;
-        }
-        
-        #mypocket-widget-root .pocket-login-text {
-            color: var(--text-color-2);
-            margin-bottom: 20px;
-            font-size: 16px;
-            line-height: 1.5;
-        }
-
-        #mypocket-widget-root .pocket-login-btn {
-            background-color: var(--pocket-todo-add-btn-bg);
-            color: #ffffff;
-            padding: 10px 24px;
-            border-radius: 6px;
             text-decoration: none;
+            font-family: 'Ubuntu', sans-serif;
             font-weight: 600;
-            font-size: 15px;
-            transition: background-color var(--transition-speed-fast) var(--ease-out-quad);
-            border: none;
-            cursor: pointer;
+            font-size: 20px;
+
+            transition: color var(--transition-speed-normal) var(--ease-out-quad);
+            will-change: transform, color;
+            white-space: nowrap; /* Prevent text wrapping */
+            transition: .1s ease-in-out;
         }
 
-        #mypocket-widget-root .pocket-login-btn:hover {
-            background-color: var(--pocket-todo-add-btn-hover);
+        .navigation-items>a:hover {
+            font-weight: 600;
+            /* padding: 0px 10px; */
+            /* text-decoration: underline;
+            text-decoration-color: royalblue;
+            text-decoration-thickness: 3px;
+            text-underline-offset: 6px; */
         }
 
-        #mypocket-widget-root .pocket-modal-inputField {
-            margin: 25px 0 20px 0;
-            width: 100%;
-            display: flex;
-            height: 45px;
-        }
-
-        #mypocket-widget-root .pocket-modal-inputField input {
-            width: 85%;
-            height: 100%;
-            outline: none;
-            border-radius: 3px;
-            border: 1px solid var(--background-4); 
-            background-color: var(--background-2);
-            color: var(--text-color-1);
-            font-size: 17px;
-            padding-left: 15px;
-            transition: all 0.3s ease;
-            font-family: 'Inter', sans-serif;
-        }
-        #mypocket-widget-root .pocket-modal-inputField input::placeholder {
+        .hamburger {
+            display: none;
+            font-size: 20px;
+            font-weight: 800;
             color: var(--text-color-2);
-        }
-        
-        #mypocket-widget-root .pocket-modal-inputField input:focus {
-            border-color: var(--pocket-todo-add-btn-bg);
-            box-shadow: 0 0 0 2px rgba(239, 64, 86, 0.2);
-        }
+            /* margin-right: 8px; */
 
-        #mypocket-widget-root .pocket-modal-inputField button {
-            width: 50px;
-            height: 100%;
-            border: none;
-            color: #fff;
-            margin-left: 5px;
-            font-size: 21px;
-            outline: none;
-            background: var(--pocket-todo-add-btn-bg);
             cursor: pointer;
-            border-radius: 3px;
-            opacity: 0.6;
-            pointer-events: none;
-            transition: all 0.3s ease;
-        }
-        #mypocket-widget-root .pocket-modal-inputField button:hover {
-            background: var(--pocket-todo-add-btn-hover);
-        }
-        #mypocket-widget-root .pocket-modal-inputField button.active {
-            opacity: 1;
-            pointer-events: auto;
+            padding: 5px;
+            z-index: 1001; /* Above mobile menu */
+            user-select: none; /* Prevent text selection */
+            -webkit-tap-highlight-color: transparent; /* Remove tap highlight on mobile */
+            transition: transform var(--transition-speed-fast) var(--ease-out-quad); /* For active feedback */
         }
 
-        #mypocket-widget-root .pocket-modal-todoList {
-            max-height: 250px;
-            overflow-y: auto;
-            margin: 0;
-            padding: 0;
-            overscroll-behavior: contain;
+        .hamburger:active {
+            transform: scale(0.9); /* Subtle squash on click */
         }
 
-        #mypocket-widget-root .pocket-modal-todoList::-webkit-scrollbar {
-            width: 6px;
-        }
-        #mypocket-widget-root .pocket-modal-todoList::-webkit-scrollbar-track {
-            background: transparent;
-        }
-        #mypocket-widget-root .pocket-modal-todoList::-webkit-scrollbar-thumb {
-            background: var(--text-color-2);
-            border-radius: 3px;
-        }
-        #mypocket-widget-root .pocket-modal-todoList::-webkit-scrollbar-thumb:hover {
-            background: var(--text-color-1);
-        }
-        
-        #mypocket-widget-root .pocket-modal-todoList li {
-            position: relative;
-            list-style: none;
-            height: 45px;
-            display: flex;
-            align-items: center;
-            margin-bottom: 8px;
-            background: var(--background-2);
-            border-radius: 3px;
-            padding: 0 15px;
-            cursor: default;
-            overflow: hidden;
-            white-space: nowrap;
-            text-overflow: ellipsis;
-            transition: opacity var(--transition-speed-normal) var(--ease-out-quad), 
-                        transform var(--transition-speed-normal) var(--ease-out-quad),
-                        background-color var(--transition-speed-fast) var(--ease-out-quad), 
-                        color 0.1s ease;
-        }
-
-        #mypocket-widget-root .pocket-item-fade-in {
-            animation: fadeInSlideUp var(--transition-speed-normal) var(--ease-out-quad);
-        }
-
-        #mypocket-widget-root .pocket-item-text {
-            flex-grow: 1;
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
-            padding-right: 10px;
-        }
-
-        #mypocket-widget-root .pocket-modal-todoList li.pocket-empty-message {
-            background: transparent;
-            color: var(--text-color-2);
-            text-align: center;
-            height: auto;
-            padding: 20px 0;
-            line-height: 1.5;
-            display: block; 
-        }
-
-        #mypocket-widget-root .pocket-modal-todoList li.pocket-item-fade-out {
-            opacity: 0;
-            transform: scale(0.95);
-        }
- 
-        #mypocket-widget-root .pocket-modal-todoList li:not(.pocket-empty-message):hover {
-            background: var(--background-4);
-        }
- 
-        #mypocket-widget-root .pocket-modal-todoList li .pocket-delete-icon {
-            position: absolute;
-            right: -45px;
-            background: var(--pocket-todo-delete-bg);
-            width: 45px;
-            height: 100%;
-            top: 0;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            text-align: center;
-            color: #fff;
-            border-radius: 0 3px 3px 0;
-            cursor: pointer;
-            transition: all 0.2s ease;
-        }
-
-        #mypocket-widget-root .pocket-modal-todoList li:hover .pocket-delete-icon {
-            right: 0px; 
-        }
-        #mypocket-widget-root .pocket-modal-todoList li.pocket-empty-message:hover .pocket-delete-icon {
-            right: -45px;
-        }
-
-        #mypocket-widget-root .pocket-modal-footer {
-            display: flex;
-            width: 100%;
-            margin-top: 15px;
-            align-items: center;
-            justify-content: space-between;
-            color: var(--text-color-1);
-            padding-top: 15px;
-            border-top: 1px solid var(--background-4);
-        }
-        
-        #mypocket-widget-root .pocket-modal-footer a.pocket-app-link {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            width: 32px;
-            height: 32px;
-            font-size: 14px;
-            border-radius: 50%;
-            text-decoration: none;
-            color: var(--text-color-2);
-            background-color: var(--button-background-2);
-            transition: all var(--transition-speed-fast) var(--ease-out-quad);
-        }
-        #mypocket-widget-root .pocket-modal-footer a.pocket-app-link:hover {
-            background-color: var(--hover-overlay);
-            color: var(--text-color-1);
-        }
-
-        #mypocket-widget-root .pocket-confirm-clear {
-            font-size: 14px;
-            color: var(--text-color-1);
-        }
-        #mypocket-widget-root .pocket-confirm-clear a {
-            cursor: pointer;
-            text-decoration: underline;
-            margin: 0 4px;
-        }
-        #mypocket-widget-root .pocket-confirm-clear a.confirm-yes {
-            color: var(--pocket-todo-delete-bg);
-        }
-
-        #mypocket-widget-root .pocket-modal-footer button {
-            padding: 6px 10px;
-            border-radius: 3px;
-            border: none;
-            outline: none;
-            color: #fff;
-            font-weight: 400;
-            font-size: 16px;
-            margin-left: 5px;
-            background: var(--pocket-todo-add-btn-bg);
-            cursor: pointer;
-            user-select: none;
-            opacity: 0.6;
-            pointer-events: none;
-            transition: all 0.3s ease;
-        }
-        
-        #mypocket-widget-root .pocket-modal-footer button:hover {
-             background: var(--pocket-todo-add-btn-hover);
-        }
-
-        #mypocket-widget-root .pocket-modal-footer button.active {
-            opacity: 1;
-            pointer-events: auto;
-        }
-
-        @keyframes fadeInSlideUp {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        @media (max-width: 640px) {
-            html.modal-open { overflow: hidden; }
-
-            #mypocket-widget-root .reading-toolbar {
-                flex-direction: row;
-                left: 50%;
-                transform: translateX(-50%);
-                bottom: calc(5px + env(safe-area-inset-bottom)); 
-                padding: 6px 12px;
-                width: auto;
-                max-width: 90%;
+        @media screen and (max-width:768px) {
+            .hamburger {
+                display: flex;
+                cursor: pointer;
             }
 
-            #mypocket-widget-root .reading-toolbar button::after { display: none !important; }
-            
-            #mypocket-widget-root .modal-content {
+            .hamburger #closeHam {
+                display: none;
+            }
+
+            .navigation-items {
+                display: none;
+                flex-direction: column;
+                /* align-items: center; */
+                align-items: flex-start;
+                position: absolute;
+                left: 0;
+                right: 0;
+                top: 58px;
+                background-color: var(--navbar-background-1);
                 width: 100%;
-                height: 100%;
-                max-width: 100%;
-                border-radius: 0;
-                border: none;
-                padding: 25px 20px;
-                padding-top: calc(25px + env(safe-area-inset-top));
-                padding-bottom: calc(25px + env(safe-area-inset-bottom));
-                display: flex;
-                flex-direction: column;
-                justify-content: flex-start;
-                transform: translateY(0);
-                transition: transform var(--transition-speed-slow) var(--ease-in-out-quint);
+                height: calc(100vh - 58px);
+                /* padding-top: 100px; */
+                padding: 100px 30px;
+                gap: 8vh;
             }
 
-            #mypocket-widget-root .modal-overlay { height: 100dvh; }
-
-            #mypocket-widget-root .modal-hidden .modal-content {
-                transform: translateY(100%);
-                opacity: 1;
+            .navigation-items>a:hover {
+                /* padding: 18px 0px; */
+                text-decoration: none;
             }
 
-            #mypocket-widget-root .pocket-modal-todoList {
-                flex-grow: 1;
-                min-height: 100px;
-                max-height: none;
-            }
-
-            #mypocket-widget-root .pocket-modal-inputField { flex-shrink: 0; }
-
-            #mypocket-widget-root .modal-content header {
-                padding-bottom: 15px;
-                border-bottom: 1px solid var(--background-4);
-                flex-shrink: 0;
-            }
-            #mypocket-widget-root .pocket-modal-footer {
-                margin-top: 15px;
-                padding-top: 15px;
-                border-top: 1px solid var(--background-4);
-                flex-shrink: 0;
-            }
-        }
-
-        @media (min-width: 641px) {
-            #mypocket-widget-root .modal-overlay {
-                left: 92px; 
-                bottom: 30px;
-                top: auto;
-                width: auto;
-                height: auto;
-                background-color: transparent;
-                display: block;
-                align-items: normal;
-                justify-content: normal;
-            }
-
-            #mypocket-widget-root .modal-content {
-                pointer-events: auto;
-                width: 350px;
-                max-width: 350px;
-                height: 500px;
-                max-height: 75vh;
-                border-radius: 8px;
-                padding: 25px;
-                display: flex;
-                flex-direction: column;
-                transform-origin: bottom left;
-                transition: transform var(--transition-speed-normal) var(--ease-in-out-quint), 
-                            opacity var(--transition-speed-normal) var(--ease-in-out-quint);
-            }
-            
-            #mypocket-widget-root .modal-overlay.modal-hidden .modal-content {
-                transform: scale(0.9) translateY(20px);
-                opacity: 0;
-            }
-
-            #mypocket-widget-root .pocket-modal-todoList {
-                flex-grow: 1;
-                min-height: 100px;
-                max-height: none;
-                overflow-y: auto;
+            .links {
+                /* border-bottom: 2px solid rgba(0,0,0,0.08); */
+                /* Subtle separator */
+                /* width: calc(100vw - 60px); */
+                padding: 18px 0;
             }
         }
     </style>
 
-    <nav class="reading-toolbar">
-        <button id="mypocket-translateBtn" title="Translate"><i class="fa-solid fa-language"></i></button>
-        <button id="mypocket-themeToggle" title="Toggle Theme"><i class="fa-solid fa-moon"></i></button>
-        <button id="mypocket-screenshotBtn" title="Screenshot"><i class="fa-solid fa-image"></i></button>
-        <button id="mypocket-triggerBtn" title="MyPocket"><i class="fa-solid fa-bookmark"></i></button>
-    </nav>
+</head>
 
-    <div id="mypocket-modalOverlay" class="modal-overlay modal-hidden">
-        <div class="modal-content">
-            <header>
-                <h2><i class="fa-solid fa-bookmark" style="color: #ef4056;"></i>&nbsp;MyPocket</h2>
-                <div class="modal-header-controls">
-                    <a href="https://atikle.github.io/mypocket/app" target="_blank" class="modal-open-app-btn" title="Open Full App">
-                        <i class="fa-solid fa-arrow-up-right-from-square"></i>
-                    </a>
-                    <button id="mypocket-closeModalBtn" class="modal-close-btn" title="Close">&times;</button>
-                </div>
-            </header>
+<body>
 
-            <div id="mypocket-authContainer" class="pocket-login-container" style="display: none;">
-                <p class="pocket-login-text">You need to be logged in to view and save MyPocket items.</p>
-                <a href="https://atikle.github.io/account/login?app=mypocket" class="pocket-login-btn">Log In with Atikle</a>
+    <header class="navigation-header">
+
+        <nav>
+
+            <div class="branding atikle-multicolor"><a href="https://atikle.github.io/home">atikle</a></div>
+
+            <div class="navigation-items" id="navigation-items">
+                <a class="links" href="https://atikle.github.io/finatikle">
+                    <font class="fin">fin</font><font class="atikle">atikle</font>
+                </a>
+                <!-- <a class="links" href="https://atikle.github.io/synapse">
+                    <font class="synapse">Synapse AI</font>
+                </a> -->
+                <a class="links" href="https://atikle.github.io/connect/schedule">
+                    <font class="atikle">atikle</font><font style="margin-left: 3px;" class="connect">connect</font>
+                </a>
+                <a class="links" href="https://atikle.github.io/insights">
+                    <font class="insights">Insights</font>
+                </a>
             </div>
 
-            <div id="mypocket-appContainer" style="display: flex; flex-direction: column; flex-grow: 1;">
-                <div class="pocket-modal-inputField">
-                    <input type="text" id="mypocket-inputField" placeholder="Add a URL or note...">
-                    <button id="mypocket-addItemBtn"><i class="fas fa-plus"></i></button>
-                </div>
-
-                <ul class="pocket-modal-todoList" id="mypocket-itemsList"></ul>
-
-                <div class="pocket-modal-footer">
-                    <span id="mypocket-taskCounter">You have <span class="mypocket-pendingCount">0</span> items</span>
-                    
-                    <span id="mypocket-confirmClear" class="pocket-confirm-clear" style="display: none;">
-                        Are you sure? 
-                        <a id="mypocket-confirmYes" class="confirm-yes">Yes</a> / 
-                        <a id="mypocket-confirmNo">No</a>
-                    </span>
-
-                    <a href="https://atikle.github.io/mypocket/app" target="_blank" title="Open full app" class="pocket-app-link">
-                        <i class="fa-solid fa-arrow-up-right-from-square"></i>
-                    </a>
-
-                    <button id="mypocket-clearAllBtn">Clear All</button>
-                </div>
+            <div class="hamburger">
+                <span id="openHam">&#9776;</span>
+                <span id="closeHam">&#x2716;</span>
             </div>
-        </div>
-    </div>
 
-    <script type="module">
-        import { initializeApp, getApps, getApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
-        import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
-        import { 
-            getFirestore, collection, doc, addDoc, deleteDoc, 
-            onSnapshot, query, getDocs 
-        } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+        </nav>
 
-        const root = document.getElementById('mypocket-widget-root');
+        <script>
+            let openHam = document.querySelector('#openHam');
+            let closeHam = document.querySelector('#closeHam');
+            let navigationItems = document.querySelector('#navigation-items');
 
-        function showCustomAlert(message) {
-            let alertBox = document.createElement('div');
-            alertBox.style.cssText = `
-                position: fixed; top: 20px; left: 50%; transform: translateX(-50%);
-                background-color: #333; color: white; padding: 16px 24px; border-radius: 8px;
-                box-shadow: 0 4px 12px rgba(0,0,0,0.25); z-index: 2000; font-family: 'Inter', sans-serif;
-                font-size: 14px; transition: opacity 0.5s ease; opacity: 0;
-            `;
-            alertBox.textContent = message;
-            document.body.appendChild(alertBox);
-            setTimeout(() => { alertBox.style.opacity = '1'; }, 10);
-            setTimeout(() => {
-                alertBox.style.opacity = '0';
-                setTimeout(() => { if (document.body.contains(alertBox)) document.body.removeChild(alertBox); }, 500); 
-            }, 3000); 
-        }
+            const hamburgerEvent = (navigation, close, open) => {
+                navigationItems.style.display = navigation;
+                closeHam.style.display = close;
+                openHam.style.display = open;
+            };
 
-        let db, auth, userId;
-        let firestoreListenerUnsubscribe = null;
-        let currentPocketItems = [];
-        const appId = typeof __app_id !== 'undefined' ? __app_id : 'atikle-v1'; 
+            openHam.addEventListener('click', () => hamburgerEvent("flex", "block", "none"));
+            closeHam.addEventListener('click', () => hamburgerEvent("none", "none", "block"));
+        </script>
 
-        const firebaseConfig = {
-            apiKey: "AIzaSyCFBRUc8afjIrOtet57sltb8M1xrVR5R3c",
-            authDomain: "atikle-web.firebaseapp.com",
-            projectId: "atikle-web",
-            storageBucket: "atikle-web.firebasestorage.app",
-            messagingSenderId: "63074656402",
-            appId: "1:63074656402:web:0af9a3d0bba7cd7dc0464b",
-            measurementId: "G-38WD0DDG8E"
-        };
+    </header>
 
-        try {
-            // Smart initialization: Reuses existing Firebase app if host page already has it running
-            const app = getApps().length === 0 ? initializeApp(firebaseConfig) : getApp();
-            auth = getAuth(app);
-            db = getFirestore(app);
-
-            onAuthStateChanged(auth, (user) => {
-                const authContainer = root.querySelector('#mypocket-authContainer');
-                const appContainer = root.querySelector('#mypocket-appContainer');
-
-                if (user) {
-                    userId = user.uid;
-                    authContainer.style.display = 'none';
-                    appContainer.style.display = 'flex';
-                    setupFirestoreListener(appId, userId);
-                } else {
-                    userId = null;
-                    if (firestoreListenerUnsubscribe) {
-                        firestoreListenerUnsubscribe();
-                        firestoreListenerUnsubscribe = null;
-                    }
-                    authContainer.style.display = 'flex';
-                    appContainer.style.display = 'none';
-                    currentPocketItems = [];
-                    renderPocketItems();
-                }
-            });
-        } catch (e) {
-            console.error("Firebase Init Error:", e);
-        }
-
-        function setupFirestoreListener(appId, uid) {
-            if (firestoreListenerUnsubscribe) firestoreListenerUnsubscribe();
-            const itemsColRef = collection(db, 'artifacts', appId, 'users', uid, 'mypocket');
-            firestoreListenerUnsubscribe = onSnapshot(query(itemsColRef), (querySnapshot) => {
-                let items = [];
-                querySnapshot.forEach((doc) => items.push({ id: doc.id, ...doc.data() }));
-                items.sort((a, b) => new Date(b.dateAdded) - new Date(a.dateAdded));
-                currentPocketItems = items; 
-                renderPocketItems();
-            }, (error) => console.error("Error listening to Firestore:", error));
-        }
-
-        // --- Theme Toggle ---
-        const themeToggle = root.querySelector('#mypocket-themeToggle');
-        if (themeToggle) {
-            const themeIcon = themeToggle.querySelector('i');
-            function applyTheme(theme) {
-                if (theme === 'dark') {
-                    root.classList.add('dark');
-                    themeIcon.classList.replace('fa-sun', 'fa-moon');
-                } else {
-                    root.classList.remove('dark');
-                    themeIcon.classList.replace('fa-moon', 'fa-sun');
-                }
-                localStorage.setItem('mypocket-theme', theme);
-            }
-            applyTheme(localStorage.getItem('mypocket-theme') || 'light');
-            themeToggle.addEventListener('click', () => {
-                applyTheme(root.classList.contains('dark') ? 'light' : 'dark');
-            });
-        }
-
-        // --- UI Elements ---
-        const readingToolbar = root.querySelector('.reading-toolbar');
-        const triggerBtn = root.querySelector('#mypocket-triggerBtn');
-        const modalOverlay = root.querySelector('#mypocket-modalOverlay');
-        const closeModalBtn = root.querySelector('#mypocket-closeModalBtn');
-        const addItemBtn = root.querySelector('#mypocket-addItemBtn');
-        const inputField = root.querySelector('#mypocket-inputField');
-        const itemsList = root.querySelector('#mypocket-itemsList');
-        const clearAllBtn = root.querySelector('#mypocket-clearAllBtn');
-        const pendingCount = root.querySelector(".mypocket-pendingCount");
-        const taskCounter = root.querySelector('#mypocket-taskCounter');
-        const confirmClear = root.querySelector('#mypocket-confirmClear');
-        const confirmYes = root.querySelector('#mypocket-confirmYes');
-        const confirmNo = root.querySelector('#mypocket-confirmNo');
-
-        function renderPocketItems() {
-            itemsList.innerHTML = ''; 
-            pendingCount.textContent = currentPocketItems.length;
-            
-            if (currentPocketItems.length > 0) clearAllBtn.classList.add("active"); 
-            else clearAllBtn.classList.remove("active"); 
-            
-            if (currentPocketItems.length === 0) {
-                itemsList.innerHTML = '<li class="pocket-empty-message">No items saved yet.</li>';
-            } else {
-                let html = "";
-                currentPocketItems.forEach((obj) => {
-                    const safeText = obj.text.replace(/</g, "&lt;").replace(/>/g, "&gt;");
-                    html += `<li><span class="pocket-item-text">${safeText}</span><span class="pocket-delete-icon" data-id="${obj.id}" title="Delete"><i class="fas fa-trash"></i></span></li>`;
-                });
-                itemsList.innerHTML = html;
-            }
-        }
-
-        function showModal() {
-            modalOverlay.classList.remove('modal-hidden');
-            if (window.innerWidth < 641) {
-                document.documentElement.classList.add('modal-open');
-                if (readingToolbar) readingToolbar.style.display = 'none'; 
-            }
-            if(userId) inputField.focus();
-        }
-
-        function hideModal() {
-            if (!modalOverlay.classList.contains('modal-hidden')) {
-                modalOverlay.classList.add('modal-hidden');
-                document.documentElement.classList.remove('modal-open'); 
-                if (readingToolbar) readingToolbar.style.display = ''; 
-            }
-        }
-
-        if (triggerBtn) triggerBtn.addEventListener('click', showModal);
-        if (closeModalBtn) closeModalBtn.addEventListener('click', hideModal);
-        if (modalOverlay) modalOverlay.addEventListener('click', (e) => { if (e.target === modalOverlay) hideModal(); });
-
-        if(inputField) {
-            inputField.oninput = () => inputField.value.trim() != 0 ? addItemBtn.classList.add("active") : addItemBtn.classList.remove("active");
-            inputField.onkeyup = (e) => { if (e.key === "Enter" && inputField.value.trim() != 0) addItemBtn.click(); }
-        }
-
-        if (addItemBtn) {
-            addItemBtn.addEventListener('click', async () => {
-                const text = inputField.value.trim();
-                if (text && userId) {
-                    try {
-                        await addDoc(collection(db, 'artifacts', appId, 'users', userId, 'mypocket'), {
-                            text: text, dateAdded: new Date().toISOString(), wasEdited: false
-                        });
-                        inputField.value = ''; 
-                        addItemBtn.classList.remove("active"); 
-                    } catch (error) { showCustomAlert("Error: Could not save item."); }
-                }
-            });
-        }
-
-        if (clearAllBtn) clearAllBtn.onclick = () => { taskCounter.style.display = 'none'; clearAllBtn.style.display = 'none'; confirmClear.style.display = 'inline'; }
-        if (confirmNo) confirmNo.onclick = () => { taskCounter.style.display = ''; clearAllBtn.style.display = ''; confirmClear.style.display = 'none'; }
-        if (confirmYes) {
-            confirmYes.onclick = async () => {
-                if(userId) {
-                    try {
-                        const q = query(collection(db, 'artifacts', appId, 'users', userId, 'mypocket'));
-                        const snap = await getDocs(q);
-                        await Promise.all(snap.docs.map(d => deleteDoc(d.ref)));
-                    } catch(e) {}
-                }
-                confirmNo.click();
-            }
-        }
-
-        if (itemsList) {
-            itemsList.addEventListener('click', async (e) => {
-                const del = e.target.closest('.pocket-delete-icon');
-                if (del && userId) {
-                    del.closest('li').classList.add('pocket-item-fade-out');
-                    setTimeout(async () => {
-                        try { await deleteDoc(doc(db, 'artifacts', appId, 'users', userId, 'mypocket', del.dataset.id)); } catch(err) {}
-                    }, 300); 
-                }
-            });
-        }
-
-        document.addEventListener('keydown', (e) => { if (e.key === "Escape") hideModal(); });
-        
-        const translateBtn = root.querySelector('#mypocket-translateBtn');
-        if (translateBtn) translateBtn.addEventListener('click', () => showCustomAlert('Can not fetch translation API'));
-    </script>
-</div>
 </body>
+
 </html>
