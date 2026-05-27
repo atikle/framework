@@ -790,7 +790,8 @@
 
         // Auth Logic
         modalLoginBtn.addEventListener('click', () => {
-            window.location.href = 'https://atikle.github.io/account/login?app=mypocket';
+            const currentUrl = encodeURIComponent(window.location.href);
+            window.location.href = `https://atikle.github.io/account/login?redirectUrl=${currentUrl}`;
         });
 
         onAuthStateChanged(auth, (user) => {
