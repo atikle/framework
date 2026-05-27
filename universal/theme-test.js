@@ -1,6 +1,5 @@
-// theme.js - Corrected and Simplified
+// theme.js - Universal Compatibility Version
 
-// Define constants in the global scope for easy access
 const THEMES = ['light', 'dark', 'system'];
 const ICONS = {
     light: 'fa-sun',
@@ -14,36 +13,36 @@ const TITLES = {
 };
 
 /**
- * This is the SINGLE source of truth for applying a theme.
- * All other parts of the script will call this function.
- * @param {string} theme - The user's chosen theme: 'light', 'dark', or 'system'.
+ * Single source of truth for applying a theme.
+ * Toggles both modernized ('dark') and legacy ('dark-mode') classes.
  */
 function applyTheme(theme) {
     let effectiveTheme = theme;
 
-    // If the theme is 'system', determine the actual theme from the OS
     if (theme === 'system') {
         effectiveTheme = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
     }
 
-    // Apply the 'dark-mode' class based on the effective theme
     const isDark = effectiveTheme === 'dark';
+    
+    // 1. Modern CSS implementation (html.dark)
+    document.documentElement.classList.toggle('dark', isDark);
+    
+    // 2. Legacy CSS implementation (html.dark-mode and body.dark-mode)
     document.documentElement.classList.toggle('dark-mode', isDark);
     if (document.body) {
         document.body.classList.toggle('dark-mode', isDark);
     }
 
-    // Update the UI of the toggle button, if it exists on the page
+    // Update the UI of the custom toolbar button, if it exists
     const themeToggle = document.getElementById('darkModeToggle');
     if (themeToggle) {
         const icon = themeToggle.querySelector('i');
         if (icon) {
-            // The icon should reflect the user's *choice* ('system'), not the effective theme.
             Object.values(ICONS).forEach(iconClass => icon.classList.remove(iconClass));
             icon.classList.add(ICONS[theme]);
         }
         
-        // The title should tell the user what the *next* click will do.
         const nextThemeIndex = (THEMES.indexOf(theme) + 1) % THEMES.length;
         themeToggle.title = TITLES[THEMES[nextThemeIndex]];
     }
@@ -54,44 +53,35 @@ function applyTheme(theme) {
  */
 function setupThemeToggle() {
     const themeToggle = document.getElementById('darkModeToggle');
-    if (!themeToggle) return; // Exit if no button on this page
+    if (!themeToggle) return; 
 
     themeToggle.addEventListener('click', () => {
-        // Get the current theme choice from storage
         const currentTheme = localStorage.getItem('theme') || 'system';
-        
-        // Determine the next theme in the cycle
         const nextThemeIndex = (THEMES.indexOf(currentTheme) + 1) % THEMES.length;
         const nextTheme = THEMES[nextThemeIndex];
 
-        // Save the user's new choice to storage
         localStorage.setItem('theme', nextTheme);
-
-        // Apply the newly chosen theme
         applyTheme(nextTheme);
     });
 }
 
 // --- SCRIPT EXECUTION FLOW ---
 
-// 1. Add a listener for OS-level theme changes.
-// This will only trigger a change if the user's setting is 'system'.
+// 1. Apply the initial theme IMMEDIATELY to prevent FOUC (White Flash)
+// Place <script src="theme.js"></script> in your <head> tags.
+const savedTheme = localStorage.getItem('theme') || 'system';
+applyTheme(savedTheme);
+
+// 2. Listen for OS-level theme changes
 window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', () => {
-    const savedTheme = localStorage.getItem('theme') || 'system';
-    if (savedTheme === 'system') {
+    if ((localStorage.getItem('theme') || 'system') === 'system') {
         applyTheme('system');
     }
 });
 
-
-// 2. Set up the toggle and apply the initial theme once the DOM is ready.
+// 3. Set up the toggle button once the DOM is ready
 document.addEventListener('DOMContentLoaded', () => {
-    // Get the saved theme preference from storage
-    const savedTheme = localStorage.getItem('theme') || 'system';
-    
-    // Apply the theme to make sure the body class and button UI are correct
-    applyTheme(savedTheme);
-
-    // Set up the click listener on the button
     setupThemeToggle();
+    // Re-apply to ensure the button UI catches up with the initially applied theme
+    applyTheme(localStorage.getItem('theme') || 'system');
 });
