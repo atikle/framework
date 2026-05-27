@@ -47,48 +47,63 @@
             --button-text-3: #ffffff;
             --hover-overlay: rgba(0, 0, 0, 0.05);
 
-            --pocket-todo-add-btn-bg: #ef4056;
-            --pocket-todo-add-btn-hover: #D93A4C;
-            --pocket-todo-delete-bg: #e74c3c;
+            /* --- MyPocket Component Variables (Light) --- */
+            --mypocket-overlay-bg: rgba(0, 0, 0, 0.6);
+            --mypocket-modal-bg: white;
+            --mypocket-item-bg: whitesmoke;
+            --mypocket-border-color: #f0f2f5;
+            
+            --mypocket-text-primary: #050505;
+            --mypocket-text-secondary: #65676b;
+            --mypocket-shadow: 0 2px 6px 0 rgba(136, 148, 171, 0.2), 0 24px 20px -24px rgba(71, 82, 107, 0.1);
+            
+            --mypocket-action-btn-bg: #e4e6eb; /* Header/Footer icon buttons */
+            --mypocket-action-btn-hover: rgba(0, 0, 0, 0.05);
+            
+            --mypocket-brand-red: #ef4056;
+            --mypocket-brand-red-hover: #D93A4C;
+            --mypocket-delete-bg: #e74c3c;
         }
 
         html.dark {
-            /* Pure black bases for the app and modal */
-            --navbar-background-1: #000000;
-            --background-1: #000000;
-            
-            /* Dark greys for input boxes, lists, and borders */
-            --background-2: #121212; /* Input fields & list items */
-            --background-3: #ffffff;
-            --background-4: #222222; /* Borders, dividers, and hover states */
-            --background-5: #1c1c1e;
-            
-            /* Modal container background */
-            --card-background-1: #000000; 
-            --card-background-2: #000000; 
-            
-            /* High-contrast typography */
-            --text-color-1: #ffffff;
-            --text-color-2: #8e8e93; /* Smooth, muted grey for secondary text */
-            --text-color-3: #000000;
-            
-            /* Deepened shadows to ground the elements against pure black */
-            --shadow-1: 0 16px 40px rgba(0, 0, 0, 0.9);
-            --shadow-2: 0 4px 16px rgba(0, 0, 0, 0.8);
+            --navbar-background-1: #242526;
+            --background-1: black;
+            --background-2: black;
+            --background-3: white;
+            --background-4: #242526;
+            --background-5: #18191a;
+            --card-background-1: #242526; 
+            --card-background-2: #242526; 
+            --text-color-1: white;
+            --text-color-2: #b0b3b8;
+            --text-color-3: black;
+            --shadow-1: 0px 0px 8px 0px #282b33;
+            --shadow-2: 0 2px 8px rgba(0, 0, 0, 0.25);
 
-            /* Refined button backgrounds */
             --button-background-1: #2d88ff;
-            --button-background-2: #1c1c1e; /* Dark grey for action buttons (close, link) */
+            --button-background-2: #3a3b3c;
             --button-background-3: #6f74ff;
             --button-text-1: #ffffff;
             --button-text-2: #e4e6eb;
             --button-text-3: #ffffff;
             --hover-overlay: rgba(255, 255, 255, 0.08);
 
-            /* Brand Red Highlights */
-            --pocket-todo-add-btn-bg: #ef4056;
-            --pocket-todo-add-btn-hover: #D93A4C; 
-            --pocket-todo-delete-bg: #ef4056; 
+            /* --- MyPocket Component Variables (Ultra Dark) --- */
+            --mypocket-overlay-bg: rgba(0, 0, 0, 0.7); 
+            --mypocket-modal-bg: #000000;
+            --mypocket-item-bg: #121212;
+            --mypocket-border-color: #222222;
+            
+            --mypocket-text-primary: #ffffff;
+            --mypocket-text-secondary: #8e8e93;
+            --mypocket-shadow: 0 16px 40px rgba(0, 0, 0, 0.9);
+            
+            --mypocket-action-btn-bg: #1c1c1e;
+            --mypocket-action-btn-hover: rgba(255, 255, 255, 0.08);
+            
+            --mypocket-brand-red: #ef4056;
+            --mypocket-brand-red-hover: #D93A4C;
+            --mypocket-delete-bg: #ef4056;
         }
 
         body, html {
@@ -205,7 +220,7 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background-color: rgba(0, 0, 0, 0.6); 
+            background-color: var(--mypocket-overlay-bg);
             display: flex;
             align-items: center;
             justify-content: center;
@@ -217,12 +232,12 @@
         }
 
         .modal-content {
-            background-color: var(--card-background-1);
-            color: var(--text-color-1);
+            background-color: var(--mypocket-modal-bg);
+            color: var(--mypocket-text-primary);
+            box-shadow: var(--mypocket-shadow); 
+            border: 1px solid var(--mypocket-border-color);
             padding: 25px;
-            border-radius: 8px; 
-            box-shadow: var(--shadow-1); 
-            border: 1px solid var(--background-4); 
+            border-radius: 8px;
             width: 90%;
             max-width: 400px; 
             transform: scale(1);
@@ -247,7 +262,7 @@
             font-size: 30px;
             font-weight: 600;
             padding-bottom: 15px;
-            border-bottom: 1px solid var(--background-4);
+            border-bottom: 1px solid var(--mypocket-border-color);
         }
  
         .modal-content header h2 {
@@ -260,11 +275,11 @@
         }
 
         .modal-close-btn {
-            background-color: var(--button-background-2); /* Added solid background */
+            background-color: var(--mypocket-action-btn-bg);
+            color: var(--mypocket-text-secondary);
             border: none;
             font-size: 24px;
             font-weight: 300;
-            color: var(--text-color-2);
             cursor: pointer;
             line-height: 1;
             padding: 0;
@@ -277,16 +292,16 @@
             transition: color var(--transition-speed-fast) var(--ease-out-quad), filter var(--transition-speed-fast) var(--ease-out-quad);
         }
         .modal-close-btn:hover {
-            color: var(--text-color-1);
+            color: var(--mypocket-text-primary);
             filter: brightness(0.9); /* Darkens slightly on hover */
         }
 
         .modal-open-app-btn {
-            background-color: var(--button-background-2); /* Added solid background */
+            background-color: var(--mypocket-action-btn-bg);
+            color: var(--mypocket-text-secondary);
             border: none;
             font-size: 18px; 
             font-weight: 300;
-            color: var(--text-color-2);
             cursor: pointer;
             line-height: 1;
             padding: 0;
@@ -299,7 +314,7 @@
             transition: color var(--transition-speed-fast) var(--ease-out-quad), filter var(--transition-speed-fast) var(--ease-out-quad);
         }
         .modal-open-app-btn:hover {
-            color: var(--text-color-1);
+            color: var(--mypocket-text-primary);
             filter: brightness(0.9);
         }
  
@@ -321,20 +336,20 @@
             height: 100%;
             outline: none;
             border-radius: 3px;
-            border: 1px solid var(--background-4); 
-            background-color: var(--background-2); 
-            color: var(--text-color-1); 
+            border: 1px solid var(--mypocket-border-color); 
+            background-color: var(--mypocket-item-bg); 
+            color: var(--mypocket-text-primary);
             font-size: 17px;
             padding-left: 15px;
             transition: all 0.3s ease;
             font-family: 'Inter', sans-serif; 
         }
         .pocket-modal-inputField input::placeholder {
-            color: var(--text-color-2);
+            color: var(--mypocket-text-secondary);
         }
         
         .pocket-modal-inputField input:focus {
-            border-color: var(--pocket-todo-add-btn-bg);
+            border-color: var(--mypocket-brand-red);
             box-shadow: 0 0 0 2px rgba(239, 64, 86, 0.2);
         }
 
@@ -346,7 +361,7 @@
             margin-left: 5px;
             font-size: 21px;
             outline: none;
-            background: var(--pocket-todo-add-btn-bg);
+            background: var(--mypocket-brand-red);
             cursor: pointer;
             border-radius: 3px;
             opacity: 0.6;
@@ -354,7 +369,7 @@
             transition: all 0.3s ease;
         }
         .pocket-modal-inputField button:hover {
-            background: var(--pocket-todo-add-btn-hover);
+            background: var(--mypocket-brand-red-hover);
         }
         .pocket-modal-inputField button.active {
             opacity: 1;
@@ -390,7 +405,7 @@
             display: flex;
             align-items: center;
             margin-bottom: 8px;
-            background: var(--background-2); 
+            background: var(--mypocket-item-bg);
             border-radius: 3px;
             padding: 0 15px;
             cursor: default;
@@ -413,7 +428,7 @@
 
         .pocket-modal-todoList li.pocket-empty-message {
             background: transparent;
-            color: var(--text-color-2);
+            color: var(--mypocket-text-secondary);
             text-align: center;
             height: auto;
             padding: 20px 0;
@@ -427,13 +442,13 @@
         }
  
         .pocket-modal-todoList li:not(.pocket-empty-message):hover {
-            background: var(--background-4); 
+            background: var(--mypocket-border-color);
         }
  
         .pocket-modal-todoList li .pocket-delete-icon {
             position: absolute;
             right: -45px; 
-            background: var(--pocket-todo-delete-bg);
+            background: var(--mypocket-delete-bg);
             width: 45px;
             height: 100%;
             top: 0;
@@ -455,14 +470,14 @@
         }
 
         .pocket-modal-footer {
+            color: var(--mypocket-text-primary); 
+            border-top: 1px solid var(--mypocket-border-color);
             display: flex;
             width: 100%;
             margin-top: 15px; 
             align-items: center;
             justify-content: space-between;
-            color: var(--text-color-1); 
             padding-top: 15px;
-            border-top: 1px solid var(--background-4);
         }
         
         .pocket-modal-footer a.pocket-app-link {
@@ -474,18 +489,18 @@
             font-size: 14px;
             border-radius: 50%;
             text-decoration: none;
-            color: var(--text-color-2);
-            background-color: var(--button-background-2);
+            color: var(--mypocket-text-secondary);
+            background-color: var(--mypocket-action-btn-bg);
             transition: all var(--transition-speed-fast) var(--ease-out-quad);
         }
         .pocket-modal-footer a.pocket-app-link:hover {
-            background-color: var(--hover-overlay);
-            color: var(--text-color-1);
+            background-color: var(--mypocket-action-btn-hover);
+            color: var(--mypocket-text-primary);
         }
 
         .pocket-confirm-clear {
             font-size: 14px;
-            color: var(--text-color-1);
+            color: var(--mypocket-text-primary);
         }
         .pocket-confirm-clear a {
             cursor: pointer;
@@ -493,7 +508,7 @@
             margin: 0 4px;
         }
         .pocket-confirm-clear a.confirm-yes {
-            color: var(--pocket-todo-delete-bg);
+            color: var(--mypocket-delete-bg);
         }
         
         .pocket-modal-footer button {
@@ -505,7 +520,7 @@
             font-weight: 400;
             font-size: 16px;
             margin-left: 5px;
-            background: var(--pocket-todo-add-btn-bg);
+            background: var(--mypocket-brand-red);
             cursor: pointer;
             user-select: none;
             opacity: 0.6;
@@ -514,7 +529,7 @@
         }
         
         .pocket-modal-footer button:hover {
-             background: var(--pocket-todo-add-btn-hover);
+            background: var(--mypocket-brand-red-hover);
         }
 
         .pocket-modal-footer button.active {
