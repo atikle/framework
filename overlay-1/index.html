@@ -846,30 +846,51 @@
             pocketItemsListContainer.innerHTML = newLiTag;
         }
 
-        // Modal Visibility Controls
+        // Modal Visibility & History Controls
+        let isPocketModalInHistory = false;
+
         function showPocketModal() {
             modalOverlay.classList.remove('modal-hidden');
+            
             if (window.innerWidth < 641) {
                 document.documentElement.classList.add('modal-open');
                 if (readingToolbar) readingToolbar.style.display = 'none'; 
             }
+
+            if (!isPocketModalInHistory) {
+                history.pushState({ pocketModalOpen: true }, "");
+                isPocketModalInHistory = true;
+            }
+
             if(currentUserId) {
                 setTimeout(() => pocketInput.focus(), 300);
             }
         }
 
-        function hidePocketModal() {
+        function hidePocketModal(fromBackButton = false) {
             if (!modalOverlay.classList.contains('modal-hidden')) {
                 modalOverlay.classList.add('modal-hidden');
                 document.documentElement.classList.remove('modal-open'); 
                 if (readingToolbar) readingToolbar.style.display = ''; 
+                
+                if (isPocketModalInHistory && !fromBackButton) {
+                    history.back(); 
+                }
+                isPocketModalInHistory = false;
             }
         }
+
+        window.addEventListener('popstate', (event) => {
+            if (isPocketModalInHistory) {
+                hidePocketModal(true); 
+            }
+        });
 
         if (pocketBtn) pocketBtn.addEventListener('click', showPocketModal);
         if (closeModalBtn) closeModalBtn.addEventListener('click', hidePocketModal);
         if (modalOverlay) {
             modalOverlay.addEventListener('click', (e) => {
+                // Ensure we only close if clicking the background, not the modal content itself
                 if (e.target === modalOverlay) hidePocketModal();
             });
         }
