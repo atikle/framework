@@ -249,23 +249,6 @@
         }
 
         .modal-close-btn {
-            background: none;
-            border: none;
-            font-size: 24px;
-            font-weight: 300;
-            color: var(--text-color-2);
-            cursor: pointer;
-            line-height: 1;
-            padding: 0;
-            width: 32px; 
-            height: 32px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: color var(--transition-speed-fast) var(--ease-out-quad), background-color var(--transition-speed-fast) var(--ease-out-quad);
-        }
-        .modal-close-btn {
             background-color: var(--button-background-2); /* Added solid background */
             border: none;
             font-size: 24px;
@@ -307,6 +290,12 @@
         .modal-open-app-btn:hover {
             color: var(--text-color-1);
             filter: brightness(0.9);
+        }
+ 
+        .modal-header-controls {
+            display: flex;
+            align-items: center;
+            gap: 8px;
         }
 
         .pocket-modal-inputField {
@@ -524,6 +513,9 @@
 
         /* --- MOBILE STYLES --- */
         @media (max-width: 640px) {
+            html.modal-open {
+                overflow: hidden;
+            }
 
             .reading-toolbar {
                 flex-direction: row; 
@@ -542,7 +534,7 @@
             
             .modal-content {
                 width: 100%;
-                min-height: 100vh; 
+                height: 100%; 
                 max-width: 100%;
                 border-radius: 0;
                 border: none; 
@@ -558,8 +550,6 @@
 
             .modal-overlay {
                 height: 100dvh;
-                overflow-y: auto; /* Allows scrolling within the overlay */
-                align-items: flex-start; /* Ensures content starts at the top, allowing downward scroll */
             }
 
             .modal-hidden .modal-content {
