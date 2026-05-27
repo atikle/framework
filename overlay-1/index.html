@@ -53,31 +53,42 @@
         }
 
         html.dark {
-            --navbar-background-1: #242526;
-            --background-1: black;
-            --background-2: black;
-            --background-3: white;
-            --background-4: #242526;
-            --background-5: #18191a;
-            --card-background-1: #242526; 
-            --card-background-2: #242526; 
-            --text-color-1: white;
-            --text-color-2: #b0b3b8;
-            --text-color-3: black;
-            --shadow-1: 0px 0px 8px 0px #282b33;
-            --shadow-2: 0 2px 8px rgba(0, 0, 0, 0.25);
+            /* Pure black bases for the app and modal */
+            --navbar-background-1: #000000;
+            --background-1: #000000;
+            
+            /* Dark greys for input boxes, lists, and borders */
+            --background-2: #121212; /* Input fields & list items */
+            --background-3: #ffffff;
+            --background-4: #222222; /* Borders, dividers, and hover states */
+            --background-5: #1c1c1e;
+            
+            /* Modal container background */
+            --card-background-1: #000000; 
+            --card-background-2: #000000; 
+            
+            /* High-contrast typography */
+            --text-color-1: #ffffff;
+            --text-color-2: #8e8e93; /* Smooth, muted grey for secondary text */
+            --text-color-3: #000000;
+            
+            /* Deepened shadows to ground the elements against pure black */
+            --shadow-1: 0 16px 40px rgba(0, 0, 0, 0.9);
+            --shadow-2: 0 4px 16px rgba(0, 0, 0, 0.8);
 
+            /* Refined button backgrounds */
             --button-background-1: #2d88ff;
-            --button-background-2: #3a3b3c;
+            --button-background-2: #1c1c1e; /* Dark grey for action buttons (close, link) */
             --button-background-3: #6f74ff;
             --button-text-1: #ffffff;
             --button-text-2: #e4e6eb;
             --button-text-3: #ffffff;
             --hover-overlay: rgba(255, 255, 255, 0.08);
 
+            /* Brand Red Highlights */
             --pocket-todo-add-btn-bg: #ef4056;
             --pocket-todo-add-btn-hover: #D93A4C; 
-            --pocket-todo-delete-bg: #e74c3c;
+            --pocket-todo-delete-bg: #ef4056; 
         }
 
         body, html {
